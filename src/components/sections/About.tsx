@@ -51,7 +51,9 @@ export function About() {
                 <div>
                   <p className="text-sm font-semibold">Founder / Lead Engineer</p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    Replace this with your founder bio: background, domains shipped, and what you value in delivery.
+                    Senior, product-minded engineer focused on shipping reliable web systems with clean UX. Built and shipped
+                    work across finance, bookings, legal/trust, healthcare, and industrial sites—prioritizing clarity,
+                    pragmatic tradeoffs, and handoffs that teams can maintain.
                   </p>
                 </div>
               </div>
