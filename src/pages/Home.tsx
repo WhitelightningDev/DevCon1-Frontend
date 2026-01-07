@@ -1,10 +1,13 @@
 import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
+import { About } from '@/components/sections/About'
 import { ContactCTA } from '@/components/sections/ContactCTA'
 import { Hero } from '@/components/sections/Hero'
 import { Industries } from '@/components/sections/Industries'
+import { Pricing } from '@/components/sections/Pricing'
 import { Process } from '@/components/sections/Process'
 import { Services } from '@/components/sections/Services'
+import { Testimonials } from '@/components/sections/Testimonials'
 
 export function Home() {
   return (
@@ -19,8 +22,11 @@ export function Home() {
 
       <main>
         <Hero />
+        <About />
         <Services />
+        <Pricing />
         <Industries />
+        <Testimonials />
         <Process />
         <ContactCTA />
       </main>
@@ -29,4 +35,3 @@ export function Home() {
     </div>
   )
 }
-
