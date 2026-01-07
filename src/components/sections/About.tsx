@@ -36,7 +36,7 @@ export function About() {
                 <a href="/contact">Work with us</a>
               </Button>
               <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
-                <a href="#testimonials">See feedback</a>
+                <a href="/work">See work</a>
               </Button>
             </div>
           </div>
@@ -81,4 +81,3 @@ export function About() {
     </section>
   )
 }
-
