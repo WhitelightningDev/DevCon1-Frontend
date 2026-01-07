@@ -21,16 +21,16 @@ export function Hero() {
             </div>
 
             <h1 className="dc-animate-heading [--dc-delay:80ms] mt-5 text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-              Software that ships{' '}
+              We build scalable software systems and digital infrastructure for businesses that need{' '}
               <span className="bg-gradient-to-r from-emerald-300 via-emerald-400 to-cyan-300 bg-clip-text text-transparent">
-                clean, fast, and hardened
+                reliability, performance, and growth
               </span>
               .
             </h1>
 
             <p className="mx-auto mt-4 max-w-2xl text-pretty text-base text-muted-foreground sm:text-lg md:mx-0">
-              DevCon1 builds modern web and internal systems for teams operating in demanding environments. Design,
-              engineering, and delivery—built for reliability and security.
+              Web apps, integrations, and operational tooling—delivered with clear scope, reviewable milestones, and a
+              handoff your team can own.
             </p>
 
             <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-start md:justify-start">
