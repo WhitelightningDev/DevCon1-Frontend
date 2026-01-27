@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 
 const stats = [
-  { label: 'Projects shipped', value: '8+', icon: Gauge },
+  { label: 'Projects shipped', value: '35+', icon: Gauge },
   { label: 'Response time', value: '< 1 business day', icon: Timer },
   { label: 'Security-minded', value: 'Safe defaults', icon: ShieldCheck },
 ] as const

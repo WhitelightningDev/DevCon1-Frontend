@@ -6,7 +6,6 @@ import {
   BatteryCharging,
   Car,
   Code2,
-  ExternalLink,
   FileText,
   Globe,
   Gavel,
@@ -26,6 +25,7 @@ import { PageBackground } from '@/components/layout/PageBackground'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { WorkPinnedSection } from '@/components/work/WorkPinnedSection'
 import { setSeo } from '@/lib/seo'
 
 type ProjectMockup = {
@@ -48,6 +48,13 @@ const fallbackProjectMockups: readonly ProjectMockup[] = [
   { src: '', label: 'Section' },
   { src: '', label: 'Mobile' },
 ]
+
+const toSectionId = (value: string) =>
+  value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '')
 
 const projects: readonly Project[] = [
   {
@@ -345,62 +352,25 @@ export function WorkPage() {
             </div>
 
             <Separator className="my-8" />
+          </div>
 
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {projects.map((item) => {
-                const Icon = item.icon
-                const mockups = item.mockups?.length ? item.mockups : fallbackProjectMockups
-                return (
-                  <div key={item.title} className="rounded-xl border border-border/60 bg-background/40 p-5">
-                    <div className="flex items-start justify-between gap-3">
-                      <p className="text-sm font-semibold">{item.title}</p>
-                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10">
-                        <Icon className="h-4 w-4 text-emerald-400" />
-                      </span>
-                    </div>
-                    <div className="mt-4 grid grid-cols-3 gap-2">
-                      {mockups.map((mockup, index) => (
-                        <div
-                          key={`${item.title}-${mockup.src || mockup.label}-${index}`}
-                          className="relative aspect-video overflow-hidden rounded-md border border-border/60 bg-background/50"
-                        >
-                          {mockup.src ? (
-                            <img
-                              src={mockup.src}
-                              alt={mockup.alt ?? `${item.title} — ${mockup.label}`}
-                              loading="lazy"
-                              className="absolute inset-0 h-full w-full object-cover"
-                              onError={(event) => {
-                                event.currentTarget.style.display = 'none'
-                              }}
-                            />
-                          ) : null}
-                          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center bg-background/60 px-2 py-1 text-[11px] text-muted-foreground backdrop-blur">
-                            {mockup.label}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <p className="mt-3 text-sm text-muted-foreground">{item.summary}</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {item.tags.map((tag) => (
-                        <Badge key={tag} variant="outline" className="border-border/60 bg-background/50 text-muted-foreground">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                      <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
-                        <a href={item.href} target="_blank" rel="noreferrer">
-                          View site <ExternalLink className="ml-2 h-4 w-4" />
-                        </a>
-                      </Button>
-                      <p className="text-xs text-muted-foreground">Ask for details (role/stack/metrics) if needed.</p>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
+          <div>
+            {projects.map((item) => {
+              const mockups = item.mockups?.length ? item.mockups : fallbackProjectMockups
+              const sectionId = toSectionId(item.title)
+              return (
+                <WorkPinnedSection
+                  key={item.title}
+                  id={sectionId}
+                  title={item.title}
+                  description={item.summary}
+                  tags={item.tags}
+                  href={item.href}
+                  icon={item.icon}
+                  images={mockups}
+                />
+              )
+            })}
           </div>
         </section>
 
