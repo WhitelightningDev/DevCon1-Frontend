@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 
 export function ContactCTA() {
+  const bookingUrl = (import.meta.env.VITE_BOOKING_URL as string | undefined) || ''
+
   return (
     <section id="contact" className="scroll-mt-24 py-14 md:py-20">
       <div className="mx-auto max-w-6xl px-4">
@@ -26,15 +28,15 @@ export function ContactCTA() {
             </div>
             <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-end md:justify-end">
               <Button asChild className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
-                <a href="mailto:systems.devconone@gmail.com">
+                <a href="/contact">
                   <Mail className="mr-2 h-4 w-4" />
-                  Email us
+                  Start a project
                 </a>
               </Button>
               <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
-                <a href="tel:+27746588885">
+                <a href={bookingUrl || 'tel:+27746588885'} target={bookingUrl ? '_blank' : undefined} rel={bookingUrl ? 'noreferrer' : undefined}>
                   <PhoneCall className="mr-2 h-4 w-4" />
-                  Call
+                  {bookingUrl ? 'Book a call' : 'Call'}
                 </a>
               </Button>
             </div>

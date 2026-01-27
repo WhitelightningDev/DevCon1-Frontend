@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import {
   ArrowRight,
   CheckCircle2,
@@ -18,35 +19,36 @@ import { PageBackground } from '@/components/layout/PageBackground'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { setSeo } from '@/lib/seo'
 
 const phases = [
   {
     title: 'Align',
-    description: 'Placeholder: goals, constraints, stakeholders, and success criteria.',
+    description: 'Align on goals, constraints, stakeholders, and what success looks like.',
     icon: ClipboardList,
     bullets: ['Discovery call', 'Scope & assumptions', 'Success metrics', 'Risks & mitigations'],
   },
   {
     title: 'Design',
-    description: 'Placeholder: UX direction, IA, and UI components that support the workflow.',
+    description: 'Define UX direction, information architecture, and build-ready UI components.',
     icon: Palette,
     bullets: ['Wireframes', 'Design system tokens', 'Key screens', 'Acceptance criteria'],
   },
   {
     title: 'Build',
-    description: 'Placeholder: incremental delivery with reviewable PRs and predictable milestones.',
+    description: 'Ship in reviewable increments with predictable milestones and clear demos.',
     icon: Code2,
     bullets: ['Type-safe implementation', 'Component library', 'API integration', 'Testing strategy'],
   },
   {
     title: 'Harden',
-    description: 'Placeholder: security checks, performance tuning, and operational readiness.',
+    description: 'Improve security, performance, and production readiness before release.',
     icon: ShieldCheck,
     bullets: ['Threat review', 'Dependency hygiene', 'Perf pass', 'Logging/metrics hooks'],
   },
   {
     title: 'Launch',
-    description: 'Placeholder: deploy plan, handoff artifacts, and post-launch stabilization.',
+    description: 'Deploy with a checklist, hand off durable artifacts, and stabilize post-launch.',
     icon: Rocket,
     bullets: ['Release checklist', 'Runbook', 'Monitoring', 'Stabilization window'],
   },
@@ -140,13 +142,21 @@ const templates = [
 ] as const
 
 export function ProcessPage() {
+  useEffect(() => {
+    setSeo({
+      title: 'DevCon1 — Process',
+      description: 'A clear delivery flow: align early, ship in reviewable increments, and hand off work your team can own.',
+      imagePath: '/pwa/icon-512.png',
+    })
+  }, [])
+
   return (
     <div id="top" className="min-h-screen bg-background text-foreground">
       <PageBackground />
 
       <Navbar cta={{ label: 'Start a project', href: '/contact' }} />
 
-      <main>
+      <main id="main">
         <section className="relative overflow-hidden pb-10 pt-12 md:pb-16 md:pt-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
@@ -167,7 +177,7 @@ export function ProcessPage() {
                   .
                 </h1>
                 <p className="mx-auto mt-4 max-w-2xl text-pretty text-base text-muted-foreground sm:text-lg md:mx-0">
-                  This page is a template. Replace the placeholders with your real steps, artifacts, and checklists.
+                  A clear delivery flow: align early, ship in reviewable increments, and hand off work your team can own.
                 </p>
 
                 <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-start md:justify-start">
@@ -268,7 +278,7 @@ export function ProcessPage() {
                 Ready-made docs you can fill in.
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                These are examples. Replace them with your own templates and links.
+                Use these artifacts to keep scope, risk, and handoff crisp from day one.
               </p>
             </div>
 
@@ -321,7 +331,7 @@ export function ProcessPage() {
                 </div>
                 <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-end md:justify-end">
                   <Button asChild className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
-                    <a href="mailto:systems.devconone@gmail.com">
+                    <a href="/contact">
                       Start a conversation <ArrowRight className="ml-2 h-4 w-4" />
                     </a>
                   </Button>

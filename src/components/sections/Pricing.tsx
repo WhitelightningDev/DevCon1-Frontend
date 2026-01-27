@@ -132,7 +132,7 @@ export function Pricing() {
                     aria-pressed={active}
                     onClick={() => setCurrency(option.code)}
                     className={[
-                      'rounded-full px-3 py-1.5 text-xs font-medium transition-colors',
+                      'rounded-full px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
                       active
                         ? 'bg-emerald-500 text-emerald-950'
                         : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',

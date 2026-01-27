@@ -250,11 +250,6 @@ export function StartProjectDialog({
 
   const percent = useMemo(() => Math.round(((step + 1) / steps.length) * 100), [step, steps.length])
   const summary = useMemo(() => buildSummary(data), [data])
-  const submitMailtoHref = useMemo(() => {
-    const subject = encodeURIComponent(`Project brief${data.company ? ` — ${data.company}` : ''}`)
-    const body = encodeURIComponent(summary)
-    return `mailto:systems.devconone@gmail.com?subject=${subject}&body=${body}`
-  }, [data.company, summary])
 
   const canNext = useMemo(() => {
     if (step === 0) return Boolean(data.name.trim()) && Boolean(data.email.trim())
@@ -633,16 +628,18 @@ export function StartProjectDialog({
                     <Button type="button" variant="outline" className="border-border/60 bg-transparent hover:bg-muted" onClick={() => copy(summary)}>
                       Copy
                     </Button>
-                    <Button asChild className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
-                      <a href={submitMailtoHref}>
-                        Submit via email <Mail className="ml-2 h-4 w-4" />
-                      </a>
+                    <Button
+                      type="button"
+                      className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400"
+                      onClick={() => goContact(true)}
+                    >
+                      Send via contact form <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </div>
                 </div>
                 <Textarea readOnly value={summary} className="min-h-[240px]" />
                 <p className="text-xs text-muted-foreground">
-                  This opens your email client with the brief prefilled. Direct in-app submission will be added when the backend/mailing service is implemented.
+                  This takes you to the contact form with the brief prefilled so you can submit it directly.
                 </p>
               </div>
             )}

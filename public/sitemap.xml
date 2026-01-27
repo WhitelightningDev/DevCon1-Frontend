@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Update https://YOUR_DOMAIN_HERE to your real domain after deployment. -->
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/</loc>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/services</loc>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/work</loc>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/process</loc>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/contact</loc>
+  </url>
+</urlset>
+

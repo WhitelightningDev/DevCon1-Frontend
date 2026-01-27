@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import {
   ArrowRight,
@@ -25,6 +26,7 @@ import { PageBackground } from '@/components/layout/PageBackground'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { setSeo } from '@/lib/seo'
 
 const projects = [
   {
@@ -44,7 +46,7 @@ const projects = [
   {
     title: 'Team Flow',
     href: 'https://teamflow-pearl.vercel.app/',
-    summary: 'Vercel-hosted web app prototype for a team/workflow experience (template project).',
+    summary: 'Vercel-hosted web app prototype exploring a lightweight team/workflow experience.',
     tags: ['Web App', 'Prototype'],
     icon: LayoutDashboard,
   },
@@ -72,14 +74,14 @@ const projects = [
   {
     title: 'AEM Co-operatives',
     href: 'https://aem-webpage.vercel.app/',
-    summary: 'Informational landing page about medical self-funding structures (template content).',
+    summary: 'Informational landing page about medical self-funding structures with clear sections and CTAs.',
     tags: ['Website', 'Healthcare'],
     icon: HeartPulse,
   },
   {
     title: 'EFC - Gazina',
     href: 'https://efc-batteries.vercel.app/',
-    summary: 'Brand/site for Gazina (EFC) with placeholder sections you can expand with products and details.',
+    summary: 'Brand/site for Gazina (EFC) with clean structure for expanding product and technical details.',
     tags: ['Website', 'Industrial'],
     icon: BatteryCharging,
   },
@@ -118,13 +120,21 @@ const proofSections = [
 ] as const
 
 export function WorkPage() {
+  useEffect(() => {
+    setSeo({
+      title: 'DevCon1 — Work',
+      description: 'A selection of shipped sites and prototypes demonstrating repeatable delivery and clean UX.',
+      imagePath: '/pwa/icon-512.png',
+    })
+  }, [])
+
   return (
     <div id="top" className="min-h-screen bg-background text-foreground">
       <PageBackground />
 
       <Navbar cta={{ label: 'Start a project', href: '/contact' }} />
 
-      <main>
+      <main id="main">
         <section className="relative overflow-hidden pb-10 pt-12 md:pb-16 md:pt-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
@@ -306,7 +316,7 @@ export function WorkPage() {
                           View site <ExternalLink className="ml-2 h-4 w-4" />
                         </a>
                       </Button>
-                      <p className="text-xs text-muted-foreground">Details (role/stack/metrics): ____</p>
+                      <p className="text-xs text-muted-foreground">Ask for details (role/stack/metrics) if needed.</p>
                     </div>
                   </div>
                 )
@@ -379,7 +389,7 @@ export function WorkPage() {
                 </div>
                 <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-end md:justify-end">
                   <Button asChild className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
-                    <a href="mailto:systems.devconone@gmail.com">
+                    <a href="/contact">
                       Start a conversation <ArrowRight className="ml-2 h-4 w-4" />
                     </a>
                   </Button>

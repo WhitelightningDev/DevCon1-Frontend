@@ -1,4 +1,6 @@
-import { Mail, MapPin, MessageSquare, PhoneCall } from 'lucide-react'
+import type { FormEvent } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { ArrowRight, Mail, MapPin, MessageSquare, PhoneCall } from 'lucide-react'
 
 import { SignalBeacon } from '@/components/illustrations/SignalBeacon'
 import { Footer } from '@/components/layout/Footer'
@@ -6,16 +8,84 @@ import { Navbar } from '@/components/layout/Navbar'
 import { PageBackground } from '@/components/layout/PageBackground'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
+import { Textarea } from '@/components/ui/textarea'
+import { setSeo } from '@/lib/seo'
 
 export function ContactPage() {
+  const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined
+  const bookingUrl = (import.meta.env.VITE_BOOKING_URL as string | undefined) || ''
+
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [company, setCompany] = useState('')
+  const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    setSeo({
+      title: 'DevCon1 — Contact',
+      description: 'Send a short brief and we’ll reply within 1 business day with next steps and timeline options.',
+      imagePath: '/pwa/icon-512.png',
+    })
+  }, [])
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('devcon1:start-project')
+      if (!raw) return
+      const parsed = JSON.parse(raw) as { name?: string; email?: string; company?: string; summary?: string }
+      if (parsed.name) setName(parsed.name)
+      if (parsed.email) setEmail(parsed.email)
+      if (parsed.company) setCompany(parsed.company)
+      if (parsed.summary) setMessage(parsed.summary)
+    } catch {
+      // ignore
+    }
+  }, [])
+
+  const canSubmit = useMemo(() => Boolean(name.trim()) && Boolean(email.trim()) && Boolean(message.trim()), [email, message, name])
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (!formspreeEndpoint) {
+      setStatus('error')
+      return
+    }
+    if (!canSubmit) return
+
+    setStatus('sending')
+    try {
+      const res = await fetch(formspreeEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          company,
+          message,
+          page: window.location.href,
+        }),
+      })
+      if (!res.ok) throw new Error('Request failed')
+      setStatus('sent')
+    } catch {
+      setStatus('error')
+    }
+  }
+
   return (
     <div id="top" className="min-h-screen bg-background text-foreground">
       <PageBackground />
 
-      <Navbar cta={{ label: 'Email us', href: 'mailto:systems.devconone@gmail.com' }} />
+      <Navbar cta={{ label: 'Start a project', href: '/contact' }} />
 
-      <main>
+      <main id="main">
         <section className="relative overflow-hidden pb-12 pt-12 md:pb-20 md:pt-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
@@ -31,27 +101,21 @@ export function ContactPage() {
                   Tell us what you’re building.
                 </h1>
                 <p className="mx-auto mt-4 max-w-2xl text-pretty text-base text-muted-foreground sm:text-lg md:mx-0">
-                  Share a short brief and we’ll respond with timeline options and a delivery plan.
+                  Share a short brief and we’ll respond within 1 business day with next steps and timeline options.
                 </p>
 
                 <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-start md:justify-start">
-                  <Button
-                    asChild
-                    className="h-auto whitespace-normal break-all bg-emerald-500 py-3 text-emerald-950 hover:bg-emerald-400"
-                  >
-                    <a href="mailto:systems.devconone@gmail.com">
-                      <Mail className="mr-2 h-4 w-4" />
-                      systems.devconone@gmail.com
-                    </a>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="h-auto whitespace-normal break-words border-border/60 bg-transparent py-3 hover:bg-muted"
-                  >
+                  {bookingUrl ? (
+                    <Button asChild className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
+                      <a href={bookingUrl} target="_blank" rel="noreferrer">
+                        Book a call <ArrowRight className="ml-2 h-4 w-4" />
+                      </a>
+                    </Button>
+                  ) : null}
+                  <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
                     <a href="tel:+27746588885">
                       <PhoneCall className="mr-2 h-4 w-4" />
-                      +27 74 658 8885
+                      Call
                     </a>
                   </Button>
                 </div>
@@ -88,12 +152,10 @@ export function ContactPage() {
 
               <div className="lg:col-span-6">
                 <div className="rounded-2xl border border-emerald-500/15 bg-gradient-to-b from-emerald-500/10 to-background/30 p-6 md:p-10">
-                  <p className="text-xs font-medium tracking-wide text-muted-foreground">NEXT STEPS</p>
-                  <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight">
-                    What happens after you reach out
-                  </h2>
+                  <p className="text-xs font-medium tracking-wide text-muted-foreground">SEND A BRIEF</p>
+                  <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight">Contact form</h2>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    We’ll reply within 1 business day with clarifying questions and a suggested next step.
+                    Prefer email? That works too. Use the form for the fastest intake and easiest follow-up.
                   </p>
 
                   <div className="mt-6">
@@ -102,23 +164,83 @@ export function ContactPage() {
 
                   <Separator className="my-8" />
 
-                  <ol className="grid gap-4">
-                    {[
-                      { title: 'Intro call', detail: 'A quick conversation to align on goals, constraints, and timing.' },
-                      { title: 'Scope & plan', detail: 'A short proposal with milestones, risks, and an estimate range.' },
-                      { title: 'Kickoff', detail: 'Access, repo setup, and first deliverable shipped in reviewable increments.' },
-                    ].map((step, idx) => (
-                      <li key={step.title} className="rounded-xl border border-border/60 bg-background/40 p-5">
-                        <div className="flex items-center justify-between gap-3">
-                          <p className="text-sm font-semibold">{step.title}</p>
-                          <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10 text-sm font-semibold text-emerald-300">
-                            {String(idx + 1).padStart(2, '0')}
-                          </span>
-                        </div>
-                        <p className="mt-2 text-sm text-muted-foreground">{step.detail}</p>
-                      </li>
-                    ))}
-                  </ol>
+                  <form onSubmit={onSubmit} className="grid gap-4">
+                    <div className="grid gap-2">
+                      <Label htmlFor="contact-name">Name</Label>
+                      <Input id="contact-name" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="contact-email">Email</Label>
+                      <Input
+                        id="contact-email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        autoComplete="email"
+                        inputMode="email"
+                      />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="contact-company">Company (optional)</Label>
+                      <Input
+                        id="contact-company"
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
+                        autoComplete="organization"
+                      />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="contact-message">What do you need help with?</Label>
+                      <Textarea
+                        id="contact-message"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        className="min-h-[160px]"
+                        placeholder="Goal, users, scope, constraints, timeline, and links (if any)."
+                      />
+                    </div>
+
+                    {!formspreeEndpoint ? (
+                      <p className="text-xs text-muted-foreground">
+                        To enable in-app submissions, set `VITE_FORMSPREE_ENDPOINT` (Formspree) and redeploy. For now, use email/phone.
+                      </p>
+                    ) : null}
+
+                    {status === 'sent' ? (
+                      <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-4 text-sm text-emerald-100">
+                        Thanks — your message was sent. We’ll reply within 1 business day.
+                      </div>
+                    ) : null}
+
+                    {status === 'error' ? (
+                      <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-muted-foreground">
+                        Something went wrong sending the form. Please email `systems.devconone@gmail.com`.
+                      </div>
+                    ) : null}
+
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <Button
+                        type="submit"
+                        className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400"
+                        disabled={!canSubmit || status === 'sending' || !formspreeEndpoint}
+                      >
+                        {status === 'sending' ? 'Sending…' : 'Send message'}
+                      </Button>
+                      <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-end">
+                        <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
+                          <a href="mailto:systems.devconone@gmail.com">
+                            <Mail className="mr-2 h-4 w-4" />
+                            Email
+                          </a>
+                        </Button>
+                        <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
+                          <a href="tel:+27746588885">
+                            <PhoneCall className="mr-2 h-4 w-4" />
+                            Call
+                          </a>
+                        </Button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
