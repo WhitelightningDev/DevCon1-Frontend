@@ -1,18 +1,28 @@
-import { Binary, Database, ShieldCheck, Wrench } from 'lucide-react'
+import { Activity, Binary, Database, Eye, Gauge, ShieldCheck, Smartphone, Wrench } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 
 const services = [
   {
-    title: 'Web Apps & Dashboards',
-    description: 'Operator-friendly UIs with secure auth, role-based access, and fast performance.',
+    title: 'Product & Platform Engineering',
+    description: 'Web apps, dashboards, portals, and component systems built to scale.',
     icon: Binary,
   },
   {
-    title: 'Systems Integration',
-    description: 'APIs, data pipelines, and glue code to connect legacy systems to modern stacks.',
+    title: 'Integrations & APIs',
+    description: 'API design, third-party integrations, ETL/data sync, and data contracts.',
     icon: Database,
+  },
+  {
+    title: 'Performance & UX Audit',
+    description: 'Core Web Vitals, conversion paths, and UX polish that improves outcomes.',
+    icon: Gauge,
+  },
+  {
+    title: 'Accessibility Audit',
+    description: 'WCAG-focused review and remediation: keyboard, contrast, semantics, and forms.',
+    icon: Eye,
   },
   {
     title: 'Security & Hardening',
@@ -20,9 +30,19 @@ const services = [
     icon: ShieldCheck,
   },
   {
-    title: 'Delivery Enablement',
-    description: 'CI/CD, environments, build tooling, and engineering workflows that scale.',
+    title: 'Observability & Runbooks',
+    description: 'Logging/metrics hooks, alerting basics, and runbook-minded handoffs.',
+    icon: Activity,
+  },
+  {
+    title: 'DevOps / CI/CD',
+    description: 'Build pipelines, environments, release automation, and developer productivity.',
     icon: Wrench,
+  },
+  {
+    title: 'PWA / Offline-first',
+    description: 'Installable apps, caching strategy, update flows, and resilient UX.',
+    icon: Smartphone,
   },
 ] as const
 

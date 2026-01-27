@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import {
   ArrowRight,
@@ -5,7 +6,6 @@ import {
   BatteryCharging,
   Car,
   Code2,
-  ExternalLink,
   FileText,
   Globe,
   Gavel,
@@ -25,14 +25,49 @@ import { PageBackground } from '@/components/layout/PageBackground'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { WorkPinnedSection } from '@/components/work/WorkPinnedSection'
+import { setSeo } from '@/lib/seo'
 
-const projects = [
+type ProjectMockup = {
+  src: string
+  label: string
+  alt?: string
+}
+
+type Project = {
+  title: string
+  href: string
+  summary: string
+  tags: readonly string[]
+  icon: LucideIcon
+  mockups?: readonly ProjectMockup[]
+}
+
+const fallbackProjectMockups: readonly ProjectMockup[] = [
+  { src: '', label: 'Hero' },
+  { src: '', label: 'Section' },
+  { src: '', label: 'Mobile' },
+]
+
+const toSectionId = (value: string) =>
+  value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '')
+
+const projects: readonly Project[] = [
   {
     title: 'Bullion Beperk Co-operative',
     href: 'https://www.bullionlimited.co.za/',
     summary: 'Secure and transparent precious metals investments website for Bullion Beperk Co-operative.',
     tags: ['Website', 'Finance'],
     icon: Shield,
+    mockups: [
+      { src: '/work/bullion/hero.png', label: 'Hero' },
+      { src: '/work/bullion/section.png', label: 'Key section' },
+      { src: '/work/bullion/mobile.png', label: 'Mobile' },
+    ],
   },
   {
     title: "Jet Ski And More (Gordon's Bay Harbour)",
@@ -40,13 +75,23 @@ const projects = [
     summary: 'Jet ski rentals and guided rides landing page with safety and booking information.',
     tags: ['Website', 'Bookings'],
     icon: Globe,
+    mockups: [
+      { src: '/work/jetski/hero.png', label: 'Hero' },
+      { src: '/work/jetski/pricing.png', label: 'Pricing' },
+      { src: '/work/jetski/mobile.png', label: 'Mobile' },
+    ],
   },
   {
     title: 'Team Flow',
     href: 'https://teamflow-pearl.vercel.app/',
-    summary: 'Vercel-hosted web app prototype for a team/workflow experience (template project).',
+    summary: 'Vercel-hosted web app prototype exploring a lightweight team/workflow experience.',
     tags: ['Web App', 'Prototype'],
     icon: LayoutDashboard,
+    mockups: [
+      { src: '/work/teamflow/dashboard.png', label: 'Dashboard' },
+      { src: '/work/teamflow/kanban.png', label: 'Workflow' },
+      { src: '/work/teamflow/mobile.png', label: 'Mobile' },
+    ],
   },
   {
     title: 'Kiings VIP Car Wash',
@@ -54,6 +99,11 @@ const projects = [
     summary: 'Service landing page for a car wash brand with offerings and contact/CTA sections.',
     tags: ['Website', 'Local Business'],
     icon: Car,
+    mockups: [
+      { src: '/work/kiings/hero.png', label: 'Hero' },
+      { src: '/work/kiings/services.png', label: 'Services' },
+      { src: '/work/kiings/mobile.png', label: 'Mobile' },
+    ],
   },
   {
     title: 'Hong Kong Trust (HKNFT)',
@@ -61,6 +111,11 @@ const projects = [
     summary: 'Landing page describing Hong Kong foreign trust setup: secure, private, and professionally crafted.',
     tags: ['Website', 'Legal/Trust'],
     icon: Gavel,
+    mockups: [
+      { src: '/work/hknft/hero.png', label: 'Hero' },
+      { src: '/work/hknft/benefits.png', label: 'Benefits' },
+      { src: '/work/hknft/mobile.png', label: 'Mobile' },
+    ],
   },
   {
     title: 'Found Your Pet',
@@ -68,28 +123,37 @@ const projects = [
     summary: "Pet tracking application site for managing and finding your pets' whereabouts.",
     tags: ['Web App', 'Product'],
     icon: PawPrint,
+    mockups: [
+      { src: '/foundyourpet/Homepage.png', label: 'Homepage' },
+      { src: '/foundyourpet/dashboard.png', label: 'Dashboard' },
+      { src: '/foundyourpet/Mobile.png', label: 'Mobile' },
+    ],
   },
   {
     title: 'AEM Co-operatives',
     href: 'https://aem-webpage.vercel.app/',
-    summary: 'Informational landing page about medical self-funding structures (template content).',
+    summary: 'Informational landing page about medical self-funding structures with clear sections and CTAs.',
     tags: ['Website', 'Healthcare'],
     icon: HeartPulse,
+    mockups: [
+      { src: '/work/aem/hero.png', label: 'Hero' },
+      { src: '/work/aem/cta.png', label: 'CTA' },
+      { src: '/work/aem/mobile.png', label: 'Mobile' },
+    ],
   },
   {
     title: 'EFC - Gazina',
     href: 'https://efc-batteries.vercel.app/',
-    summary: 'Brand/site for Gazina (EFC) with placeholder sections you can expand with products and details.',
+    summary: 'Brand/site for Gazina (EFC) with clean structure for expanding product and technical details.',
     tags: ['Website', 'Industrial'],
     icon: BatteryCharging,
+    mockups: [
+      { src: '/work/efc/hero.png', label: 'Hero' },
+      { src: '/work/efc/products.png', label: 'Products' },
+      { src: '/work/efc/mobile.png', label: 'Mobile' },
+    ],
   },
-] satisfies readonly {
-  title: string
-  href: string
-  summary: string
-  tags: readonly string[]
-  icon: LucideIcon
-}[]
+] as const
 
 const proofSections = [
   {
@@ -118,13 +182,21 @@ const proofSections = [
 ] as const
 
 export function WorkPage() {
+  useEffect(() => {
+    setSeo({
+      title: 'DevCon1 — Work',
+      description: 'A selection of shipped sites and prototypes demonstrating repeatable delivery and clean UX.',
+      imagePath: '/pwa/icon-512.png',
+    })
+  }, [])
+
   return (
     <div id="top" className="min-h-screen bg-background text-foreground">
       <PageBackground />
 
       <Navbar cta={{ label: 'Start a project', href: '/contact' }} />
 
-      <main>
+      <main id="main">
         <section className="relative overflow-hidden pb-10 pt-12 md:pb-16 md:pt-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
@@ -280,38 +352,25 @@ export function WorkPage() {
             </div>
 
             <Separator className="my-8" />
+          </div>
 
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {projects.map((item) => {
-                const Icon = item.icon
-                return (
-                  <div key={item.title} className="rounded-xl border border-border/60 bg-background/40 p-5">
-                    <div className="flex items-start justify-between gap-3">
-                      <p className="text-sm font-semibold">{item.title}</p>
-                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10">
-                        <Icon className="h-4 w-4 text-emerald-400" />
-                      </span>
-                    </div>
-                    <p className="mt-2 text-sm text-muted-foreground">{item.summary}</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {item.tags.map((tag) => (
-                        <Badge key={tag} variant="outline" className="border-border/60 bg-background/50 text-muted-foreground">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                      <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
-                        <a href={item.href} target="_blank" rel="noreferrer">
-                          View site <ExternalLink className="ml-2 h-4 w-4" />
-                        </a>
-                      </Button>
-                      <p className="text-xs text-muted-foreground">Details (role/stack/metrics): ____</p>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
+          <div>
+            {projects.map((item) => {
+              const mockups = item.mockups?.length ? item.mockups : fallbackProjectMockups
+              const sectionId = toSectionId(item.title)
+              return (
+                <WorkPinnedSection
+                  key={item.title}
+                  id={sectionId}
+                  title={item.title}
+                  description={item.summary}
+                  tags={item.tags}
+                  href={item.href}
+                  icon={item.icon}
+                  images={mockups}
+                />
+              )
+            })}
           </div>
         </section>
 
@@ -379,7 +438,7 @@ export function WorkPage() {
                 </div>
                 <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-end md:justify-end">
                   <Button asChild className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
-                    <a href="mailto:systems.devconone@gmail.com">
+                    <a href="/contact">
                       Start a conversation <ArrowRight className="ml-2 h-4 w-4" />
                     </a>
                   </Button>

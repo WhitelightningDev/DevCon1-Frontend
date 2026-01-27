@@ -40,6 +40,12 @@ export function Navbar({
         ].join(' ')}
       >
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+          <a
+            href="#main"
+            className="sr-only rounded-md px-3 py-2 text-sm font-medium text-foreground focus:not-sr-only focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:ring-offset-2 focus:ring-offset-background"
+          >
+            Skip to content
+          </a>
           <a href="/" className="group inline-flex items-center gap-2">
             <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/20 bg-emerald-500/10">
               <Shield className="h-5 w-5 text-emerald-400" />
