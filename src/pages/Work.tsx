@@ -28,13 +28,39 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { setSeo } from '@/lib/seo'
 
-const projects = [
+type ProjectMockup = {
+  src: string
+  label: string
+  alt?: string
+}
+
+type Project = {
+  title: string
+  href: string
+  summary: string
+  tags: readonly string[]
+  icon: LucideIcon
+  mockups?: readonly ProjectMockup[]
+}
+
+const fallbackProjectMockups: readonly ProjectMockup[] = [
+  { src: '', label: 'Hero' },
+  { src: '', label: 'Section' },
+  { src: '', label: 'Mobile' },
+]
+
+const projects: readonly Project[] = [
   {
     title: 'Bullion Beperk Co-operative',
     href: 'https://www.bullionlimited.co.za/',
     summary: 'Secure and transparent precious metals investments website for Bullion Beperk Co-operative.',
     tags: ['Website', 'Finance'],
     icon: Shield,
+    mockups: [
+      { src: '/work/bullion/hero.png', label: 'Hero' },
+      { src: '/work/bullion/section.png', label: 'Key section' },
+      { src: '/work/bullion/mobile.png', label: 'Mobile' },
+    ],
   },
   {
     title: "Jet Ski And More (Gordon's Bay Harbour)",
@@ -42,6 +68,11 @@ const projects = [
     summary: 'Jet ski rentals and guided rides landing page with safety and booking information.',
     tags: ['Website', 'Bookings'],
     icon: Globe,
+    mockups: [
+      { src: '/work/jetski/hero.png', label: 'Hero' },
+      { src: '/work/jetski/pricing.png', label: 'Pricing' },
+      { src: '/work/jetski/mobile.png', label: 'Mobile' },
+    ],
   },
   {
     title: 'Team Flow',
@@ -49,6 +80,11 @@ const projects = [
     summary: 'Vercel-hosted web app prototype exploring a lightweight team/workflow experience.',
     tags: ['Web App', 'Prototype'],
     icon: LayoutDashboard,
+    mockups: [
+      { src: '/work/teamflow/dashboard.png', label: 'Dashboard' },
+      { src: '/work/teamflow/kanban.png', label: 'Workflow' },
+      { src: '/work/teamflow/mobile.png', label: 'Mobile' },
+    ],
   },
   {
     title: 'Kiings VIP Car Wash',
@@ -56,6 +92,11 @@ const projects = [
     summary: 'Service landing page for a car wash brand with offerings and contact/CTA sections.',
     tags: ['Website', 'Local Business'],
     icon: Car,
+    mockups: [
+      { src: '/work/kiings/hero.png', label: 'Hero' },
+      { src: '/work/kiings/services.png', label: 'Services' },
+      { src: '/work/kiings/mobile.png', label: 'Mobile' },
+    ],
   },
   {
     title: 'Hong Kong Trust (HKNFT)',
@@ -63,6 +104,11 @@ const projects = [
     summary: 'Landing page describing Hong Kong foreign trust setup: secure, private, and professionally crafted.',
     tags: ['Website', 'Legal/Trust'],
     icon: Gavel,
+    mockups: [
+      { src: '/work/hknft/hero.png', label: 'Hero' },
+      { src: '/work/hknft/benefits.png', label: 'Benefits' },
+      { src: '/work/hknft/mobile.png', label: 'Mobile' },
+    ],
   },
   {
     title: 'Found Your Pet',
@@ -70,6 +116,11 @@ const projects = [
     summary: "Pet tracking application site for managing and finding your pets' whereabouts.",
     tags: ['Web App', 'Product'],
     icon: PawPrint,
+    mockups: [
+      { src: '/foundyourpet/Homepage.png', label: 'Homepage' },
+      { src: '/foundyourpet/dashboard.png', label: 'Dashboard' },
+      { src: '/foundyourpet/Mobile.png', label: 'Mobile' },
+    ],
   },
   {
     title: 'AEM Co-operatives',
@@ -77,6 +128,11 @@ const projects = [
     summary: 'Informational landing page about medical self-funding structures with clear sections and CTAs.',
     tags: ['Website', 'Healthcare'],
     icon: HeartPulse,
+    mockups: [
+      { src: '/work/aem/hero.png', label: 'Hero' },
+      { src: '/work/aem/cta.png', label: 'CTA' },
+      { src: '/work/aem/mobile.png', label: 'Mobile' },
+    ],
   },
   {
     title: 'EFC - Gazina',
@@ -84,14 +140,13 @@ const projects = [
     summary: 'Brand/site for Gazina (EFC) with clean structure for expanding product and technical details.',
     tags: ['Website', 'Industrial'],
     icon: BatteryCharging,
+    mockups: [
+      { src: '/work/efc/hero.png', label: 'Hero' },
+      { src: '/work/efc/products.png', label: 'Products' },
+      { src: '/work/efc/mobile.png', label: 'Mobile' },
+    ],
   },
-] satisfies readonly {
-  title: string
-  href: string
-  summary: string
-  tags: readonly string[]
-  icon: LucideIcon
-}[]
+] as const
 
 const proofSections = [
   {
@@ -294,6 +349,7 @@ export function WorkPage() {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {projects.map((item) => {
                 const Icon = item.icon
+                const mockups = item.mockups?.length ? item.mockups : fallbackProjectMockups
                 return (
                   <div key={item.title} className="rounded-xl border border-border/60 bg-background/40 p-5">
                     <div className="flex items-start justify-between gap-3">
@@ -302,7 +358,30 @@ export function WorkPage() {
                         <Icon className="h-4 w-4 text-emerald-400" />
                       </span>
                     </div>
-                    <p className="mt-2 text-sm text-muted-foreground">{item.summary}</p>
+                    <div className="mt-4 grid grid-cols-3 gap-2">
+                      {mockups.map((mockup, index) => (
+                        <div
+                          key={`${item.title}-${mockup.src || mockup.label}-${index}`}
+                          className="relative aspect-video overflow-hidden rounded-md border border-border/60 bg-background/50"
+                        >
+                          {mockup.src ? (
+                            <img
+                              src={mockup.src}
+                              alt={mockup.alt ?? `${item.title} — ${mockup.label}`}
+                              loading="lazy"
+                              className="absolute inset-0 h-full w-full object-cover"
+                              onError={(event) => {
+                                event.currentTarget.style.display = 'none'
+                              }}
+                            />
+                          ) : null}
+                          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center bg-background/60 px-2 py-1 text-[11px] text-muted-foreground backdrop-blur">
+                            {mockup.label}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="mt-3 text-sm text-muted-foreground">{item.summary}</p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       {item.tags.map((tag) => (
                         <Badge key={tag} variant="outline" className="border-border/60 bg-background/50 text-muted-foreground">
