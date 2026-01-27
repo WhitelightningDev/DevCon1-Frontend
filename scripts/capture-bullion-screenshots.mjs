@@ -38,58 +38,62 @@ async function tryDismissCookie(page) {
 
 async function captureDesktop() {
   const browser = await chromium.launch()
-  const context = await browser.newContext({ viewport: { width: 1440, height: 900 } })
-  const page = await context.newPage()
+  try {
+    const context = await browser.newContext({ viewport: { width: 1440, height: 900 } })
+    const page = await context.newPage()
 
-  await page.goto(SITE_URL, { waitUntil: 'networkidle' })
-  await page.waitForTimeout(800)
-  await tryDismissCookie(page)
-  await page.evaluate(() => window.scrollTo(0, 0))
-  await page.waitForTimeout(300)
-
-  // Matches existing Work.tsx path: /work/bullion/hero.png
-  await page.screenshot({ path: path.join(OUT_DIR, 'hero.png'), fullPage: false })
-
-  // Try to find a "section" worth capturing (e.g., services/offerings); fallback to mid-page.
-  const sectionTarget =
-    (await page.getByRole('heading', { name: /services|offer|solutions|features|about/i }).first().count()) > 0
-      ? page.getByRole('heading', { name: /services|offer|solutions|features|about/i }).first()
-      : null
-
-  if (sectionTarget) {
-    await sectionTarget.scrollIntoViewIfNeeded()
+    await page.goto(SITE_URL, { waitUntil: 'load', timeout: 90000 })
+    await page.waitForTimeout(1500)
+    await tryDismissCookie(page)
+    await page.evaluate(() => window.scrollTo(0, 0))
     await page.waitForTimeout(400)
-    await page.screenshot({ path: path.join(OUT_DIR, 'section.png'), fullPage: false })
-  } else {
-    const height = await page.evaluate(() => document.documentElement.scrollHeight || document.body.scrollHeight || 0)
-    await page.evaluate((y) => window.scrollTo(0, y), Math.max(0, Math.round(height * 0.55)))
-    await page.waitForTimeout(400)
-    await page.screenshot({ path: path.join(OUT_DIR, 'section.png'), fullPage: false })
+
+    // Matches existing Work.tsx path: /work/bullion/hero.png
+    await page.screenshot({ path: path.join(OUT_DIR, 'hero.png'), fullPage: false })
+
+    // Try to find a "section" worth capturing (e.g., services/offerings); fallback to mid-page.
+    const sectionTarget =
+      (await page.getByRole('heading', { name: /services|offer|solutions|features|about/i }).first().count()) > 0
+        ? page.getByRole('heading', { name: /services|offer|solutions|features|about/i }).first()
+        : null
+
+    if (sectionTarget) {
+      await sectionTarget.scrollIntoViewIfNeeded()
+      await page.waitForTimeout(450)
+      await page.screenshot({ path: path.join(OUT_DIR, 'section.png'), fullPage: false })
+    } else {
+      const height = await page.evaluate(() => document.documentElement.scrollHeight || document.body.scrollHeight || 0)
+      await page.evaluate((y) => window.scrollTo(0, y), Math.max(0, Math.round(height * 0.55)))
+      await page.waitForTimeout(450)
+      await page.screenshot({ path: path.join(OUT_DIR, 'section.png'), fullPage: false })
+    }
+  } finally {
+    await browser.close()
   }
-
-  await browser.close()
 }
 
 async function captureMobile() {
   const browser = await chromium.launch()
-  const context = await browser.newContext({
-    viewport: { width: 390, height: 844 },
-    deviceScaleFactor: 2,
-    isMobile: true,
-    hasTouch: true,
-  })
-  const page = await context.newPage()
+  try {
+    const context = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      deviceScaleFactor: 2,
+      isMobile: true,
+      hasTouch: true,
+    })
+    const page = await context.newPage()
 
-  await page.goto(SITE_URL, { waitUntil: 'networkidle' })
-  await page.waitForTimeout(800)
-  await tryDismissCookie(page)
-  await page.evaluate(() => window.scrollTo(0, 0))
-  await page.waitForTimeout(300)
+    await page.goto(SITE_URL, { waitUntil: 'load', timeout: 90000 })
+    await page.waitForTimeout(1500)
+    await tryDismissCookie(page)
+    await page.evaluate(() => window.scrollTo(0, 0))
+    await page.waitForTimeout(400)
 
-  // Matches existing Work.tsx path: /work/bullion/mobile.png
-  await page.screenshot({ path: path.join(OUT_DIR, 'mobile.png'), fullPage: false })
-
-  await browser.close()
+    // Matches existing Work.tsx path: /work/bullion/mobile.png
+    await page.screenshot({ path: path.join(OUT_DIR, 'mobile.png'), fullPage: false })
+  } finally {
+    await browser.close()
+  }
 }
 
 async function main() {
@@ -105,4 +109,3 @@ main().catch((error) => {
   console.error(error)
   process.exitCode = 1
 })
-

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Menu, Shield } from 'lucide-react'
 
 import { StartProjectDialog } from '@/components/project/StartProjectDialog'
@@ -23,6 +23,15 @@ export function Navbar({
   cta?: { label: string; href: string }
 }) {
   const [scrolled, setScrolled] = useState(false)
+  const pathname = useMemo(() => window.location.pathname.replace(/\/+$/, '') || '/', [])
+
+  const isActive = useMemo(() => {
+    return (href: string) => {
+      const normalizedHref = href.replace(/\/+$/, '') || '/'
+      if (normalizedHref === '/process') return pathname === '/process' || pathname === '/processes'
+      return normalizedHref === pathname
+    }
+  }, [pathname])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -56,15 +65,24 @@ export function Navbar({
           </a>
 
           <nav className="hidden items-center gap-6 md:flex">
-            {items.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {item.label}
-              </a>
-            ))}
+            {items.map((item) => {
+              const active = isActive(item.href)
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active ? 'page' : undefined}
+                  className={[
+                    'rounded-md px-2 py-1 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500/35 focus:ring-offset-2 focus:ring-offset-background',
+                    active
+                      ? 'bg-emerald-500/10 text-foreground ring-1 ring-emerald-500/25'
+                      : 'text-muted-foreground hover:bg-muted/40 hover:text-foreground',
+                  ].join(' ')}
+                >
+                  {item.label}
+                </a>
+              )
+            })}
           </nav>
 
           <div className="hidden items-center gap-2 md:flex">
@@ -101,15 +119,24 @@ export function Navbar({
                 </SheetHeader>
 
                 <div className="mt-6 grid gap-2">
-                  {items.map((item) => (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
-                    >
-                      {item.label}
-                    </a>
-                  ))}
+                  {items.map((item) => {
+                    const active = isActive(item.href)
+                    return (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        aria-current={active ? 'page' : undefined}
+                        className={[
+                          'rounded-md px-3 py-2 text-sm transition-colors',
+                          active
+                            ? 'bg-emerald-500/10 text-foreground ring-1 ring-emerald-500/25'
+                            : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                        ].join(' ')}
+                      >
+                        {item.label}
+                      </a>
+                    )
+                  })}
                   {cta.href === '/contact' ? (
                     <StartProjectDialog
                       trigger={<Button className="mt-2 w-full bg-emerald-500 text-emerald-950 hover:bg-emerald-400">{cta.label}</Button>}
