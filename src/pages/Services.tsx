@@ -1,13 +1,17 @@
+import { useEffect } from 'react'
 import {
   ArrowRight,
+  Activity,
   BadgeCheck,
   Boxes,
+  Eye,
   FileText,
   HardHat,
   Lock,
   Radar,
   ServerCog,
   Shield,
+  Smartphone,
   Wrench,
 } from 'lucide-react'
 
@@ -18,6 +22,7 @@ import { PageBackground } from '@/components/layout/PageBackground'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { setSeo } from '@/lib/seo'
 
 const offerings = [
   {
@@ -26,19 +31,39 @@ const offerings = [
     icon: Boxes,
   },
   {
+    title: 'Integrations & APIs',
+    description: 'API design, third-party integrations, ETL/data sync, and reliable data contracts.',
+    icon: ServerCog,
+  },
+  {
     title: 'Secure Web Delivery',
     description: 'Threat-aware implementation, authZ patterns, dependency hygiene, and security hardening.',
     icon: Shield,
   },
   {
-    title: 'Systems Integration',
-    description: 'APIs, ETL, data contracts, and connective tissue between legacy and modern services.',
-    icon: ServerCog,
-  },
-  {
     title: 'DevEx & CI/CD',
     description: 'Build pipelines, release workflows, environment strategy, and developer productivity.',
     icon: Wrench,
+  },
+  {
+    title: 'Performance & UX Audit',
+    description: 'Core Web Vitals, conversion paths, and usability improvements that move metrics.',
+    icon: Activity,
+  },
+  {
+    title: 'Accessibility Audit',
+    description: 'WCAG-focused review and remediation: keyboard, contrast, semantics, and forms.',
+    icon: Eye,
+  },
+  {
+    title: 'Observability & Runbooks',
+    description: 'Logging/metrics hooks, alerting basics, and operational documentation for ownership.',
+    icon: BadgeCheck,
+  },
+  {
+    title: 'PWA / Offline-first',
+    description: 'Installable apps, caching strategy, update flows, and resilient UX.',
+    icon: Smartphone,
   },
 ] as const
 
@@ -47,16 +72,25 @@ const engagementModels = [
     title: 'Project Delivery',
     description: 'Fixed scope with clear milestones: discovery → build → harden → ship.',
     icon: FileText,
+    idealFor: 'Marketing sites, MVPs, and well-defined features with a clear “done”.',
+    timeline: '1–6 weeks (scope dependent)',
+    deliverables: 'Milestones + PRs, docs, deployment checklist, and handoff.',
   },
   {
     title: 'Sprint Blocks',
     description: 'Time-boxed delivery for teams that want quick progress without long commitments.',
     icon: Radar,
+    idealFor: 'Roadmap progress, UX improvements, integrations, or hardening work.',
+    timeline: '1–2 week sprints',
+    deliverables: 'Shipped increments, demos, backlog updates, and next-sprint plan.',
   },
   {
     title: 'Retainer',
     description: 'Ongoing engineering support for roadmap execution, reliability, and maintenance.',
     icon: HardHat,
+    idealFor: 'Teams that want ongoing support: features, uptime, and iteration.',
+    timeline: 'Monthly',
+    deliverables: 'Dedicated capacity, optional SLAs, and continuous improvements.',
   },
 ] as const
 
@@ -74,13 +108,22 @@ const proofPoints = [
 ] as const
 
 export function ServicesPage() {
+  useEffect(() => {
+    setSeo({
+      title: 'DevCon1 — Services',
+      description:
+        'Product & platform engineering, integrations, performance/UX, accessibility, security hardening, CI/CD, observability, and PWA delivery.',
+      imagePath: '/pwa/icon-512.png',
+    })
+  }, [])
+
   return (
     <div id="top" className="min-h-screen bg-background text-foreground">
       <PageBackground />
 
       <Navbar cta={{ label: 'Start a project', href: '/contact' }} />
 
-      <main>
+      <main id="main">
         <section className="relative overflow-hidden pb-10 pt-12 md:pb-16 md:pt-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
@@ -101,7 +144,8 @@ export function ServicesPage() {
                   .
                 </h1>
                 <p className="mx-auto mt-4 max-w-2xl text-pretty text-base text-muted-foreground sm:text-lg md:mx-0">
-                  Use this page as a template: swap in your real offerings, case studies, and proof points as you go.
+                  We help teams ship secure, reliable software with a repeatable process and clean UX—delivered in
+                  reviewable milestones and handed off for long-term ownership.
                 </p>
 
                 <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-start md:justify-start">
@@ -160,7 +204,7 @@ export function ServicesPage() {
                 A focused set of services.
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                Replace these with your real services. Keep each card tight: what it is, who it’s for, and the outcome.
+                A clear menu of services, sold as projects, sprint blocks, or ongoing support.
               </p>
             </div>
 
@@ -201,7 +245,7 @@ export function ServicesPage() {
                 Simple options, clear outcomes.
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                Add your pricing bands later. For now, describe how clients can buy and what to expect.
+                Choose the engagement model that best fits your timeline and internal capacity.
               </p>
             </div>
 
@@ -220,11 +264,11 @@ export function ServicesPage() {
                     </div>
                     <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
                     <div className="mt-4 rounded-lg border border-border/60 bg-background/50 p-4">
-                      <p className="text-xs font-medium tracking-wide text-muted-foreground">FILL IN LATER</p>
+                      <p className="text-xs font-medium tracking-wide text-muted-foreground">DETAILS</p>
                       <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
-                        <li>Ideal for: ____</li>
-                        <li>Typical timeline: ____</li>
-                        <li>Deliverables: ____</li>
+                        <li>Ideal for: {item.idealFor}</li>
+                        <li>Typical timeline: {item.timeline}</li>
+                        <li>Deliverables: {item.deliverables}</li>
                       </ul>
                     </div>
                   </div>
@@ -247,7 +291,7 @@ export function ServicesPage() {
                 Answer the big questions.
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                Replace these with your real answers. Keep it short and specific.
+                Short answers to help you evaluate fit quickly.
               </p>
             </div>
 
@@ -257,7 +301,8 @@ export function ServicesPage() {
               <div className="rounded-xl border border-border/60 bg-background/40 p-5">
                 <p className="text-sm font-semibold">What do you build?</p>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Placeholder: describe your typical projects (web apps, internal tooling, integrations).
+                  Web apps, dashboards, and internal tools—plus integrations, delivery enablement, and hardening work for
+                  teams in demanding environments.
                 </p>
               </div>
               <div className="rounded-xl border border-border/60 bg-background/40 p-5">
@@ -302,7 +347,7 @@ export function ServicesPage() {
                 </div>
                 <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-end md:justify-end">
                   <Button asChild className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
-                    <a href="mailto:systems.devconone@gmail.com">
+                    <a href="/contact">
                       Contact us <ArrowRight className="ml-2 h-4 w-4" />
                     </a>
                   </Button>
