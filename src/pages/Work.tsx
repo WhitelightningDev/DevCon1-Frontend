@@ -252,11 +252,11 @@ export function WorkPage() {
               <div>
                 <p className="text-xs font-medium tracking-wide text-muted-foreground">WHAT TO INCLUDE</p>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  A quick checklist for writing case studies (swap this for your real project specifics).
+                  A quick checklist for writing case studies — aligned to the projects on this page.
                 </p>
               </div>
               <Badge variant="outline" className="border-emerald-500/25 bg-emerald-500/10 text-emerald-200">
-                TEMPLATE
+                CHECKLIST
               </Badge>
             </div>
 
@@ -270,12 +270,14 @@ export function WorkPage() {
                     <TriangleAlert className="h-4 w-4 text-emerald-400" />
                   </span>
                 </div>
-                <p className="mt-2 text-sm text-muted-foreground">What was broken, slow, risky, or unclear—and why it mattered.</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  The real issues we solve across these projects — clarity, trust, and conversion.
+                </p>
                 <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                  <li>• Performance or reliability issues</li>
-                  <li>• Confusing UX / weak conversion path</li>
-                  <li>• Mobile layout problems</li>
-                  <li>• Missing SEO or accessibility basics</li>
+                  <li>• Booking/inquiry friction (Jet Ski, Kiings)</li>
+                  <li>• Trust-first messaging for finance/legal/health (Bullion, HKNFT, AEM)</li>
+                  <li>• Information overload → clearer IA and key flows (Team Flow, EFC)</li>
+                  <li>• Mobile polish + performance basics (all projects)</li>
                 </ul>
               </div>
 
@@ -286,12 +288,12 @@ export function WorkPage() {
                     <Code2 className="h-4 w-4 text-emerald-400" />
                   </span>
                 </div>
-                <p className="mt-2 text-sm text-muted-foreground">How you worked: discovery → plan → build → harden → ship.</p>
+                <p className="mt-2 text-sm text-muted-foreground">How you worked: clarify → design → build → harden → ship.</p>
                 <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                  <li>• Audit + scope + success metrics</li>
-                  <li>• IA/content structure + key screens</li>
-                  <li>• Componentized build (Tailwind/shadcn)</li>
-                  <li>• Perf + accessibility pass</li>
+                  <li>• Content + UX audit (what it is, who it’s for, next action)</li>
+                  <li>• Define the key “money” section/flow (pricing, services, products, dashboard)</li>
+                  <li>• Componentized React build (Tailwind + shadcn/ui)</li>
+                  <li>• SEO metadata + performance + accessibility pass</li>
                 </ul>
               </div>
 
@@ -302,12 +304,12 @@ export function WorkPage() {
                     <TrendingUp className="h-4 w-4 text-emerald-400" />
                   </span>
                 </div>
-                <p className="mt-2 text-sm text-muted-foreground">What improved after launch—measurable where possible.</p>
+                <p className="mt-2 text-sm text-muted-foreground">What improved after launch — measurable when possible.</p>
                 <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                  <li>• Clearer UX and stronger CTAs</li>
-                  <li>• Better SEO metadata/structure</li>
-                  <li>• Faster iteration via reusable components</li>
-                  <li>• Safer defaults + dependency hygiene</li>
+                  <li>• Clearer conversion path (book, enquire, learn, contact)</li>
+                  <li>• Stronger credibility (proof, clarity, professional structure)</li>
+                  <li>• Better performance + responsive layout polish</li>
+                  <li>• Reusable patterns to ship faster next time</li>
                 </ul>
               </div>
 
@@ -318,17 +320,37 @@ export function WorkPage() {
                     <Image className="h-4 w-4 text-emerald-400" />
                   </span>
                 </div>
-                <p className="mt-2 text-sm text-muted-foreground">Add 2–3 screenshots: hero, key section, and mobile view.</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Every project includes 3 screenshots: hero, key section/flow, and mobile.
+                </p>
                 <div className="mt-4 grid grid-cols-3 gap-2">
-                  {['Hero', 'Section', 'Mobile'].map((label) => (
+                  {[
+                    { src: '/work/bullion/hero.png', label: 'Hero (Bullion)' },
+                    { src: '/work/jetski/pricing.png', label: 'Key flow (Jet Ski)' },
+                    { src: '/work/teamflow/dashboard.png', label: 'Key screen (Team Flow)' },
+                  ].map((item) => (
                     <div
-                      key={label}
-                      className="flex aspect-video items-center justify-center rounded-md border border-border/60 bg-background/50"
+                      key={item.label}
+                      className="relative aspect-video overflow-hidden rounded-md border border-border/60 bg-background/50"
                     >
-                      <span className="text-xs text-muted-foreground">{label}</span>
+                      <img
+                        src={item.src}
+                        alt={item.label}
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover"
+                        onError={(event) => {
+                          event.currentTarget.style.display = 'none'
+                        }}
+                      />
+                      <div className="absolute inset-x-0 bottom-0 bg-background/70 px-2 py-1 text-[11px] text-muted-foreground backdrop-blur">
+                        {item.label}
+                      </div>
                     </div>
                   ))}
                 </div>
+                <p className="mt-3 text-xs text-muted-foreground">
+                  Also included: Kiings (services), HKNFT (benefits), AEM (CTA), EFC (products), Found Your Pet (dashboard/mobile).
+                </p>
               </div>
             </div>
           </div>

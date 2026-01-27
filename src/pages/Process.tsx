@@ -57,86 +57,86 @@ const phases = [
 const templates = [
   {
     title: 'Project Brief',
-    description: 'A short doc to capture scope, users, constraints, and timelines.',
+    description: 'A short doc that makes scope, roles, and success unambiguous.',
     icon: FileText,
-    placeholder: [
-      'Problem statement: Launch a fast, credible DevCon1 site + lead intake.',
-      'Primary users / JTBD: Teams needing a delivery partner; quickly assess fit and contact.',
-      'In scope / out of scope: Pages + CTA flow; no custom backend/CRM/blog in v1.',
-      'Constraints (tech/legal/brand): React/TS, accessible, high performance, minimal PII.',
-      'Timeline + success metrics: MVP in days; Lighthouse 90+; measurable inbound leads.',
+    bullets: [
+      'Goals, target users, and primary CTA',
+      'In-scope vs out-of-scope (what we will/won’t build)',
+      'Assumptions, constraints, and risks',
+      'Timeline and budget guardrails',
+      'Success metrics and launch checklist owner',
     ],
   },
   {
     title: 'Technical Plan',
     description: 'Architecture notes, milestones, and risks — written for review and handoff.',
     icon: Search,
-    placeholder: [
-      'Proposed approach + stack: Vite + React + TS, Tailwind, shadcn/ui, lucide-react.',
-      'Milestones + demo checkpoints: Content pass → UI polish → contact flow → deploy.',
-      'Dependencies (APIs, vendors, assets): Domain/DNS, hosting (Vercel/Netlify), email + optional analytics.',
-      'Risks + mitigations: Content delays → ship with drafts; scope creep → keep v1 static.',
-      'Rollback / migration notes: Atomic deploys + hosting rollback; keep prior build available.',
+    bullets: [
+      'Stack + architecture outline (data flow, pages, integrations)',
+      'Milestones + demo checkpoints (reviewable PRs)',
+      'Dependencies (vendors, APIs, analytics, email, DNS/hosting)',
+      'Risk register + mitigations (scope, schedule, tech)',
+      'Deploy/rollback plan + environment notes',
     ],
   },
   {
     title: 'Design Handoff',
-    description: 'Design links, components, states, and accessibility notes for build-ready UI.',
+    description: 'Build-ready UI notes: components, states, and accessibility requirements.',
     icon: Palette,
-    placeholder: [
-      'Figma / spec links: Build-from-code (add design links if you have them).',
-      'Token decisions (type/spacing/colors): Emerald/cyan accents; subtle borders; roomy spacing; rounded-xl.',
-      'Components + variants: Navbar/Footer, CTA blocks, cards, badges, buttons (primary/outline), dialogs.',
-      'Edge states (empty/error/loading): Wizard validation, disabled states, copy-to-clipboard failure fallback.',
-      'A11y requirements (keyboard/contrast): Visible focus, keyboard nav, dialog focus trap, readable contrast.',
+    bullets: [
+      'Design links (Figma/refs) + brand notes (type, spacing, color)',
+      'Component inventory + variants (buttons, cards, dialogs, forms)',
+      'Responsive rules (breakpoints, stacking behavior, spacing)',
+      'Edge states (empty/error/loading) + motion rules',
+      'Accessibility requirements (keyboard, focus, contrast)',
     ],
   },
   {
     title: 'QA Checklist',
     description: 'A test plan for critical flows, devices, and acceptance criteria.',
     icon: ClipboardList,
-    placeholder: [
-      'Critical user journeys: Navigate pages → Start Project wizard → email/tel links work.',
-      'Browser/device matrix: Chrome/Firefox/Safari/Edge; iOS Safari; Android Chrome.',
-      'Acceptance criteria per feature: No console errors; links correct; responsive layout; copy works.',
-      'Automation scope (unit/e2e): Optional; start with smoke checks + build verification.',
-      'A11y + performance checks: Lighthouse + basic keyboard-only pass; check contrast and tap targets.',
+    bullets: [
+      'Critical journeys (navigation, contact/wizard, conversions)',
+      'Browser/device coverage (desktop + iOS/Android)',
+      'Acceptance criteria per feature (no console errors, correct links, responsive)',
+      'Performance + accessibility checks (Lighthouse + keyboard pass)',
+      'Release smoke test steps (pre/post deploy)',
     ],
   },
   {
     title: 'Security & Privacy Review',
     description: 'A lightweight checklist for data handling, permissions, and threats.',
     icon: ShieldCheck,
-    placeholder: [
-      'Data collected + retention: Contact brief; stored locally for UX; sent only via email action.',
-      'Authn/authz assumptions: Public marketing site; no user accounts or protected data in v1.',
-      'Third-party services + risks: Hosting + optional analytics; review vendors before adding.',
-      'Threats + mitigations: Supply chain → lockfile; XSS → avoid unsafe HTML; add CSP when needed.',
-      'Secrets/env handling plan: None for v1; use hosting env vars and never commit secrets.',
+    bullets: [
+      'Data collected + retention (forms, analytics, cookies)',
+      'Auth/authz assumptions + permissions model (if applicable)',
+      'Third-party services review (what runs where, vendor risks)',
+      'Threats + mitigations (XSS, supply chain, rate limiting, spam)',
+      'Secrets/env handling + deployment hardening notes',
     ],
   },
   {
     title: 'Launch Checklist',
     description: 'Deploy steps, monitoring, and rollback so launch day is boring.',
     icon: Rocket,
-    placeholder: [
-      'Release train + owners: DevCon1 owner review + deploy checklist sign-off.',
-      'Env vars / DNS / redirects: Connect domain; verify redirects; confirm mailto/tel links.',
-      'Monitoring + alerts: Uptime + error tracking (optional Sentry); basic analytics if desired.',
-      'Backups + rollback: Git repo is source of truth; hosting rollback to last good build.',
-      'Post-launch stabilization: 48h monitoring; fix issues fast; iterate content + SEO basics.',
+    bullets: [
+      'Release owner + sign-off checklist',
+      'DNS/redirects, env vars, and form delivery verification',
+      'Monitoring + alerts (uptime + optional error tracking)',
+      'Rollback plan (last-known-good deploy)',
+      'Post-launch stabilization window and follow-up tasks',
     ],
   },
   {
     title: 'Ops Handoff',
     description: 'Runbook-minded checklist for deploying and operating the system.',
     icon: HardHat,
-    placeholder: [
-      'Runbook link: README + hosting provider docs (deployment, rollbacks, domain).',
-      'Deploy procedure: `npm run build` → deploy → smoke test key pages + contact CTAs.',
-      'Alerts + SLOs: Uptime monitoring; page load targets; error rate threshold if instrumented.',
-      'Backups + restores: Repo + lockfile; restore by redeploying a tagged release.',
-      'On-call / escalation notes: Single owner; respond within 1 business day; hotfix path documented.',
+    bullets: [
+      'Runbook: how to deploy, roll back, and verify',
+      'Routine checks (forms, links, uptime, performance)',
+      'SLOs/targets (load time, error rate, uptime) when instrumented',
+      'Backups/restores (repo, content, vendor accounts)',
+      'Escalation path + ownership (who fixes what, when)',
     ],
   },
 ] as const
@@ -234,7 +234,7 @@ export function ProcessPage() {
                 A clear sequence, flexible scope.
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                Swap in your real phases. Keep them consistent and outcome-oriented.
+                These phases keep delivery predictable while still allowing scope to flex where it’s safe.
               </p>
             </div>
 
@@ -275,10 +275,10 @@ export function ProcessPage() {
                 <p className="text-xs tracking-wide text-muted-foreground">ARTIFACTS TO REUSE</p>
               </div>
               <h2 className="dc-animate-heading [--dc-delay:60ms] mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">
-                Ready-made docs you can fill in.
+                Templates we provide for every project.
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                Use these artifacts to keep scope, risk, and handoff crisp from day one.
+                These artifacts keep scope, risk, and handoff crisp from day one.
               </p>
             </div>
 
@@ -297,9 +297,9 @@ export function ProcessPage() {
                     </div>
                     <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
                     <div className="mt-4 rounded-lg border border-border/60 bg-background/50 p-4">
-                      <p className="text-xs font-medium tracking-wide text-muted-foreground">EXAMPLE (EDIT ME)</p>
+                      <p className="text-xs font-medium tracking-wide text-muted-foreground">INCLUDED</p>
                       <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
-                        {item.placeholder.map((line) => (
+                        {item.bullets.map((line) => (
                           <li key={line}>{line}</li>
                         ))}
                       </ul>
@@ -326,7 +326,7 @@ export function ProcessPage() {
                     Want this process applied to you?
                   </h2>
                   <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                    Swap this with your real contact flow and add scheduling links when ready.
+                    Answer a few questions and we’ll reply with next steps, timeline options, and a clear plan.
                   </p>
                 </div>
                 <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-end md:justify-end">

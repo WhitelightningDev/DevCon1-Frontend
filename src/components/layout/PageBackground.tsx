@@ -10,7 +10,13 @@ export function PageBackground() {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     if (reducedMotion.matches) return
 
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)')
+    const isDark = document.documentElement.classList.contains('dark')
+
     let raf = 0
+    let pointerRaf = 0
+    let lastX = 0
+    let lastY = 0
 
     const update = () => {
       raf = 0
@@ -32,22 +38,44 @@ export function PageBackground() {
       root.style.setProperty('--dc-r3', `${r3}deg`)
     }
 
+    const updatePointer = () => {
+      pointerRaf = 0
+      root.style.setProperty('--dc-mx', `${lastX}px`)
+      root.style.setProperty('--dc-my', `${lastY}px`)
+    }
+
     const onScroll = () => {
       if (raf) return
       raf = window.requestAnimationFrame(update)
     }
 
+    const onPointerMove = (event: PointerEvent) => {
+      lastX = event.clientX
+      lastY = event.clientY
+      if (pointerRaf) return
+      pointerRaf = window.requestAnimationFrame(updatePointer)
+    }
+
     update()
     window.addEventListener('scroll', onScroll, { passive: true })
+    if (isDark && canHover.matches) {
+      root.style.setProperty('--dc-mx', '50%')
+      root.style.setProperty('--dc-my', '30%')
+      window.addEventListener('pointermove', onPointerMove, { passive: true })
+    }
     return () => {
       window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('pointermove', onPointerMove)
       if (raf) window.cancelAnimationFrame(raf)
+      if (pointerRaf) window.cancelAnimationFrame(pointerRaf)
     }
   }, [])
 
   return (
     <div ref={rootRef} className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,rgba(16,185,129,0.30),transparent_46%),radial-gradient(circle_at_85%_18%,rgba(34,197,94,0.22),transparent_44%),radial-gradient(circle_at_55%_90%,rgba(52,211,153,0.14),transparent_58%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.10),transparent_55%),radial-gradient(circle_at_8%_55%,rgba(56,189,248,0.08),transparent_50%),radial-gradient(circle_at_92%_65%,rgba(110,231,183,0.08),transparent_52%)]" />
+      <div className="absolute inset-0 hidden md:block [background:radial-gradient(520px_circle_at_var(--dc-mx,50%)_var(--dc-my,30%),rgba(255,255,255,0.14),transparent_55%)]" />
 
       <div
         aria-hidden="true"
@@ -66,7 +94,7 @@ export function PageBackground() {
       />
 
       <div className="absolute inset-0 opacity-[0.06] [background-image:linear-gradient(to_right,rgba(16,185,129,0.22)_1px,transparent_1px),linear-gradient(to_bottom,rgba(16,185,129,0.20)_1px,transparent_1px)] [background-size:48px_48px]" />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/25 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/15 to-background/90" />
     </div>
   )
 }
