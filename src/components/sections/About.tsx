@@ -18,9 +18,7 @@ export function About() {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
           <div className="text-center md:text-left lg:max-w-xl">
             <div className="flex items-center justify-center gap-2 md:justify-start">
-              <Badge variant="outline" className="border-emerald-500/25 bg-emerald-500/10 text-emerald-200">
-                About
-              </Badge>
+              <Badge variant="outline">About</Badge>
               <p className="text-xs tracking-wide text-muted-foreground">WHO WE ARE</p>
             </div>
             <h2 className="dc-animate-heading [--dc-delay:60ms] mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -32,21 +30,21 @@ export function About() {
             </p>
 
             <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:justify-start">
-              <Button asChild className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
+              <Button asChild>
                 <a href="/contact">Work with us</a>
               </Button>
-              <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
+              <Button asChild variant="outline">
                 <a href="/work">See work</a>
               </Button>
             </div>
           </div>
 
           <div className="grid gap-4 lg:w-[28rem]">
-            <div className="rounded-2xl border border-emerald-500/15 bg-gradient-to-b from-emerald-500/10 to-background/30 p-6">
+            <div className="rounded-2xl border border-border/60 bg-background/40 p-6">
               <p className="text-xs font-medium tracking-wide text-muted-foreground">FOUNDER</p>
               <div className="mt-4 flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
-                <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-emerald-500/20 bg-emerald-500/10">
-                  <span className="text-sm font-semibold text-emerald-200">D1</span>
+                <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-border/60 bg-background/50">
+                  <span className="text-sm font-semibold text-primary">D1</span>
                 </div>
                 <div>
                   <p className="text-sm font-semibold">Founder / Lead Engineer</p>
@@ -67,8 +65,8 @@ export function About() {
                     <div key={item.title} className="rounded-xl border border-border/60 bg-background/40 p-4">
                       <div className="flex items-start justify-between gap-3">
                         <p className="text-sm font-semibold">{item.title}</p>
-                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10">
-                          <Icon className="h-4 w-4 text-emerald-400" />
+                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border/60 bg-background/50">
+                          <Icon className="h-4 w-4 text-primary" />
                         </span>
                       </div>
                       <p className="mt-2 text-sm text-muted-foreground">{item.detail}</p>

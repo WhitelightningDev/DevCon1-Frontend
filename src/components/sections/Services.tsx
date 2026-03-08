@@ -1,48 +1,23 @@
-import { Activity, Binary, Database, Eye, Gauge, ShieldCheck, Smartphone, Wrench } from 'lucide-react'
+import { Binary, Eye, ShieldCheck } from 'lucide-react'
 
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
-
-const services = [
+const serviceGroups = [
   {
-    title: 'Product & Platform Engineering',
-    description: 'Web apps, dashboards, portals, and component systems built to scale.',
+    title: 'Build',
+    description: 'Ship features and systems that scale.',
     icon: Binary,
+    bullets: ['Product & platform engineering', 'Integrations & APIs', 'PWA / offline-first'],
   },
   {
-    title: 'Integrations & APIs',
-    description: 'API design, third-party integrations, ETL/data sync, and data contracts.',
-    icon: Database,
-  },
-  {
-    title: 'Performance & UX Audit',
-    description: 'Core Web Vitals, conversion paths, and UX polish that improves outcomes.',
-    icon: Gauge,
-  },
-  {
-    title: 'Accessibility Audit',
-    description: 'WCAG-focused review and remediation: keyboard, contrast, semantics, and forms.',
+    title: 'Improve',
+    description: 'Make what you have faster, clearer, and more usable.',
     icon: Eye,
+    bullets: ['Performance & UX audit', 'Accessibility audit', 'Design system cleanup'],
   },
   {
-    title: 'Security & Hardening',
-    description: 'Threat modeling, secure patterns, dependency hygiene, and best-practice reviews.',
+    title: 'Operate',
+    description: 'Reliability, safety, and calm production delivery.',
     icon: ShieldCheck,
-  },
-  {
-    title: 'Observability & Runbooks',
-    description: 'Logging/metrics hooks, alerting basics, and runbook-minded handoffs.',
-    icon: Activity,
-  },
-  {
-    title: 'DevOps / CI/CD',
-    description: 'Build pipelines, environments, release automation, and developer productivity.',
-    icon: Wrench,
-  },
-  {
-    title: 'PWA / Offline-first',
-    description: 'Installable apps, caching strategy, update flows, and resilient UX.',
-    icon: Smartphone,
+    bullets: ['Security & hardening', 'Observability & runbooks', 'DevOps / CI/CD'],
   },
 ] as const
 
@@ -50,45 +25,46 @@ export function Services() {
   return (
     <section id="services" className="scroll-mt-24 py-14 md:py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-          <div className="text-center md:text-left">
-            <div className="flex items-center justify-center gap-2 md:justify-start">
-              <Badge variant="outline" className="border-emerald-500/25 bg-emerald-500/10 text-emerald-200">
-                Services
-              </Badge>
-              <p className="text-xs tracking-wide text-muted-foreground">WHAT WE DO</p>
-            </div>
-            <h2 className="dc-animate-heading [--dc-delay:60ms] mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">
-              Built for clarity and control.
-            </h2>
-            <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-              A small set of high-leverage offerings that help teams move quickly—without compromising safety,
-              maintainability, or UX.
-            </p>
-          </div>
+        <div className="text-center md:text-left">
+          <p className="text-xs font-medium tracking-wide text-muted-foreground">SERVICES</p>
+          <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+            A simple menu of help.
+          </h2>
+          <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
+            Grouped into three buckets so it’s easy to pick the right starting point.
+          </p>
         </div>
 
-        <Separator className="my-8" />
-
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((item) => {
-            const Icon = item.icon
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {serviceGroups.map((group) => {
+            const Icon = group.icon
             return (
-              <div
-                key={item.title}
-                className="group rounded-xl border border-border/60 bg-background/40 p-5 transition-colors hover:border-emerald-500/20"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <p className="text-sm font-semibold">{item.title}</p>
-                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10">
-                    <Icon className="h-4 w-4 text-emerald-400" />
+              <div key={group.title} className="rounded-xl border border-border/60 bg-background/40 p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="text-sm font-semibold">{group.title}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">{group.description}</p>
+                  </div>
+                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border/60 bg-background/50">
+                    <Icon className="h-4 w-4 text-primary" />
                   </span>
                 </div>
-                <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
+                <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                  {group.bullets.map((line) => (
+                    <li key={line} className="flex items-start gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-primary" />
+                      <span>{line}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             )
           })}
         </div>
+
+        <p className="mt-6 text-center text-xs text-muted-foreground md:text-left">
+          Need help choosing? Use the contact form and we’ll recommend the smallest starting scope.
+        </p>
       </div>
     </section>
   )

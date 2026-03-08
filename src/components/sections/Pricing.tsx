@@ -68,14 +68,17 @@ const tiers = [
 ] as const
 
 export function Pricing() {
-  const [currency, setCurrency] = useState<CurrencyCode>('ZAR')
-
-  useEffect(() => {
-    const stored = localStorage.getItem('devcon1.currency')
-    if (stored && currencyOptions.some((option) => option.code === stored)) {
-      setCurrency(stored as CurrencyCode)
+  const [currency, setCurrency] = useState<CurrencyCode>(() => {
+    try {
+      const stored = localStorage.getItem('devcon1.currency')
+      if (stored && currencyOptions.some((option) => option.code === stored)) {
+        return stored as CurrencyCode
+      }
+    } catch {
+      // ignore
     }
-  }, [])
+    return 'ZAR'
+  })
 
   useEffect(() => {
     localStorage.setItem('devcon1.currency', currency)
@@ -104,9 +107,7 @@ export function Pricing() {
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div className="text-center md:text-left">
             <div className="flex items-center justify-center gap-2 md:justify-start">
-              <Badge variant="outline" className="border-emerald-500/25 bg-emerald-500/10 text-emerald-200">
-                Pricing
-              </Badge>
+              <Badge variant="outline">Pricing</Badge>
               <p className="text-xs tracking-wide text-muted-foreground">RANGES & TIERS</p>
             </div>
             <h2 className="dc-animate-heading [--dc-delay:60ms] mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">
@@ -132,9 +133,9 @@ export function Pricing() {
                     aria-pressed={active}
                     onClick={() => setCurrency(option.code)}
                     className={[
-                      'rounded-full px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+                      'rounded-full px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
                       active
-                        ? 'bg-emerald-500 text-emerald-950'
+                        ? 'bg-primary text-primary-foreground'
                         : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
                     ].join(' ')}
                   >
@@ -145,10 +146,10 @@ export function Pricing() {
             </div>
 
             <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center md:items-end md:justify-end">
-              <Button asChild className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
+              <Button asChild>
                 <a href="/contact">Get a quote</a>
               </Button>
-              <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
+              <Button asChild variant="outline">
                 <a href="#services">See services</a>
               </Button>
             </div>
@@ -165,7 +166,7 @@ export function Pricing() {
                 key={tier.name}
                 className={[
                   'rounded-xl border border-border/60 bg-background/40 p-6',
-                  tier.featured ? 'border-emerald-500/25 bg-emerald-500/5' : '',
+                  tier.featured ? 'border-primary/20 bg-primary/5' : '',
                 ].join(' ')}
               >
                 <div className="flex items-start justify-between gap-3">
@@ -174,16 +175,16 @@ export function Pricing() {
                     <p className="mt-1 text-2xl font-semibold tracking-tight">{tierPriceLabel(tier.pricing[currency])}</p>
                     <p className="mt-2 text-sm text-muted-foreground">{tier.description}</p>
                   </div>
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10">
-                    <Icon className="h-5 w-5 text-emerald-400" />
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-primary/15 bg-primary/10">
+                    <Icon className="h-5 w-5 text-primary" />
                   </span>
                 </div>
 
                 <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
                   {tier.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2">
-                      <span className="mt-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500/10">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                      <span className="mt-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary/10">
+                        <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                       </span>
                       <span>{feature}</span>
                     </li>
@@ -194,10 +195,7 @@ export function Pricing() {
                   <Button
                     asChild
                     variant={tier.featured ? 'default' : 'outline'}
-                    className={[
-                      'w-full',
-                      tier.featured ? 'bg-emerald-500 text-emerald-950 hover:bg-emerald-400' : 'border-border/60 bg-transparent hover:bg-muted',
-                    ].join(' ')}
+                    className="w-full"
                   >
                     <a href="/contact">Ask about {tier.name}</a>
                   </Button>

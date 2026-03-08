@@ -5,27 +5,19 @@ import {
   BarChart3,
   BatteryCharging,
   Car,
-  Code2,
   FileText,
   Globe,
   Gavel,
   HeartPulse,
-  Image,
   LayoutDashboard,
   PawPrint,
   Shield,
-  TrendingUp,
-  TriangleAlert,
 } from 'lucide-react'
 
-import { Pipeline } from '@/components/illustrations/Pipeline'
 import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
 import { PageBackground } from '@/components/layout/PageBackground'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
-import { WorkPinnedSection } from '@/components/work/WorkPinnedSection'
 import { setSeo } from '@/lib/seo'
 
 type ProjectMockup = {
@@ -42,19 +34,6 @@ type Project = {
   icon: LucideIcon
   mockups?: readonly ProjectMockup[]
 }
-
-const fallbackProjectMockups: readonly ProjectMockup[] = [
-  { src: '', label: 'Hero' },
-  { src: '', label: 'Section' },
-  { src: '', label: 'Mobile' },
-]
-
-const toSectionId = (value: string) =>
-  value
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)+/g, '')
 
 const projects: readonly Project[] = [
   {
@@ -199,232 +178,116 @@ export function WorkPage() {
       <main id="main">
         <section className="relative overflow-hidden pb-10 pt-12 md:pb-16 md:pt-20">
           <div className="mx-auto max-w-6xl px-4">
-            <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
-              <div className="lg:col-span-7 text-center md:text-left">
-                <div className="flex flex-wrap items-center justify-center gap-2 md:justify-start">
-                  <Badge variant="outline" className="border-emerald-500/25 bg-emerald-500/10 text-emerald-200">
-                    Work
-                  </Badge>
-                  <Badge variant="outline" className="border-border/60 bg-background/60 text-muted-foreground">
-                    Case studies • Templates
-                  </Badge>
-                </div>
-                <h1 className="dc-animate-heading [--dc-delay:80ms] mt-5 text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-                  Proof, patterns, and{' '}
-                  <span className="bg-gradient-to-r from-emerald-300 via-emerald-400 to-cyan-300 bg-clip-text text-transparent">
-                    repeatable delivery
-                  </span>
-                  .
-                </h1>
-                <p className="mx-auto mt-4 max-w-2xl text-pretty text-base text-muted-foreground sm:text-lg md:mx-0">
-                  Use this page as a starter: add real case studies, screenshots, metrics, and references when ready.
-                </p>
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="text-xs font-medium tracking-wide text-muted-foreground">WORK</p>
+              <h1 className="dc-animate-heading [--dc-delay:80ms] mt-3 text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+                Proof, patterns, and{' '}
+                <span className="text-primary">repeatable delivery</span>
+                .
+              </h1>
+              <p className="mx-auto mt-4 max-w-2xl text-pretty text-base text-muted-foreground sm:text-lg">
+                A small selection of shipped sites and prototypes.
+              </p>
 
-                <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-start md:justify-start">
-                  <Button asChild className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
-                    <a href="#case-studies">
-                      View case studies <ArrowRight className="ml-2 h-4 w-4" />
-                    </a>
-                  </Button>
-                  <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
-                    <a href="/services">See services</a>
-                  </Button>
-                </div>
-              </div>
-              <div className="hidden lg:block lg:col-span-5">
-                <div className="rounded-2xl border border-emerald-500/15 bg-gradient-to-b from-emerald-500/10 to-background/30 p-6">
-                  <p className="text-xs font-medium tracking-wide text-muted-foreground">DELIVERY FLOW</p>
-                  <div className="mt-4">
-                    <Pipeline className="h-28 w-full text-emerald-300/55" />
-                  </div>
-                  <p className="mt-4 text-sm text-muted-foreground">
-                    Consistent milestones, reviewable PRs, and a handoff that’s easy to own.
-                  </p>
-                </div>
+              <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Button asChild>
+                  <a href="#projects">
+                    View projects <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+                <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
+                  <a href="/services">See services</a>
+                </Button>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="py-8 md:py-10">
-          <div className="mx-auto max-w-6xl px-4">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="text-xs font-medium tracking-wide text-muted-foreground">WHAT TO INCLUDE</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  A quick checklist for writing case studies — aligned to the projects on this page.
-                </p>
-              </div>
-              <Badge variant="outline" className="border-emerald-500/25 bg-emerald-500/10 text-emerald-200">
-                CHECKLIST
-              </Badge>
-            </div>
-
-            <Separator className="my-6" />
-
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <div className="rounded-xl border border-border/60 bg-background/40 p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <p className="text-sm font-semibold">Problem</p>
-                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10">
-                    <TriangleAlert className="h-4 w-4 text-emerald-400" />
-                  </span>
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  The real issues we solve across these projects — clarity, trust, and conversion.
-                </p>
-                <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                  <li>• Booking/inquiry friction (Jet Ski, Kiings)</li>
-                  <li>• Trust-first messaging for finance/legal/health (Bullion, HKNFT, AEM)</li>
-                  <li>• Information overload → clearer IA and key flows (Team Flow, EFC)</li>
-                  <li>• Mobile polish + performance basics (all projects)</li>
-                </ul>
-              </div>
-
-              <div className="rounded-xl border border-border/60 bg-background/40 p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <p className="text-sm font-semibold">Approach</p>
-                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10">
-                    <Code2 className="h-4 w-4 text-emerald-400" />
-                  </span>
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground">How you worked: clarify → design → build → harden → ship.</p>
-                <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                  <li>• Content + UX audit (what it is, who it’s for, next action)</li>
-                  <li>• Define the key “money” section/flow (pricing, services, products, dashboard)</li>
-                  <li>• Componentized React build (Tailwind + shadcn/ui)</li>
-                  <li>• SEO metadata + performance + accessibility pass</li>
-                </ul>
-              </div>
-
-              <div className="rounded-xl border border-border/60 bg-background/40 p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <p className="text-sm font-semibold">Outcome</p>
-                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10">
-                    <TrendingUp className="h-4 w-4 text-emerald-400" />
-                  </span>
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground">What improved after launch — measurable when possible.</p>
-                <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                  <li>• Clearer conversion path (book, enquire, learn, contact)</li>
-                  <li>• Stronger credibility (proof, clarity, professional structure)</li>
-                  <li>• Better performance + responsive layout polish</li>
-                  <li>• Reusable patterns to ship faster next time</li>
-                </ul>
-              </div>
-
-              <div className="rounded-xl border border-border/60 bg-background/40 p-5">
-                <div className="flex items-start justify-between gap-3">
-                  <p className="text-sm font-semibold">Images</p>
-                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10">
-                    <Image className="h-4 w-4 text-emerald-400" />
-                  </span>
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Every project includes 3 screenshots: hero, key section/flow, and mobile.
-                </p>
-                <div className="mt-4 grid grid-cols-3 gap-2">
-                  {[
-                    { src: '/work/bullion/hero.png', label: 'Hero (Bullion)' },
-                    { src: '/work/jetski/pricing.png', label: 'Key flow (Jet Ski)' },
-                    { src: '/work/teamflow/dashboard.png', label: 'Key screen (Team Flow)' },
-                  ].map((item) => (
-                    <div
-                      key={item.label}
-                      className="relative aspect-video overflow-hidden rounded-md border border-border/60 bg-background/50"
-                    >
-                      <img
-                        src={item.src}
-                        alt={item.label}
-                        loading="lazy"
-                        className="absolute inset-0 h-full w-full object-cover"
-                        onError={(event) => {
-                          event.currentTarget.style.display = 'none'
-                        }}
-                      />
-                      <div className="absolute inset-x-0 bottom-0 bg-background/70 px-2 py-1 text-[11px] text-muted-foreground backdrop-blur">
-                        {item.label}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <p className="mt-3 text-xs text-muted-foreground">
-                  Also included: Kiings (services), HKNFT (benefits), AEM (CTA), EFC (products), Found Your Pet (dashboard/mobile).
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="case-studies" className="scroll-mt-24 py-14 md:py-20">
+        <section id="projects" className="scroll-mt-24 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="text-center md:text-left">
-              <div className="flex items-center justify-center gap-2 md:justify-start">
-                <Badge variant="outline" className="border-emerald-500/25 bg-emerald-500/10 text-emerald-200">
-                  Projects
-                </Badge>
-                <p className="text-xs tracking-wide text-muted-foreground">EXAMPLES TO FILL IN</p>
-              </div>
-              <h2 className="dc-animate-heading [--dc-delay:60ms] mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">
+              <p className="text-xs font-medium tracking-wide text-muted-foreground">PROJECTS</p>
+              <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
                 Representative work.
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                A selection of shipped sites and prototypes. Add more details (role, stack, metrics) as you iterate.
+                A selection of shipped sites and prototypes.
               </p>
             </div>
 
-            <Separator className="my-8" />
-          </div>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {projects.map((project) => {
+                const Icon = project.icon
+                const preview = project.mockups?.[0]?.src || ''
+                return (
+                  <div key={project.title} className="rounded-xl border border-border/60 bg-background/40 p-5">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-sm font-semibold">{project.title}</p>
+                        <p className="mt-1 text-xs text-muted-foreground">{project.tags.join(' • ')}</p>
+                      </div>
+                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border/60 bg-background/50">
+                        <Icon className="h-4 w-4 text-primary" />
+                      </span>
+                    </div>
 
-          <div>
-            {projects.map((item) => {
-              const mockups = item.mockups?.length ? item.mockups : fallbackProjectMockups
-              const sectionId = toSectionId(item.title)
-              return (
-                <WorkPinnedSection
-                  key={item.title}
-                  id={sectionId}
-                  title={item.title}
-                  description={item.summary}
-                  tags={item.tags}
-                  href={item.href}
-                  icon={item.icon}
-                  images={mockups}
-                />
-              )
-            })}
+                    <p className="mt-3 text-sm text-muted-foreground">{project.summary}</p>
+
+                    <div className="mt-4 overflow-hidden rounded-lg border border-border/60 bg-background/50">
+                      <div className="relative aspect-video">
+                        {preview ? (
+                          <img
+                            src={preview}
+                            alt={`${project.title} preview`}
+                            loading="lazy"
+                            className="absolute inset-0 h-full w-full object-cover"
+                            onError={(event) => {
+                              event.currentTarget.style.display = 'none'
+                            }}
+                          />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="text-xs text-muted-foreground">Preview</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+                      <Button asChild>
+                        <a href={project.href} target="_blank" rel="noreferrer">
+                          View site <ArrowRight className="ml-2 h-4 w-4" />
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </section>
 
         <section id="approach" className="scroll-mt-24 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="text-center md:text-left">
-              <div className="flex items-center justify-center gap-2 md:justify-start">
-                <Badge variant="outline" className="border-emerald-500/25 bg-emerald-500/10 text-emerald-200">
-                  Approach
-                </Badge>
-                <p className="text-xs tracking-wide text-muted-foreground">WHAT YOU DELIVER</p>
-              </div>
-              <h2 className="dc-animate-heading [--dc-delay:60ms] mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">
+              <p className="text-xs font-medium tracking-wide text-muted-foreground">WHAT YOU GET</p>
+              <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
                 Deliverables that stick.
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                Not just a build — a set of outcomes and artifacts that make the work durable, maintainable, and easy to
-                extend.
+                Not just a build — outcomes and artifacts that make the work durable and easy to own.
               </p>
             </div>
 
-            <Separator className="my-8" />
-
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="mt-8 grid gap-4 md:grid-cols-2">
               {proofSections.map((section) => {
                 const Icon = section.icon
                 return (
                   <div key={section.title} className="rounded-xl border border-border/60 bg-background/40 p-5">
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-sm font-semibold">{section.title}</p>
-                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10">
-                        <Icon className="h-4 w-4 text-emerald-400" />
+                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border/60 bg-background/50">
+                        <Icon className="h-4 w-4 text-primary" />
                       </span>
                     </div>
                     <p className="mt-2 text-sm text-muted-foreground">{section.description}</p>
@@ -442,16 +305,11 @@ export function WorkPage() {
 
         <section id="contact" className="scroll-mt-24 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
-            <div className="rounded-2xl border border-emerald-500/15 bg-gradient-to-b from-emerald-500/10 to-background/30 p-6 md:p-10">
+            <div className="rounded-xl border border-border/60 bg-background/40 p-6 md:p-10">
               <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                 <div className="text-center md:text-left">
-                  <div className="flex items-center justify-center gap-2 md:justify-start">
-                    <Badge variant="outline" className="border-emerald-500/25 bg-emerald-500/10 text-emerald-200">
-                      Contact
-                    </Badge>
-                    <p className="text-xs tracking-wide text-muted-foreground">NEXT STEP</p>
-                  </div>
-                  <h2 className="dc-animate-heading [--dc-delay:60ms] mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">
+                  <p className="text-xs font-medium tracking-wide text-muted-foreground">NEXT STEP</p>
+                  <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
                     Want work like this?
                   </h2>
                   <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
@@ -459,7 +317,7 @@ export function WorkPage() {
                   </p>
                 </div>
                 <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-end md:justify-end">
-                  <Button asChild className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
+                  <Button asChild>
                     <a href="/contact">
                       Start a conversation <ArrowRight className="ml-2 h-4 w-4" />
                     </a>

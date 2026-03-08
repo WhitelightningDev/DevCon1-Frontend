@@ -197,8 +197,8 @@ export function WorkPinnedSection({
                       <CardTitle className="mt-2 text-xl tracking-tight text-foreground">{title}</CardTitle>
                     </div>
                     {Icon ? (
-                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10">
-                        <Icon className="h-4 w-4 text-emerald-400" />
+                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-primary/15 bg-primary/10">
+                        <Icon className="h-4 w-4 text-primary" />
                       </span>
                     ) : null}
                   </div>
@@ -219,7 +219,7 @@ export function WorkPinnedSection({
                 <CardContent className="space-y-4">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                     {href ? (
-                      <Button asChild className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
+                      <Button asChild>
                         <a href={href} target="_blank" rel="noreferrer">
                           View site <ExternalLink className="ml-2 h-4 w-4" />
                         </a>
@@ -232,7 +232,7 @@ export function WorkPinnedSection({
 
                   <div className="flex items-center justify-between rounded-lg border border-border/50 bg-background/40 px-3 py-2">
                     <p className="text-xs text-muted-foreground">Scroll to browse screenshots</p>
-                    <span className="text-xs font-medium text-emerald-300/80">{images.length} images</span>
+                    <span className="text-xs font-medium text-primary/80">{images.length} images</span>
                   </div>
                 </CardContent>
               </Card>

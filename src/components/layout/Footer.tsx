@@ -3,10 +3,10 @@ import { Mail, MapPin, Phone, ShieldCheck } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 
 const footerLinks = [
-  { label: 'Services', href: '#services' },
-  { label: 'Work', href: '#work' },
-  { label: 'Process', href: '#process' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Services', href: '/services' },
+  { label: 'Work', href: '/work' },
+  { label: 'Process', href: '/process' },
+  { label: 'Contact', href: '/contact' },
 ] as const
 
 export function Footer() {
@@ -16,7 +16,7 @@ export function Footer() {
         <div className="grid gap-10 text-center md:grid-cols-3 md:text-left">
           <div className="space-y-3">
             <div className="flex items-center justify-center gap-2 text-sm font-semibold tracking-wide md:justify-start">
-              <ShieldCheck className="h-5 w-5 text-emerald-400" />
+              <ShieldCheck className="h-5 w-5 text-primary" />
               DevCon1
             </div>
             <p className="text-sm text-muted-foreground">
@@ -47,18 +47,18 @@ export function Footer() {
                 href="mailto:systems.devconone@gmail.com"
                 className="flex items-center justify-center gap-2 break-all transition-colors hover:text-foreground md:justify-start"
               >
-                <Mail className="h-4 w-4 text-emerald-400" />
+                <Mail className="h-4 w-4 text-primary" />
                 systems.devconone@gmail.com
               </a>
               <p className="flex items-center justify-center gap-2 md:justify-start">
-                <MapPin className="h-4 w-4 text-emerald-400" />
+                <MapPin className="h-4 w-4 text-primary" />
                 Remote-first • US & CAT time zones
               </p>
               <a
                 href="tel:+27746588885"
                 className="flex items-center justify-center gap-2 whitespace-nowrap transition-colors hover:text-foreground md:justify-start"
               >
-                <Phone className="h-4 w-4 text-emerald-400" />
+                <Phone className="h-4 w-4 text-primary" />
                 +27 74 658 8885
               </a>
             </div>
