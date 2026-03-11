@@ -3,7 +3,6 @@ import type { LucideIcon } from 'lucide-react'
 import {
   ArrowRight,
   BarChart3,
-  BatteryCharging,
   Car,
   ExternalLink,
   FileText,
@@ -169,19 +168,7 @@ const projects: readonly Project[] = [
       { src: '/work/aem/mobile.png', label: 'Mobile' },
     ],
   },
-  {
-    id: 'efc',
-    title: 'EFC - Gazina',
-    href: 'https://efc-batteries.vercel.app/',
-    summary: 'Brand/site for Gazina (EFC) with clean structure for expanding product and technical details.',
-    tags: ['Website', 'Industrial'],
-    icon: BatteryCharging,
-    mockups: [
-      { src: '/work/efc/hero.png', label: 'Hero' },
-      { src: '/work/efc/products.png', label: 'Products' },
-      { src: '/work/efc/mobile.png', label: 'Mobile' },
-    ],
-  },
+ 
 ] as const
 
 type CaseStudy = {
