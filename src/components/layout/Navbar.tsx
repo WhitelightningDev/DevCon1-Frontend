@@ -51,16 +51,16 @@ export function Navbar({
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           <a
             href="#main"
-            className="sr-only rounded-md px-3 py-2 text-sm font-medium text-foreground focus:not-sr-only focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:ring-offset-2 focus:ring-offset-background"
+            className="sr-only rounded-md px-3 py-2 text-sm font-medium text-foreground focus:not-sr-only focus:outline-none focus:ring-2 focus:ring-ring/40 focus:ring-offset-2 focus:ring-offset-background"
           >
             Skip to content
           </a>
           <a href="/" className="group inline-flex items-center gap-2">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/20 bg-emerald-500/10">
-              <Shield className="h-5 w-5 text-emerald-400" />
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-primary/15 bg-primary/10">
+              <Shield className="h-5 w-5 text-primary" />
             </span>
             <span className="text-sm font-semibold tracking-wide text-foreground">
-              DevCon<span className="text-emerald-400">1</span>
+              DevCon<span className="text-primary">1</span>
             </span>
           </a>
 
@@ -73,9 +73,9 @@ export function Navbar({
                   href={item.href}
                   aria-current={active ? 'page' : undefined}
                   className={[
-                    'rounded-md px-2 py-1 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500/35 focus:ring-offset-2 focus:ring-offset-background',
+                    'rounded-md px-2 py-1 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-ring/40 focus:ring-offset-2 focus:ring-offset-background',
                     active
-                      ? 'bg-emerald-500/10 text-foreground ring-1 ring-emerald-500/25'
+                      ? 'bg-primary/10 text-foreground ring-1 ring-primary/20'
                       : 'text-muted-foreground hover:bg-muted/40 hover:text-foreground',
                   ].join(' ')}
                 >
@@ -89,13 +89,11 @@ export function Navbar({
             {cta.href === '/contact' ? (
               <StartProjectDialog
                 trigger={
-                  <Button variant="outline" className="border-emerald-500/20 bg-transparent hover:bg-emerald-500/10">
-                    {cta.label}
-                  </Button>
+                  <Button variant="outline">{cta.label}</Button>
                 }
               />
             ) : (
-              <Button asChild variant="outline" className="border-emerald-500/20 bg-transparent hover:bg-emerald-500/10">
+              <Button asChild variant="outline">
                 <a href={cta.href}>{cta.label}</a>
               </Button>
             )}
@@ -111,8 +109,8 @@ export function Navbar({
               <SheetContent side="right">
                 <SheetHeader>
                   <SheetTitle className="flex items-center gap-2">
-                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-emerald-500/20 bg-emerald-500/10">
-                      <Shield className="h-4 w-4 text-emerald-400" />
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-primary/15 bg-primary/10">
+                      <Shield className="h-4 w-4 text-primary" />
                     </span>
                     DevCon1
                   </SheetTitle>
@@ -129,7 +127,7 @@ export function Navbar({
                         className={[
                           'rounded-md px-3 py-2 text-sm transition-colors',
                           active
-                            ? 'bg-emerald-500/10 text-foreground ring-1 ring-emerald-500/25'
+                            ? 'bg-primary/10 text-foreground ring-1 ring-primary/20'
                             : 'text-muted-foreground hover:bg-muted hover:text-foreground',
                         ].join(' ')}
                       >
@@ -139,10 +137,10 @@ export function Navbar({
                   })}
                   {cta.href === '/contact' ? (
                     <StartProjectDialog
-                      trigger={<Button className="mt-2 w-full bg-emerald-500 text-emerald-950 hover:bg-emerald-400">{cta.label}</Button>}
+                      trigger={<Button className="mt-2 w-full">{cta.label}</Button>}
                     />
                   ) : (
-                    <Button asChild className="mt-2 bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
+                    <Button asChild className="mt-2">
                       <a href={cta.href}>{cta.label}</a>
                     </Button>
                   )}

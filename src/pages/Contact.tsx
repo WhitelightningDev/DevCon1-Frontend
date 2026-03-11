@@ -1,16 +1,13 @@
 import type { FormEvent } from 'react'
 import { useEffect, useMemo, useState } from 'react'
-import { ArrowRight, Mail, MapPin, MessageSquare, PhoneCall } from 'lucide-react'
+import { ArrowRight, Mail, PhoneCall } from 'lucide-react'
 
-import { SignalBeacon } from '@/components/illustrations/SignalBeacon'
 import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
 import { PageBackground } from '@/components/layout/PageBackground'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
 import { setSeo } from '@/lib/seo'
 
@@ -90,14 +87,9 @@ export function ContactPage() {
           <div className="mx-auto max-w-6xl px-4">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
               <div className="lg:col-span-6 text-center md:text-left">
-                <div className="flex items-center justify-center gap-2 md:justify-start">
-                  <Badge variant="outline" className="border-emerald-500/25 bg-emerald-500/10 text-emerald-200">
-                    Contact
-                  </Badge>
-                  <p className="text-xs tracking-wide text-muted-foreground">LET'S TALK</p>
-                </div>
+                <p className="text-xs font-medium tracking-wide text-muted-foreground">CONTACT</p>
 
-                <h1 className="dc-animate-heading [--dc-delay:80ms] mt-5 text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+                <h1 className="dc-animate-heading [--dc-delay:80ms] mt-3 text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
                   Tell us what you’re building.
                 </h1>
                 <p className="mx-auto mt-4 max-w-2xl text-pretty text-base text-muted-foreground sm:text-lg md:mx-0">
@@ -106,7 +98,7 @@ export function ContactPage() {
 
                 <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-start md:justify-start">
                   {bookingUrl ? (
-                    <Button asChild className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400">
+                    <Button asChild>
                       <a href={bookingUrl} target="_blank" rel="noreferrer">
                         Book a call <ArrowRight className="ml-2 h-4 w-4" />
                       </a>
@@ -119,50 +111,18 @@ export function ContactPage() {
                     </a>
                   </Button>
                 </div>
-
-                <Separator className="my-10" />
-
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-xl border border-border/60 bg-background/40 p-5 text-left">
-                    <p className="flex items-center gap-2 text-sm font-semibold">
-                      <MessageSquare className="h-4 w-4 text-emerald-400" />
-                      Brief template
-                    </p>
-                    <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                      <li>• Goal and users</li>
-                      <li>• Scope and constraints</li>
-                      <li>• Timeline and budget band</li>
-                      <li>• Definition of “done”</li>
-                    </ul>
-                  </div>
-                  <div className="rounded-xl border border-border/60 bg-background/40 p-5 text-left">
-                    <p className="flex items-center gap-2 text-sm font-semibold">
-                      <MapPin className="h-4 w-4 text-emerald-400" />
-                      Availability
-                    </p>
-                    <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                      <li>• Remote-first</li>
-                      <li>• US-aligned time zones</li>
-                      <li>• Sprint blocks or retainers</li>
-                      <li>• Fast turnaround</li>
-                    </ul>
-                  </div>
-                </div>
+                <p className="mt-8 text-sm text-muted-foreground">
+                  Brief template: goal, users, scope/constraints, timeline/budget band, definition of “done”.
+                </p>
               </div>
 
               <div className="lg:col-span-6">
-                <div className="rounded-2xl border border-emerald-500/15 bg-gradient-to-b from-emerald-500/10 to-background/30 p-6 md:p-10">
+                <div className="rounded-xl border border-border/60 bg-background/40 p-6 md:p-10">
                   <p className="text-xs font-medium tracking-wide text-muted-foreground">SEND A BRIEF</p>
                   <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight">Contact form</h2>
                   <p className="mt-2 text-sm text-muted-foreground">
                     Prefer email? That works too. Use the form for the fastest intake and easiest follow-up.
                   </p>
-
-                  <div className="mt-6">
-                    <SignalBeacon className="h-28 w-full text-emerald-300/55" />
-                  </div>
-
-                  <Separator className="my-8" />
 
                   <form onSubmit={onSubmit} className="grid gap-4">
                     <div className="grid gap-2">
@@ -206,7 +166,7 @@ export function ContactPage() {
                     ) : null}
 
                     {status === 'sent' ? (
-                      <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-4 text-sm text-emerald-100">
+                      <div className="rounded-lg border border-primary/20 bg-primary/10 p-4 text-sm text-foreground">
                         Thanks — your message was sent. We’ll reply within 1 business day.
                       </div>
                     ) : null}
@@ -220,7 +180,7 @@ export function ContactPage() {
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                       <Button
                         type="submit"
-                        className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400"
+                        className="bg-primary text-primary-foreground hover:bg-primary/90"
                         disabled={!canSubmit || status === 'sending' || !formspreeEndpoint}
                       >
                         {status === 'sending' ? 'Sending…' : 'Send message'}

@@ -1,6 +1,3 @@
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
-
 const steps = [
   {
     title: 'Align',
@@ -29,13 +26,8 @@ export function Process() {
     <section id="process" className="scroll-mt-24 py-14 md:py-20">
       <div className="mx-auto max-w-6xl px-4">
         <div className="text-center md:text-left">
-          <div className="flex items-center justify-center gap-2 md:justify-start">
-            <Badge variant="outline" className="border-emerald-500/25 bg-emerald-500/10 text-emerald-200">
-              Process
-            </Badge>
-            <p className="text-xs tracking-wide text-muted-foreground">HOW WE SHIP</p>
-          </div>
-          <h2 className="dc-animate-heading [--dc-delay:60ms] mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">
+          <p className="text-xs font-medium tracking-wide text-muted-foreground">PROCESS</p>
+          <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
             Tight loops. Clear checkpoints.
           </h2>
           <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
@@ -43,18 +35,14 @@ export function Process() {
           </p>
         </div>
 
-        <Separator className="my-8" />
-
-        <ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <ol className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {steps.map((step, index) => (
-            <li key={step.title} className="rounded-xl border border-border/60 bg-background/40 p-5">
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-sm font-semibold">{step.title}</p>
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10 text-sm font-semibold text-emerald-300">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground">{step.detail}</p>
+            <li key={step.title} className="rounded-lg border border-border/60 bg-background/40 p-4">
+              <p className="text-sm font-semibold">
+                <span className="mr-2 text-primary">{String(index + 1).padStart(2, '0')}.</span>
+                {step.title}
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">{step.detail}</p>
             </li>
           ))}
         </ol>

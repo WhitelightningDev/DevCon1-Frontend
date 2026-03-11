@@ -489,15 +489,15 @@ export function StartProjectDialog({
                 <button
                   type="button"
                   onClick={() => goContact(false)}
-                  className="rounded-xl border border-border/60 bg-background/40 p-5 text-left transition-colors hover:border-emerald-500/20 hover:bg-muted/40"
+                  className="rounded-xl border border-border/60 bg-background/40 p-5 text-left transition-colors hover:border-primary/20 hover:bg-muted/40"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="text-sm font-semibold">Use the contact page</p>
                       <p className="mt-1 text-sm text-muted-foreground">Write what you need help with and send it.</p>
                     </div>
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10">
-                      <Mail className="h-4 w-4 text-emerald-400" />
+                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-primary/15 bg-primary/10">
+                      <Mail className="h-4 w-4 text-primary" />
                     </span>
                   </div>
                 </button>
@@ -505,15 +505,15 @@ export function StartProjectDialog({
                 <button
                   type="button"
                   onClick={() => setMode('wizard')}
-                  className="rounded-xl border border-border/60 bg-background/40 p-5 text-left transition-colors hover:border-emerald-500/20 hover:bg-muted/40"
+                  className="rounded-xl border border-border/60 bg-background/40 p-5 text-left transition-colors hover:border-primary/20 hover:bg-muted/40"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="text-sm font-semibold">Follow an advanced wizard</p>
                       <p className="mt-1 text-sm text-muted-foreground">More questions → a better brief → faster quotes.</p>
                     </div>
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-emerald-500/15 bg-emerald-500/10">
-                      <Sparkles className="h-4 w-4 text-emerald-400" />
+                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-primary/15 bg-primary/10">
+                      <Sparkles className="h-4 w-4 text-primary" />
                     </span>
                   </div>
                 </button>
@@ -524,7 +524,7 @@ export function StartProjectDialog({
               <DialogHeader>
                 <DialogTitle className="flex items-center justify-between gap-3">
                   <span className="inline-flex items-center gap-2">
-                    <ClipboardList className="h-5 w-5 text-emerald-400" />
+                    <ClipboardList className="h-5 w-5 text-primary" />
                     Project wizard
                   </span>
                   <span className="text-xs text-muted-foreground">
@@ -1085,7 +1085,7 @@ export function StartProjectDialog({
                       >
                         Copy
                       </Button>
-                      <Button type="button" className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400" onClick={() => goContact(true)}>
+                      <Button type="button" onClick={() => goContact(true)}>
                         Send via contact form <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </div>
@@ -1127,7 +1127,6 @@ export function StartProjectDialog({
                   {step < steps.length - 1 ? (
                     <Button
                       type="button"
-                      className="bg-emerald-500 text-emerald-950 hover:bg-emerald-400"
                       disabled={!canNext}
                       onClick={() => setStep((s) => Math.min(steps.length - 1, s + 1))}
                     >
@@ -1171,4 +1170,3 @@ export function StartProjectDialog({
     </>
   )
 }
-
