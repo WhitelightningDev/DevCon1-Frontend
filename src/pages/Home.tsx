@@ -9,6 +9,7 @@ import { Industries } from '@/components/sections/Industries'
 import { Process } from '@/components/sections/Process'
 import { Services } from '@/components/sections/Services'
 import { TrustSignals } from '@/components/sections/TrustSignals'
+import { CompanyLogos } from '@/components/sections/CompanyLogos'
 import { setSeo } from '@/lib/seo'
 
 export function Home() {
@@ -30,6 +31,7 @@ export function Home() {
       <main id="main">
         <Hero />
         <TrustSignals />
+        <CompanyLogos />
         <Services />
         <Industries />
         <Process />

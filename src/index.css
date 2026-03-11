@@ -101,4 +101,25 @@
       animation: none !important;
     }
   }
+
+  @keyframes dc-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .dc-marquee {
+    animation: dc-marquee var(--dc-marquee-duration, 35s) linear infinite;
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dc-marquee {
+      animation: none !important;
+      transform: translateX(0) !important;
+    }
+  }
 }
