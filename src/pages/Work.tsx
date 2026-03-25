@@ -308,7 +308,8 @@ export function WorkPage() {
   useEffect(() => {
     setSeo({
       title: 'DevCon1 — Work',
-      description: 'A selection of shipped sites and prototypes demonstrating repeatable delivery and clean UX.',
+      description:
+        'Case studies and shipped work: websites, dashboards, and prototypes—delivered with clean UX, performance focus, and maintainable handoff.',
       imagePath: '/pwa/icon-512.png',
     })
   }, [])
@@ -324,12 +325,12 @@ export function WorkPage() {
           <div className="mx-auto max-w-6xl px-4">
             <div className="grid gap-8 md:grid-cols-[1.15fr_0.85fr] md:items-end">
               <div className="max-w-3xl text-center md:text-left">
-                <p className="text-xs font-medium tracking-wide text-muted-foreground">WORK</p>
-                <h1 className="dc-animate-heading [--dc-delay:80ms] mt-3 text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+                <p className="dc-kicker">Work</p>
+                <h1 className="dc-animate-heading dc-h1 [--dc-delay:80ms] mt-3 text-foreground">
                   Shipped software,{' '}
                   <span className="text-primary">measurable outcomes</span>.
                 </h1>
-                <p className="mt-4 max-w-2xl text-pretty text-base text-muted-foreground sm:text-lg">
+                <p className="mt-4 max-w-2xl dc-lead">
                   Selected websites and prototypes focused on clarity, performance, and delivery you can repeat.
                 </p>
 
@@ -339,11 +340,11 @@ export function WorkPage() {
 	                      View case studies <ArrowRight className="ml-2 h-4 w-4" />
 	                    </a>
 	                  </Button>
-	                  <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
-	                    <a href="#projects">Browse all work</a>
-	                  </Button>
-	                </div>
-	              </div>
+		                  <Button asChild variant="outline">
+		                    <a href="#projects">Browse all work</a>
+		                  </Button>
+		                </div>
+		              </div>
 
               <Card className="border-border/60 bg-background/40">
                 <CardHeader className="pb-4">
@@ -380,12 +381,12 @@ export function WorkPage() {
 
         <section id="case-studies" className="scroll-mt-24 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
-            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-              <div className="text-center md:text-left">
-                <p className="text-xs font-medium tracking-wide text-muted-foreground">CASE STUDIES</p>
-                <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
-                  Work that sells itself.
-                </h2>
+	            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+	              <div className="text-center md:text-left">
+	                <p className="dc-kicker">Case studies</p>
+	                <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
+	                  Work that sells itself.
+	                </h2>
                 <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
                   Three representative builds — presented like a client would evaluate them.
                 </p>
@@ -431,7 +432,7 @@ export function WorkPage() {
                     <CardHeader className="space-y-3 pb-4">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <p className="text-xs font-medium tracking-wide text-muted-foreground">{caseStudy.label.toUpperCase()}</p>
+                          <p className="dc-kicker">{caseStudy.label}</p>
                           <CardTitle className="mt-2 text-base">{project.title}</CardTitle>
                         </div>
                         <div className="flex flex-wrap justify-end gap-2">
@@ -480,11 +481,11 @@ export function WorkPage() {
                             <div className="grid gap-6 md:grid-cols-[1.2fr_0.8fr]">
                               <div className="space-y-6">
                                 <div>
-                                  <p className="text-xs font-medium tracking-wide text-muted-foreground">PROBLEM</p>
+                                  <p className="dc-kicker">Problem</p>
                                   <p className="mt-2 text-sm text-muted-foreground">{caseStudy.problem}</p>
                                 </div>
                                 <div>
-                                  <p className="text-xs font-medium tracking-wide text-muted-foreground">DELIVERABLES</p>
+                                  <p className="dc-kicker">Deliverables</p>
                                   <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
                                     {caseStudy.deliverables.map((bullet) => (
                                       <li key={bullet}>• {bullet}</li>
@@ -492,7 +493,7 @@ export function WorkPage() {
                                   </ul>
                                 </div>
                                 <div>
-                                  <p className="text-xs font-medium tracking-wide text-muted-foreground">HIGHLIGHTS</p>
+                                  <p className="dc-kicker">Highlights</p>
                                   <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
                                     {caseStudy.highlights.map((bullet) => (
                                       <li key={bullet}>• {bullet}</li>
@@ -503,7 +504,7 @@ export function WorkPage() {
 
                               <div className="space-y-6">
                                 <div className="rounded-xl border border-border/60 bg-background/40 p-4">
-                                  <p className="text-xs font-medium tracking-wide text-muted-foreground">STACK</p>
+                                  <p className="dc-kicker">Stack</p>
                                   <div className="mt-3 flex flex-wrap gap-2">
                                     {caseStudy.stack.map((entry) => (
                                       <Badge key={entry} variant="secondary" className="bg-secondary/70">
@@ -514,7 +515,7 @@ export function WorkPage() {
                                 </div>
 
                                 <div className="rounded-xl border border-border/60 bg-background/40 p-4">
-                                  <p className="text-xs font-medium tracking-wide text-muted-foreground">NEXT STEP</p>
+                                  <p className="dc-kicker">Next step</p>
                                   <p className="mt-2 text-sm text-muted-foreground">
                                     Want something similar for your team?
                                   </p>
@@ -535,7 +536,7 @@ export function WorkPage() {
                             {hasGallery ? (
                               <div className="mt-6">
                                 <Separator className="mb-5" />
-                                <p className="text-xs font-medium tracking-wide text-muted-foreground">SCREENSHOTS</p>
+                                <p className="dc-kicker">Screenshots</p>
                                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                                   {project.mockups?.map((mockup) => (
                                     <div
@@ -576,8 +577,8 @@ export function WorkPage() {
           <div className="mx-auto max-w-6xl px-4">
             <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
               <div className="text-center md:text-left">
-                <p className="text-xs font-medium tracking-wide text-muted-foreground">PROJECTS</p>
-                <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+                <p className="dc-kicker">Projects</p>
+                <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
                   Representative work.
                 </h2>
                 <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
@@ -818,7 +819,7 @@ export function WorkPage() {
                 <div key={category}>
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                     <div>
-                      <p className="text-xs font-medium tracking-wide text-muted-foreground">{category.toUpperCase()}</p>
+                      <p className="dc-kicker">{category}</p>
                       <h3 className="mt-2 text-lg font-semibold tracking-tight">{category}</h3>
                     </div>
                     <p className="text-xs text-muted-foreground">
@@ -946,8 +947,8 @@ export function WorkPage() {
         <section id="approach" className="scroll-mt-24 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="text-center md:text-left">
-              <p className="text-xs font-medium tracking-wide text-muted-foreground">WHAT YOU GET</p>
-              <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+              <p className="dc-kicker">What you get</p>
+              <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
                 Deliverables that stick.
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
@@ -989,8 +990,8 @@ export function WorkPage() {
               <CardContent className="p-6 md:p-10">
                 <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                   <div className="text-center md:text-left">
-                    <p className="text-xs font-medium tracking-wide text-muted-foreground">NEXT STEP</p>
-                    <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+                    <p className="dc-kicker">Next step</p>
+                    <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
                       Want work like this?
                     </h2>
                     <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
@@ -1003,7 +1004,7 @@ export function WorkPage() {
                         Start a conversation <ArrowRight className="ml-2 h-4 w-4" />
                       </a>
                     </Button>
-                    <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
+                    <Button asChild variant="outline">
                       <a href="/">Back to home</a>
                     </Button>
                   </div>

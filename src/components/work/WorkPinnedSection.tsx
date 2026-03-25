@@ -193,7 +193,7 @@ export function WorkPinnedSection({
                 <CardHeader className="space-y-3">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <p className="text-xs font-medium tracking-wide text-muted-foreground">PROJECT</p>
+                      <p className="dc-kicker">Project</p>
                       <CardTitle className="mt-2 text-xl tracking-tight text-foreground">{title}</CardTitle>
                     </div>
                     {Icon ? (

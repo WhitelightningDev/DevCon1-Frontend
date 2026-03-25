@@ -25,8 +25,8 @@ export function TrustSignals() {
       <div className="mx-auto max-w-6xl px-4">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="text-center md:text-left">
-            <p className="text-xs font-medium tracking-wide text-muted-foreground">TRUST</p>
-            <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+            <p className="dc-kicker">Trust</p>
+            <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
               Proof you can scan quickly.
             </h2>
             <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">

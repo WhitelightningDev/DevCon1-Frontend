@@ -24,7 +24,7 @@ export function ContactPage() {
   useEffect(() => {
     setSeo({
       title: 'DevCon1 — Contact',
-      description: 'Send a short brief and we’ll reply within 1 business day with next steps and timeline options.',
+      description: 'Send a short brief. We reply within 1 business day with next steps, timeline options, and a proposal outline.',
       imagePath: '/pwa/icon-512.png',
     })
   }, [])
@@ -87,12 +87,12 @@ export function ContactPage() {
           <div className="mx-auto max-w-6xl px-4">
             <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
               <div className="lg:col-span-6 text-center md:text-left">
-                <p className="text-xs font-medium tracking-wide text-muted-foreground">CONTACT</p>
+                <p className="dc-kicker">Contact</p>
 
-                <h1 className="dc-animate-heading [--dc-delay:80ms] mt-3 text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+                <h1 className="dc-animate-heading dc-h1 [--dc-delay:80ms] mt-3 text-foreground">
                   Tell us what you’re building.
                 </h1>
-                <p className="mx-auto mt-4 max-w-2xl text-pretty text-base text-muted-foreground sm:text-lg md:mx-0">
+                <p className="mx-auto mt-4 max-w-2xl dc-lead md:mx-0">
                   Share a short brief and we’ll respond within 1 business day with next steps and timeline options.
                 </p>
 
@@ -118,8 +118,8 @@ export function ContactPage() {
 
               <div className="lg:col-span-6">
                 <div className="rounded-xl border border-border/60 bg-background/40 p-6 md:p-10">
-                  <p className="text-xs font-medium tracking-wide text-muted-foreground">SEND A BRIEF</p>
-                  <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight">Contact form</h2>
+                  <p className="dc-kicker">Send a brief</p>
+                  <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">Contact form</h2>
                   <p className="mt-2 text-sm text-muted-foreground">
                     Prefer email? That works too. Use the form for the fastest intake and easiest follow-up.
                   </p>

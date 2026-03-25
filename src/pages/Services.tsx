@@ -4,13 +4,13 @@ import {
   Activity,
   BadgeCheck,
   Boxes,
+  Bot,
   Eye,
   FileText,
   HardHat,
   Radar,
   ServerCog,
   Shield,
-  Smartphone,
   Wrench,
 } from 'lucide-react'
 
@@ -18,48 +18,51 @@ import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
 import { PageBackground } from '@/components/layout/PageBackground'
 import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { setSeo } from '@/lib/seo'
 
 const offerings = [
   {
     title: 'Product & Platform Engineering',
-    description: 'React/TypeScript delivery, component systems, performance, and pragmatic architecture.',
+    description: 'React/TypeScript delivery with pragmatic architecture and predictable milestones.',
     icon: Boxes,
+    includes: ['Component systems & design tokens', 'Feature delivery via PR milestones', 'Maintainable patterns for scale'],
+  },
+  {
+    title: 'AI Integration (Existing Infrastructure)',
+    description: 'Add AI capability to current systems without rewriting everything.',
+    icon: Bot,
+    includes: ['LLM APIs + tool integrations', 'RAG/search over internal knowledge', 'Guardrails, evals, and rollout strategy'],
   },
   {
     title: 'Integrations & APIs',
-    description: 'API design, third-party integrations, ETL/data sync, and reliable data contracts.',
+    description: 'API design and integration work with resilient data contracts and clear ownership.',
     icon: ServerCog,
+    includes: ['API design & versioning strategy', 'Webhooks, third-party integrations', 'ETL/data sync reliability'],
   },
   {
-    title: 'Secure Web Delivery',
-    description: 'Threat-aware implementation, authZ patterns, dependency hygiene, and security hardening.',
+    title: 'Security Hardening',
+    description: 'Threat-aware implementation with secure defaults and reviewable controls.',
     icon: Shield,
+    includes: ['AuthN/AuthZ patterns & least privilege', 'Dependency + secrets hygiene', 'Hardening checklist + handoff notes'],
   },
   {
-    title: 'DevEx & CI/CD',
-    description: 'Build pipelines, release workflows, environment strategy, and developer productivity.',
-    icon: Wrench,
-  },
-  {
-    title: 'Performance & UX Audit',
-    description: 'Core Web Vitals, conversion paths, and usability improvements that move metrics.',
+    title: 'Performance & UX Optimization',
+    description: 'Core Web Vitals, conversion flows, and usability fixes tied to measurable outcomes.',
     icon: Activity,
+    includes: ['Core Web Vitals triage + fixes', 'UX flow improvements for key paths', 'Metrics + instrumentation guidance'],
   },
   {
-    title: 'Accessibility Audit',
-    description: 'WCAG-focused review and remediation: keyboard, contrast, semantics, and forms.',
+    title: 'Accessibility & Compliance',
+    description: 'WCAG-focused audit and remediation: keyboard, contrast, semantics, and forms.',
     icon: Eye,
+    includes: ['Audit + prioritized remediation plan', 'Keyboard + screen reader testing', 'Accessible component patterns'],
   },
   {
-    title: 'Observability & Runbooks',
-    description: 'Logging/metrics hooks, alerting basics, and operational documentation for ownership.',
-    icon: BadgeCheck,
-  },
-  {
-    title: 'PWA / Offline-first',
-    description: 'Installable apps, caching strategy, update flows, and resilient UX.',
-    icon: Smartphone,
+    title: 'DevEx, CI/CD & Release',
+    description: 'Build pipelines, release workflows, and environment strategy for calm delivery.',
+    icon: Wrench,
+    includes: ['CI/CD pipelines + quality gates', 'Release & environment strategy', 'Deployment checklist + runbook starter'],
   },
 ] as const
 
@@ -108,7 +111,7 @@ export function ServicesPage() {
     setSeo({
       title: 'DevCon1 — Services',
       description:
-        'Product & platform engineering, integrations, performance/UX, accessibility, security hardening, CI/CD, observability, and PWA delivery.',
+        'Product & platform engineering, AI integration, integrations, performance/UX, accessibility, security hardening, and CI/CD delivery.',
       imagePath: '/pwa/icon-512.png',
     })
   }, [])
@@ -123,13 +126,11 @@ export function ServicesPage() {
         <section className="relative overflow-hidden pb-10 pt-12 md:pb-16 md:pt-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="mx-auto max-w-3xl text-center">
-              <p className="text-xs font-medium tracking-wide text-muted-foreground">SERVICES</p>
-                <h1 className="dc-animate-heading [--dc-delay:80ms] mt-3 text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-                  Engineering support built for{' '}
-                  <span className="text-primary">high-stakes delivery</span>
-                  .
-                </h1>
-              <p className="mx-auto mt-4 max-w-2xl text-pretty text-base text-muted-foreground sm:text-lg">
+              <p className="dc-kicker">Services</p>
+              <h1 className="dc-animate-heading dc-h1 [--dc-delay:80ms] mt-3 text-foreground">
+                Engineering support built for <span className="text-primary">high-stakes delivery</span>.
+              </h1>
+              <p className="mx-auto mt-4 max-w-2xl dc-lead">
                 We help teams ship secure, reliable software with a repeatable process and clean UX—delivered in
                 reviewable milestones and handed off for long-term ownership.
               </p>
@@ -165,38 +166,71 @@ export function ServicesPage() {
 
         <section id="offerings" className="scroll-mt-24 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
-            <div className="text-center md:text-left">
-              <p className="text-xs font-medium tracking-wide text-muted-foreground">OFFERINGS</p>
-              <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
-                A focused set of services.
-              </h2>
-              <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                A clear menu of services, sold as projects, sprint blocks, or ongoing support.
-              </p>
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div className="text-center md:text-left">
+                <p className="dc-kicker">Offerings</p>
+                <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
+                  A focused set of services.
+                </h2>
+                <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
+                  Seven core capabilities—delivered as projects, sprint blocks, or ongoing support with a clean handoff.
+                </p>
+              </div>
+
+              <div className="flex flex-col items-center gap-2 md:items-end">
+                <Button asChild variant="outline">
+                  <a href="#contact">Request a proposal</a>
+                </Button>
+                <p className="text-xs text-muted-foreground">Reply within 1 business day.</p>
+              </div>
             </div>
 
-            <ul className="mt-8 grid gap-3 md:grid-cols-2">
+            <Separator className="my-8" />
+
+            <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {offerings.map((item) => {
                 const Icon = item.icon
                 return (
-                  <li key={item.title} className="rounded-lg border border-border/60 bg-background/40 p-4">
-                    <p className="flex items-center gap-2 text-sm font-semibold">
-                      <Icon className="h-4 w-4 text-primary" />
-                      {item.title}
-                    </p>
-                    <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
+                  <li
+                    key={item.title}
+                    className="group relative overflow-hidden rounded-2xl border border-border/70 bg-background/55 p-6 shadow-sm shadow-black/5 backdrop-blur transition-colors hover:border-primary/25 hover:bg-background/75"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h3 className="text-sm font-semibold tracking-tight">{item.title}</h3>
+                        <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
+                      </div>
+                      <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-primary/15 bg-primary/10">
+                        <Icon className="h-5 w-5 text-primary" />
+                      </span>
+                    </div>
+
+                    <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
+                      {item.includes.map((line) => (
+                        <li key={line} className="flex items-start gap-2">
+                          <span className="mt-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary/10">
+                            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                          </span>
+                          <span>{line}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </li>
                 )
               })}
             </ul>
+
+            <p className="mt-6 text-center text-xs text-muted-foreground md:text-left">
+              Need observability/runbooks, PWA work, or other specialist delivery? Ask—these are available by request.
+            </p>
           </div>
         </section>
 
         <section id="engagement" className="scroll-mt-24 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="text-center md:text-left">
-              <p className="text-xs font-medium tracking-wide text-muted-foreground">ENGAGEMENT</p>
-              <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+              <p className="dc-kicker">Engagement</p>
+              <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
                 Simple options, clear outcomes.
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
@@ -237,8 +271,8 @@ export function ServicesPage() {
         <section id="faq" className="scroll-mt-24 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="text-center md:text-left">
-              <p className="text-xs font-medium tracking-wide text-muted-foreground">FAQ</p>
-              <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+              <p className="dc-kicker">FAQ</p>
+              <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
                 Answer the big questions.
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
@@ -276,8 +310,8 @@ export function ServicesPage() {
             <div className="rounded-xl border border-border/60 bg-background/40 p-6 md:p-10">
               <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                 <div className="text-center md:text-left">
-                  <p className="text-xs font-medium tracking-wide text-muted-foreground">NEXT STEP</p>
-                  <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+                  <p className="dc-kicker">Next step</p>
+                  <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
                     Tell us what you’re building.
                   </h2>
                   <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">

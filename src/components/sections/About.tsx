@@ -19,9 +19,9 @@ export function About() {
           <div className="text-center md:text-left lg:max-w-xl">
             <div className="flex items-center justify-center gap-2 md:justify-start">
               <Badge variant="outline">About</Badge>
-              <p className="text-xs tracking-wide text-muted-foreground">WHO WE ARE</p>
+              <p className="dc-kicker">Who we are</p>
             </div>
-            <h2 className="dc-animate-heading [--dc-delay:60ms] mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">
+            <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-4">
               Senior-led delivery, built on trust.
             </h2>
             <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
@@ -41,7 +41,7 @@ export function About() {
 
           <div className="grid gap-4 lg:w-[28rem]">
             <div className="rounded-2xl border border-border/60 bg-background/40 p-6">
-              <p className="text-xs font-medium tracking-wide text-muted-foreground">FOUNDER</p>
+              <p className="dc-kicker">Founder</p>
               <div className="mt-4 flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
                 <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-border/60 bg-background/50">
                   <span className="text-sm font-semibold text-primary">D1</span>

@@ -11,8 +11,8 @@ export function ContactCTA() {
         <div className="rounded-xl border border-border/60 bg-background/40 p-6 md:p-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="text-center md:text-left">
-              <p className="text-xs font-medium tracking-wide text-muted-foreground">CONTACT</p>
-              <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+              <p className="dc-kicker">Contact</p>
+              <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
                 Ready to ship something solid?
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">

@@ -110,7 +110,7 @@ export function Pricing() {
               <Badge variant="outline">Pricing</Badge>
               <p className="text-xs tracking-wide text-muted-foreground">RANGES & TIERS</p>
             </div>
-            <h2 className="dc-animate-heading [--dc-delay:60ms] mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">
+            <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-4">
               Transparent packages to set expectations.
             </h2>
             <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">

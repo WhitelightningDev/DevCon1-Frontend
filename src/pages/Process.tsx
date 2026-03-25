@@ -142,7 +142,8 @@ export function ProcessPage() {
   useEffect(() => {
     setSeo({
       title: 'DevCon1 — Process',
-      description: 'A clear delivery flow: align early, ship in reviewable increments, and hand off work your team can own.',
+      description:
+        'Our delivery process: align early, design for clarity, ship in reviewable increments, harden for production, and hand off durable artifacts.',
       imagePath: '/pwa/icon-512.png',
     })
   }, [])
@@ -157,13 +158,13 @@ export function ProcessPage() {
         <section className="relative overflow-hidden pb-10 pt-12 md:pb-16 md:pt-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="mx-auto max-w-3xl text-center">
-              <p className="text-xs font-medium tracking-wide text-muted-foreground">PROCESS</p>
-              <h1 className="dc-animate-heading [--dc-delay:80ms] mt-3 text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+              <p className="dc-kicker">Process</p>
+              <h1 className="dc-animate-heading dc-h1 [--dc-delay:80ms] mt-3 text-foreground">
                 A delivery flow built for{' '}
                 <span className="text-primary">reliability and speed</span>
                 .
               </h1>
-              <p className="mx-auto mt-4 max-w-2xl text-pretty text-base text-muted-foreground sm:text-lg">
+              <p className="mx-auto mt-4 max-w-2xl dc-lead">
                 Align early, ship in reviewable increments, and hand off work your team can own.
               </p>
 
@@ -173,7 +174,7 @@ export function ProcessPage() {
                   View phases <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
-              <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
+              <Button asChild variant="outline">
                 <a href="#templates">See templates</a>
               </Button>
             </div>
@@ -197,8 +198,8 @@ export function ProcessPage() {
         <section id="phases" className="scroll-mt-24 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="text-center md:text-left">
-              <p className="text-xs font-medium tracking-wide text-muted-foreground">PHASES</p>
-              <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+              <p className="dc-kicker">Phases</p>
+              <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
                 A clear sequence, flexible scope.
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
@@ -230,8 +231,8 @@ export function ProcessPage() {
         <section id="templates" className="scroll-mt-24 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="text-center md:text-left">
-              <p className="text-xs font-medium tracking-wide text-muted-foreground">TEMPLATES</p>
-              <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+              <p className="dc-kicker">Templates</p>
+              <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
                 Templates we provide for every project.
               </h2>
               <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
@@ -275,8 +276,8 @@ export function ProcessPage() {
             <div className="rounded-xl border border-border/60 bg-background/40 p-6 md:p-10">
               <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                 <div className="text-center md:text-left">
-                  <p className="text-xs font-medium tracking-wide text-muted-foreground">NEXT STEP</p>
-                  <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+                  <p className="dc-kicker">Next step</p>
+                  <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
                     Want this process applied to you?
                   </h2>
                   <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
@@ -289,7 +290,7 @@ export function ProcessPage() {
                       Start a conversation <ArrowRight className="ml-2 h-4 w-4" />
                     </a>
                   </Button>
-                  <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
+                  <Button asChild variant="outline">
                     <a href="/">Back to home</a>
                   </Button>
                 </div>

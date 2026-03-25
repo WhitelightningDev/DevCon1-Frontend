@@ -10,14 +10,15 @@ import { Process } from '@/components/sections/Process'
 import { Services } from '@/components/sections/Services'
 import { TrustSignals } from '@/components/sections/TrustSignals'
 import { CompanyLogos } from '@/components/sections/CompanyLogos'
+import { AiIntegration } from '@/components/sections/AiIntegration'
 import { setSeo } from '@/lib/seo'
 
 export function Home() {
   useEffect(() => {
     setSeo({
-      title: 'DevCon1 — Reliable software systems for growth',
+      title: 'DevCon1 — Engineering support built for high-stakes delivery',
       description:
-        'We build scalable software systems and digital infrastructure for businesses that need reliability, performance, and growth.',
+        'We build and improve web apps, integrations, and AI-enabled workflows—delivered with secure defaults, performance focus, and a clean handoff.',
       imagePath: '/pwa/icon-512.png',
     })
   }, [])
@@ -33,6 +34,7 @@ export function Home() {
         <TrustSignals />
         <CompanyLogos />
         <Services />
+        <AiIntegration />
         <Industries />
         <Process />
         <ContactCTA />

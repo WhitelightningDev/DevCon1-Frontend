@@ -1,5 +1,7 @@
 import { lazy, Suspense, useMemo } from 'react'
 
+import { FloatingContactFab } from '@/components/layout/FloatingContactFab'
+
 const Home = lazy(() => import('./pages/Home').then((mod) => ({ default: mod.Home })))
 const ContactPage = lazy(() => import('./pages/Contact').then((mod) => ({ default: mod.ContactPage })))
 const ServicesPage = lazy(() => import('./pages/Services').then((mod) => ({ default: mod.ServicesPage })))
@@ -29,7 +31,10 @@ function App() {
         </div>
       }
     >
-      <Page />
+      <>
+        <Page />
+        <FloatingContactFab />
+      </>
     </Suspense>
   )
 }

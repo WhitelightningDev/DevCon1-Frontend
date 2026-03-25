@@ -60,6 +60,14 @@ type WizardData = {
   targetUsers: string
   primaryCta: string
 
+  problemStatement: string
+  targetSegments: string
+  decisionMakers: string
+  differentiators: string
+  acquisitionChannels: string
+  pricingModel: string
+  discoveryLinks: string
+
   description: string
   pagesOrScreens: string
   keyFlows: string
@@ -279,6 +287,13 @@ function buildSummary(data: WizardData) {
     `Primary goal: ${data.primaryGoal?.trim() ? data.primaryGoal.trim() : '—'}`,
     `Target users: ${data.targetUsers?.trim() ? data.targetUsers.trim() : '—'}`,
     `Primary CTA: ${data.primaryCta?.trim() ? data.primaryCta.trim() : '—'}`,
+    `Problem statement: ${data.problemStatement?.trim() ? data.problemStatement.trim() : '—'}`,
+    `Target segments / ICP: ${data.targetSegments?.trim() ? data.targetSegments.trim() : '—'}`,
+    `Decision makers / stakeholders: ${data.decisionMakers?.trim() ? data.decisionMakers.trim() : '—'}`,
+    `Differentiators / positioning: ${data.differentiators?.trim() ? data.differentiators.trim() : '—'}`,
+    `Acquisition channels: ${data.acquisitionChannels?.trim() ? data.acquisitionChannels.trim() : '—'}`,
+    `Pricing / business model: ${data.pricingModel?.trim() ? data.pricingModel.trim() : '—'}`,
+    `Discovery links: ${data.discoveryLinks?.trim() ? data.discoveryLinks.trim() : '—'}`,
     goLiveLine,
     `Currency: ${data.currency ? CURRENCIES.find((c) => c.code === data.currency)?.label || data.currency : '—'}`,
     `Budget: ${data.budget || '—'}`,
@@ -349,6 +364,13 @@ const emptyWizardData: WizardData = {
   primaryGoal: '',
   targetUsers: '',
   primaryCta: '',
+  problemStatement: '',
+  targetSegments: '',
+  decisionMakers: '',
+  differentiators: '',
+  acquisitionChannels: '',
+  pricingModel: '',
+  discoveryLinks: '',
   description: '',
   pagesOrScreens: '',
   keyFlows: '',
@@ -392,6 +414,7 @@ export function StartProjectDialog({
       { title: 'Basics' },
       { title: 'Business' },
       { title: 'Goals' },
+      { title: 'Discovery' },
       { title: 'Scope' },
       { title: 'Features' },
       { title: 'Timeline & budget' },
@@ -415,6 +438,8 @@ export function StartProjectDialog({
       Boolean(data.projectStage),
       Boolean(data.primaryGoal.trim()),
       Boolean(data.targetUsers.trim()),
+      Boolean(data.problemStatement.trim()),
+      Boolean(data.targetSegments.trim()),
       Boolean(data.description.trim()),
       Boolean(data.pagesOrScreens.trim()),
       Boolean(data.timeline),
@@ -443,8 +468,9 @@ export function StartProjectDialog({
       if (!data.targetUsers.trim()) return false
       return true
     }
-    if (step === 3) return Boolean(data.description.trim()) && Boolean(data.pagesOrScreens.trim())
-    if (step === 5) return Boolean(data.timeline) && Boolean(data.currency) && Boolean(data.budget)
+    if (step === 3) return Boolean(data.problemStatement.trim()) && Boolean(data.targetSegments.trim())
+    if (step === 4) return Boolean(data.description.trim()) && Boolean(data.pagesOrScreens.trim())
+    if (step === 6) return Boolean(data.timeline) && Boolean(data.currency) && Boolean(data.budget)
     return true
   }, [data, step])
 
@@ -777,6 +803,96 @@ export function StartProjectDialog({
               )}
 
               {step === 3 && (
+                <div className="grid gap-4">
+                  <div className="rounded-xl border border-border/60 bg-background/40 p-4 text-sm text-muted-foreground">
+                    <p className="font-medium text-foreground">Product discovery (fast, but useful)</p>
+                    <p className="mt-1">
+                      These answers help us shape scope, reduce risk, and design the right UX. Keep it short — bullet points are perfect.
+                    </p>
+                  </div>
+
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="grid gap-2 md:col-span-2">
+                      <Label htmlFor="sp-problem">Problem statement</Label>
+                      <Textarea
+                        id="sp-problem"
+                        value={data.problemStatement}
+                        onChange={(e) => setData((prev) => ({ ...prev, problemStatement: e.target.value }))}
+                        placeholder="What problem are you solving, for who, and why now?"
+                        className="min-h-[110px]"
+                      />
+                    </div>
+
+                    <div className="grid gap-2 md:col-span-2">
+                      <Label htmlFor="sp-segments">Target segments / ICP</Label>
+                      <Textarea
+                        id="sp-segments"
+                        value={data.targetSegments}
+                        onChange={(e) => setData((prev) => ({ ...prev, targetSegments: e.target.value }))}
+                        placeholder="Who is the ideal customer? Region/industry/company size? Any non-ideal customers?"
+                        className="min-h-[110px]"
+                      />
+                    </div>
+
+                    <div className="grid gap-2">
+                      <Label htmlFor="sp-buyers">Decision makers / stakeholders (optional)</Label>
+                      <Textarea
+                        id="sp-buyers"
+                        value={data.decisionMakers}
+                        onChange={(e) => setData((prev) => ({ ...prev, decisionMakers: e.target.value }))}
+                        placeholder="Who buys/approves? Who operates it? Any legal/compliance sign-off?"
+                        className="min-h-[110px]"
+                      />
+                    </div>
+
+                    <div className="grid gap-2">
+                      <Label htmlFor="sp-positioning">Differentiators / positioning (optional)</Label>
+                      <Textarea
+                        id="sp-positioning"
+                        value={data.differentiators}
+                        onChange={(e) => setData((prev) => ({ ...prev, differentiators: e.target.value }))}
+                        placeholder="Why you? What’s unique vs alternatives? Any “must” requirements?"
+                        className="min-h-[110px]"
+                      />
+                    </div>
+
+                    <div className="grid gap-2">
+                      <Label htmlFor="sp-channels">Acquisition channels (optional)</Label>
+                      <Textarea
+                        id="sp-channels"
+                        value={data.acquisitionChannels}
+                        onChange={(e) => setData((prev) => ({ ...prev, acquisitionChannels: e.target.value }))}
+                        placeholder="How do users find you? SEO, ads, referrals, outbound, partnerships, marketplaces…"
+                        className="min-h-[110px]"
+                      />
+                    </div>
+
+                    <div className="grid gap-2">
+                      <Label htmlFor="sp-pricing">Pricing / business model (optional)</Label>
+                      <Textarea
+                        id="sp-pricing"
+                        value={data.pricingModel}
+                        onChange={(e) => setData((prev) => ({ ...prev, pricingModel: e.target.value }))}
+                        placeholder="Free/trial, subscription tiers, once-off purchases, bookings, lead-gen, internal tool…"
+                        className="min-h-[110px]"
+                      />
+                    </div>
+
+                    <div className="grid gap-2 md:col-span-2">
+                      <Label htmlFor="sp-discovery-links">Discovery links (optional)</Label>
+                      <Textarea
+                        id="sp-discovery-links"
+                        value={data.discoveryLinks}
+                        onChange={(e) => setData((prev) => ({ ...prev, discoveryLinks: e.target.value }))}
+                        placeholder="Links to docs, Notion, existing briefs, user research notes, analytics screenshots, etc. (one per line)"
+                        className="min-h-[110px]"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {step === 4 && (
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="grid gap-2 md:col-span-2">
                     <Label htmlFor="sp-description">What needs to be built?</Label>
@@ -835,7 +951,7 @@ export function StartProjectDialog({
                 </div>
               )}
 
-              {step === 4 && (
+              {step === 5 && (
                 <div className="grid gap-4">
                   <div className="grid gap-3">
                     <Label>Feature checklist (optional)</Label>
@@ -907,7 +1023,7 @@ export function StartProjectDialog({
                 </div>
               )}
 
-              {step === 5 && (
+              {step === 6 && (
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="grid gap-2">
                     <Label>When do you want it live?</Label>
@@ -1004,7 +1120,7 @@ export function StartProjectDialog({
                 </div>
               )}
 
-              {step === 6 && (
+              {step === 7 && (
                 <div className="grid gap-4">
                   <div className="grid gap-3">
                     <Label>Assets & constraints</Label>
@@ -1072,7 +1188,7 @@ export function StartProjectDialog({
                 </div>
               )}
 
-              {step === 7 && (
+              {step === 8 && (
                 <div className="grid gap-3">
                   <div className="flex items-center justify-between gap-3">
                     <p className="text-sm font-semibold">Review</p>

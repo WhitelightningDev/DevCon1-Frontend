@@ -85,12 +85,12 @@ export function CompanyLogos() {
     <section aria-label="Companies" className="py-10 md:py-12">
       <div className="mx-auto max-w-6xl px-4">
         <div className="text-center md:text-left">
-          <p className="text-xs font-medium tracking-wide text-muted-foreground">COMPANIES</p>
-          <h2 className="dc-animate-heading [--dc-delay:60ms] mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
+          <p className="dc-kicker">Companies</p>
+          <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
             Built for teams that ship.
           </h2>
           <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-            A few of the companies and prototypes I’ve worked on recently.
+            A few of the companies and prototypes we’ve worked on recently.
           </p>
         </div>
 
