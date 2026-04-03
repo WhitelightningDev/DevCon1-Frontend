@@ -78,7 +78,7 @@ export function setSeo(config: SeoConfig) {
   upsertMetaByProperty('og:description', config.description)
   upsertMetaByProperty('og:url', url)
   upsertMetaByProperty('og:type', 'website')
-  upsertMetaByProperty('og:site_name', 'DevCon1')
+  upsertMetaByProperty('og:site_name', 'HKFT Services')
   upsertMetaByProperty('og:locale', 'en_US')
 
   upsertMetaByName('twitter:title', config.title)
@@ -98,15 +98,15 @@ export function setSeo(config: SeoConfig) {
       {
         '@type': 'Organization',
         '@id': `${siteUrl}#organization`,
-        name: 'DevCon1',
+        name: 'HKFT Services',
         url: siteUrl,
-        logo: new URL('/DevCon1Logo.png', window.location.origin).toString(),
+        logo: new URL('/hkftlogo.png', window.location.origin).toString(),
       },
       {
         '@type': 'WebSite',
         '@id': `${siteUrl}#website`,
         url: siteUrl,
-        name: 'DevCon1',
+        name: 'HKFT Services',
       },
       {
         '@type': 'WebPage',

@@ -16,7 +16,7 @@ import { setSeo } from '@/lib/seo'
 export function Home() {
   useEffect(() => {
     setSeo({
-      title: 'DevCon1 — Engineering support built for high-stakes delivery',
+      title: 'HKFT Services — Engineering support built for high-stakes delivery',
       description:
         'We build and improve web apps, integrations, and AI-enabled workflows—delivered with secure defaults, performance focus, and a clean handoff.',
       imagePath: '/pwa/icon-512.png',

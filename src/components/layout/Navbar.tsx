@@ -101,7 +101,7 @@ export function Navbar({
               <Shield className="h-5 w-5 text-primary" />
             </span>
             <span className="text-sm font-semibold tracking-tight text-foreground">
-              DevCon<span className="text-primary">1</span>
+              HKFT <span className="text-primary">Services</span>
             </span>
           </a>
 
@@ -176,7 +176,7 @@ export function Navbar({
                     <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-primary/15 bg-primary/10">
                       <Shield className="h-4 w-4 text-primary" />
                     </span>
-                    DevCon1
+                    HKFT Services
                   </SheetTitle>
                 </SheetHeader>
 

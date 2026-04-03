@@ -109,7 +109,7 @@ const proofPoints = [
 export function ServicesPage() {
   useEffect(() => {
     setSeo({
-      title: 'DevCon1 — Services',
+      title: 'HKFT Services — Services',
       description:
         'Product & platform engineering, AI integration, integrations, performance/UX, accessibility, security hardening, and CI/CD delivery.',
       imagePath: '/pwa/icon-512.png',

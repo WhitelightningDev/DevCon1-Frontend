@@ -17,7 +17,7 @@ export function Footer() {
           <div className="space-y-3">
             <div className="flex items-center justify-center gap-2 text-sm font-semibold tracking-wide md:justify-start">
               <ShieldCheck className="h-5 w-5 text-primary" />
-              DevCon1
+              HKFT Services
             </div>
             <p className="text-sm text-muted-foreground">
               Modern software services for teams that ship in high-stakes environments: secure, reliable, and built to
@@ -68,7 +68,7 @@ export function Footer() {
         <Separator className="my-10" />
 
         <div className="flex flex-col gap-2 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} DevCon1. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} HKFT Services. All rights reserved.</p>
           <p className="text-muted-foreground/80">Built with React, Vite, Tailwind, shadcn/ui.</p>
         </div>
       </div>

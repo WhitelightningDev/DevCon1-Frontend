@@ -307,7 +307,7 @@ export function WorkPage() {
 
   useEffect(() => {
     setSeo({
-      title: 'DevCon1 — Work',
+      title: 'HKFT Services — Work',
       description:
         'Case studies and shipped work: websites, dashboards, and prototypes—delivered with clean UX, performance focus, and maintainable handoff.',
       imagePath: '/pwa/icon-512.png',

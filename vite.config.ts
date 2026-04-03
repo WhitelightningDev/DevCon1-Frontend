@@ -10,7 +10,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: [
-        'DevCon1Logo.png',
+        'hkftlogo.png',
         'pwa/icon-192.png',
         'pwa/icon-512.png',
         'pwa/apple-touch-icon.png',
@@ -18,10 +18,10 @@ export default defineConfig({
         'pwa/favicon-32.png',
       ],
       manifest: {
-        name: 'DevCon1',
-        short_name: 'DevCon1',
+        name: 'HKFT Services',
+        short_name: 'HKFT Services',
         description:
-          'DevCon1 provides engineering support built for high-stakes delivery: secure, reliable web apps and systems with repeatable process and clean UX.',
+          'HKFT Services provides engineering support built for high-stakes delivery: secure, reliable web apps and systems with repeatable process and clean UX.',
         theme_color: '#0b1220',
         background_color: '#0b1220',
         display: 'standalone',

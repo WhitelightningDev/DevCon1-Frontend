@@ -141,7 +141,7 @@ const templates = [
 export function ProcessPage() {
   useEffect(() => {
     setSeo({
-      title: 'DevCon1 — Process',
+      title: 'HKFT Services — Process',
       description:
         'Our delivery process: align early, design for clarity, ship in reviewable increments, harden for production, and hand off durable artifacts.',
       imagePath: '/pwa/icon-512.png',

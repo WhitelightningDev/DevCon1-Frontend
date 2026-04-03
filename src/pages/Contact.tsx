@@ -23,7 +23,7 @@ export function ContactPage() {
 
   useEffect(() => {
     setSeo({
-      title: 'DevCon1 — Contact',
+      title: 'HKFT Services — Contact',
       description: 'Send a short brief. We reply within 1 business day with next steps, timeline options, and a proposal outline.',
       imagePath: '/pwa/icon-512.png',
     })

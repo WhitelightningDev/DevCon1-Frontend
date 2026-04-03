@@ -196,7 +196,7 @@ export function FloatingContactFab({ className }: { className?: string }) {
                     {CONTACTS.map((person) => {
                       const canWhatsApp = Boolean(person.whatsappNumber)
                       const href = canWhatsApp
-                        ? buildWhatsAppLink('Hi DevCon1 — I’d like to discuss a project.')(person.whatsappNumber!)
+                        ? buildWhatsAppLink('Hi HKFT Services — we’d like to discuss a project.')(person.whatsappNumber!)
                         : ''
 
                       return (
@@ -259,7 +259,7 @@ export function FloatingContactFab({ className }: { className?: string }) {
                     {CONTACTS.map((person) => {
                       const href = buildMailtoLink(
                         'Project enquiry',
-                        'Hi DevCon1 — I’d like to discuss a project.\n\nContext:\n- Company:\n- Timeline:\n- Scope:\n',
+                        'Hi HKFT Services — we’d like to discuss a project.\n\nContext:\n- Company:\n- Timeline:\n- Scope:\n',
                       )(person.email)
                       return (
                         <a

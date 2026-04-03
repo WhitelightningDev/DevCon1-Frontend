@@ -25,7 +25,7 @@ export function About() {
               Senior-led delivery, built on trust.
             </h2>
             <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-              DevCon1 exists to help teams ship confidently: reduce risk early, build clean systems, and hand over work
+              HKFT Services exists to help teams ship confidently: reduce risk early, build clean systems, and hand over work
               that’s easy to operate and extend.
             </p>
 
@@ -44,7 +44,7 @@ export function About() {
               <p className="dc-kicker">Founder</p>
               <div className="mt-4 flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
                 <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-border/60 bg-background/50">
-                  <span className="text-sm font-semibold text-primary">D1</span>
+                  <span className="text-sm font-semibold text-primary">HK</span>
                 </div>
                 <div>
                   <p className="text-sm font-semibold">Founder / Lead Engineer</p>
