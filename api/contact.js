@@ -78,17 +78,25 @@ export default async function handler(req, res) {
     return
   }
 
-  const smtpHost = process.env.SMTP_HOST || process.env.MAIL_HOST || ''
-  const smtpPort = Number(process.env.SMTP_PORT || process.env.MAIL_PORT || 465)
-  const smtpUser = process.env.SMTP_USER || process.env.MAIL_USER || ''
-  const smtpPass = process.env.SMTP_PASS || process.env.MAIL_PASS || ''
+  const DEFAULT_SMTP_HOST = 'hkftservices.co.za'
+  const DEFAULT_SMTP_PORT = 465
+  const DEFAULT_SMTP_USER = 'admin@hkftservices.co.za'
 
-  const toEmail = process.env.CONTACT_TO_EMAIL || smtpUser
-  const fromEmail = process.env.CONTACT_FROM_EMAIL || smtpUser
+  const smtpHost = process.env.SMTP_HOST || process.env.MAIL_HOST || DEFAULT_SMTP_HOST
+  const smtpPort = Number(process.env.SMTP_PORT || process.env.MAIL_PORT || DEFAULT_SMTP_PORT)
+  const smtpUser = process.env.SMTP_USER || process.env.MAIL_USER || DEFAULT_SMTP_USER
+  const smtpPass = process.env.SMTP_PASS || process.env.SMTP_PASSWORD || process.env.MAIL_PASS || process.env.MAIL_PASSWORD || ''
+
+  const toEmail = process.env.CONTACT_TO_EMAIL || DEFAULT_SMTP_USER
+  const fromEmail = process.env.CONTACT_FROM_EMAIL || DEFAULT_SMTP_USER
   const fromName = process.env.CONTACT_FROM_NAME || 'HKFT Services'
 
-  if (!smtpHost || !smtpUser || !smtpPass || !toEmail || !fromEmail) {
-    json(res, 500, { ok: false, error: 'Email is not configured' })
+  if (!smtpPass) {
+    json(res, 500, {
+      ok: false,
+      error: 'Email is not configured',
+      missing: ['SMTP_PASS'],
+    })
     return
   }
 
