@@ -206,7 +206,7 @@ const PROJECT_STAGES: readonly ProjectStage[] = ['New build', 'Redesign', 'MVP',
 const INTEGRATION_OPTIONS = [
   'Google Analytics (GA4)',
   'Meta Pixel',
-  'Formspree / email forms',
+  'Email forms (SMTP)',
   'Mailchimp / email marketing',
   'HubSpot / CRM',
   'Stripe / payments',

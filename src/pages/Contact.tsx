@@ -12,7 +12,6 @@ import { Textarea } from '@/components/ui/textarea'
 import { setSeo } from '@/lib/seo'
 
 export function ContactPage() {
-  const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined
   const bookingUrl = (import.meta.env.VITE_BOOKING_URL as string | undefined) || ''
 
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
@@ -20,6 +19,7 @@ export function ContactPage() {
   const [email, setEmail] = useState('')
   const [company, setCompany] = useState('')
   const [message, setMessage] = useState('')
+  const [website, setWebsite] = useState('')
 
   useEffect(() => {
     setSeo({
@@ -47,15 +47,11 @@ export function ContactPage() {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!formspreeEndpoint) {
-      setStatus('error')
-      return
-    }
     if (!canSubmit) return
 
     setStatus('sending')
     try {
-      const res = await fetch(formspreeEndpoint, {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,6 +63,7 @@ export function ContactPage() {
           company,
           message,
           page: window.location.href,
+          website,
         }),
       })
       if (!res.ok) throw new Error('Request failed')
@@ -159,11 +156,16 @@ export function ContactPage() {
                       />
                     </div>
 
-                    {!formspreeEndpoint ? (
-                      <p className="text-xs text-muted-foreground">
-                        To enable in-app submissions, set `VITE_FORMSPREE_ENDPOINT` (Formspree) and redeploy. For now, use email/phone.
-                      </p>
-                    ) : null}
+                    <div className="hidden" aria-hidden="true">
+                      <Label htmlFor="contact-website">Website</Label>
+                      <Input
+                        id="contact-website"
+                        value={website}
+                        onChange={(e) => setWebsite(e.target.value)}
+                        tabIndex={-1}
+                        autoComplete="off"
+                      />
+                    </div>
 
                     {status === 'sent' ? (
                       <div className="rounded-lg border border-primary/20 bg-primary/10 p-4 text-sm text-foreground">
@@ -181,7 +183,7 @@ export function ContactPage() {
                       <Button
                         type="submit"
                         className="bg-primary text-primary-foreground hover:bg-primary/90"
-                        disabled={!canSubmit || status === 'sending' || !formspreeEndpoint}
+                        disabled={!canSubmit || status === 'sending'}
                       >
                         {status === 'sending' ? 'Sending…' : 'Send message'}
                       </Button>

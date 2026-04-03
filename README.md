@@ -71,4 +71,11 @@ export default defineConfig([
   },
 ])
 ```
-# DevCon1-Frontend
+# HKFT Services
+
+## Contact form
+
+The contact form submits to a Vercel Serverless Function at `/api/contact` and sends email via SMTP.
+
+- Configure SMTP in `.env` (see `.env.example`)
+- In local development, `/api/*` is available when running the project through `vercel dev` (recommended) or when deployed on Vercel
