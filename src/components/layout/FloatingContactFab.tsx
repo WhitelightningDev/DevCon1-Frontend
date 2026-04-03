@@ -7,7 +7,6 @@ import { cn } from '@/lib/utils'
 
 type ContactPerson = {
   name: string
-  email: string
   phoneE164?: string
   whatsappNumber?: string
 }
@@ -23,15 +22,15 @@ type MenuAction = {
 const CONTACTS: readonly ContactPerson[] = [
   {
     name: 'Daniel Mommsen',
-    email: 'danielmommsen2@gmail.com',
     phoneE164: '+27746588885',
     whatsappNumber: '27746588885',
   },
   {
     name: 'Willem Pretorius',
-    email: 'willemp75@gmail.com',
   },
 ]
+
+const SUPPORT_EMAIL = 'admin@hkftservices.co.za'
 
 function buildWhatsAppLink(message: string) {
   return (whatsappNumber: string) => `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`
@@ -47,11 +46,15 @@ function buildMailtoLink(subject: string, body: string) {
 
 export function FloatingContactFab({ className }: { className?: string }) {
   const [open, setOpen] = useState(false)
-  const [panel, setPanel] = useState<'root' | 'whatsapp' | 'email'>('root')
+  const [panel, setPanel] = useState<'root' | 'whatsapp'>('root')
   const reduceMotion = useReducedMotion()
 
   const rootActions = useMemo((): MenuAction[] => {
     const primaryPhone = CONTACTS.find((person) => person.phoneE164)?.phoneE164
+    const emailHref = buildMailtoLink(
+      'Project enquiry',
+      'Hi HKFT Services — we’d like to discuss a project.\n\nContext:\n- Company:\n- Timeline:\n- Scope:\n',
+    )(SUPPORT_EMAIL)
     return [
       {
         label: 'WhatsApp',
@@ -61,7 +64,7 @@ export function FloatingContactFab({ className }: { className?: string }) {
       {
         label: 'Email',
         icon: Mail,
-        onSelect: () => setPanel('email'),
+        href: emailHref,
       },
       {
         label: 'Call',
@@ -201,7 +204,7 @@ export function FloatingContactFab({ className }: { className?: string }) {
 
                       return (
                         <a
-                          key={person.email}
+                          key={person.name}
                           href={href}
                           target={canWhatsApp ? '_blank' : undefined}
                           rel={canWhatsApp ? 'noreferrer' : undefined}
@@ -220,60 +223,12 @@ export function FloatingContactFab({ className }: { className?: string }) {
                         >
                           <div>
                             <p className="text-sm font-semibold leading-tight">{person.name}</p>
-                            <p className="mt-0.5 text-xs text-muted-foreground">{person.email}</p>
                             {!canWhatsApp ? (
                               <p className="mt-1 text-xs text-muted-foreground">WhatsApp number not set</p>
                             ) : null}
                           </div>
                           <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-primary/15 bg-primary/10">
                             <MessageCircle className="h-4 w-4 text-primary" />
-                          </span>
-                        </a>
-                      )
-                    })}
-                  </div>
-                </div>
-              ) : null}
-
-              {panel === 'email' ? (
-                <div className="w-[18.5rem] overflow-hidden rounded-2xl border border-border/60 bg-background/80 shadow-sm backdrop-blur">
-                  <div className="flex items-center justify-between gap-3 border-b border-border/60 px-3 py-2">
-                    <button
-                      type="button"
-                      onClick={() => setPanel('root')}
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-border/60 bg-background/60 text-muted-foreground transition-colors hover:text-foreground"
-                      aria-label="Back"
-                    >
-                      <ArrowLeft className="h-4 w-4" />
-                    </button>
-                    <div className="flex-1 text-left">
-                      <p className="dc-kicker">Email</p>
-                      <p className="text-sm font-semibold">Choose a contact</p>
-                    </div>
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-primary/15 bg-primary/10">
-                      <Mail className="h-4 w-4 text-primary" />
-                    </span>
-                  </div>
-
-                  <div className="p-2">
-                    {CONTACTS.map((person) => {
-                      const href = buildMailtoLink(
-                        'Project enquiry',
-                        'Hi HKFT Services — we’d like to discuss a project.\n\nContext:\n- Company:\n- Timeline:\n- Scope:\n',
-                      )(person.email)
-                      return (
-                        <a
-                          key={person.email}
-                          href={href}
-                          onClick={() => setOpen(false)}
-                          className="flex items-center justify-between gap-3 rounded-xl px-3 py-2 text-left transition-colors hover:bg-muted/60"
-                        >
-                          <div>
-                            <p className="text-sm font-semibold leading-tight">{person.name}</p>
-                            <p className="mt-0.5 text-xs text-muted-foreground">{person.email}</p>
-                          </div>
-                          <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-primary/15 bg-primary/10">
-                            <Mail className="h-4 w-4 text-primary" />
                           </span>
                         </a>
                       )

@@ -173,7 +173,7 @@ export function ContactPage() {
 
                     {status === 'error' ? (
                       <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-muted-foreground">
-                        Something went wrong sending the form. Please email `systems.devconone@gmail.com`.
+                        Something went wrong sending the form. Please email `admin@hkftservices.co.za`.
                       </div>
                     ) : null}
 
@@ -187,7 +187,7 @@ export function ContactPage() {
                       </Button>
                       <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-end">
                         <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
-                          <a href="mailto:systems.devconone@gmail.com">
+                          <a href="mailto:admin@hkftservices.co.za">
                             <Mail className="mr-2 h-4 w-4" />
                             Email
                           </a>

@@ -46,11 +46,11 @@ export function Footer() {
             <p className="text-sm font-semibold">Contact</p>
             <div className="space-y-2 text-sm text-muted-foreground">
               <a
-                href="mailto:systems.devconone@gmail.com"
+                href="mailto:admin@hkftservices.co.za"
                 className="flex items-center justify-center gap-2 break-all transition-colors hover:text-foreground md:justify-start"
               >
                 <Mail className="h-4 w-4 text-primary" />
-                systems.devconone@gmail.com
+                admin@hkftservices.co.za
               </a>
               <p className="flex items-center justify-center gap-2 md:justify-start">
                 <MapPin className="h-4 w-4 text-primary" />
