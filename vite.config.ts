@@ -11,6 +11,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: [
         'hkftlogo.png',
+        'brand/logo-mark.png',
+        'seo/og.png',
         'pwa/icon-192.png',
         'pwa/icon-512.png',
         'pwa/apple-touch-icon.png',

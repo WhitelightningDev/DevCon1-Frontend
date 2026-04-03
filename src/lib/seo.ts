@@ -67,6 +67,7 @@ export function setSeo(config: SeoConfig) {
   const canonicalPath = normalizePathname(window.location.pathname)
   const url = new URL(canonicalPath, siteUrl).toString()
   const imageUrl = config.imagePath ? new URL(config.imagePath, window.location.origin).toString() : undefined
+  const defaultOgImageUrl = new URL('/seo/og.png', window.location.origin).toString()
 
   document.title = config.title
   upsertLink('canonical', url)
@@ -84,13 +85,11 @@ export function setSeo(config: SeoConfig) {
   upsertMetaByName('twitter:title', config.title)
   upsertMetaByName('twitter:description', config.description)
   upsertMetaByName('twitter:url', url)
-  upsertMetaByName('twitter:card', imageUrl ? 'summary_large_image' : 'summary')
+  upsertMetaByName('twitter:card', imageUrl ? 'summary_large_image' : 'summary_large_image')
 
-  if (imageUrl) {
-    upsertMetaByProperty('og:image', imageUrl)
-    upsertMetaByProperty('og:image:alt', config.title)
-    upsertMetaByName('twitter:image', imageUrl)
-  }
+  upsertMetaByProperty('og:image', imageUrl || defaultOgImageUrl)
+  upsertMetaByProperty('og:image:alt', config.title)
+  upsertMetaByName('twitter:image', imageUrl || defaultOgImageUrl)
 
   upsertJsonLd('site', {
     '@context': 'https://schema.org',
@@ -100,7 +99,7 @@ export function setSeo(config: SeoConfig) {
         '@id': `${siteUrl}#organization`,
         name: 'HKFT Services',
         url: siteUrl,
-        logo: new URL('/hkftlogo.png', window.location.origin).toString(),
+        logo: new URL('/pwa/icon-512.png', window.location.origin).toString(),
       },
       {
         '@type': 'WebSite',

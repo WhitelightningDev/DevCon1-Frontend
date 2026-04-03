@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone, ShieldCheck } from 'lucide-react'
+import { Mail, MapPin, Phone } from 'lucide-react'
 
 import { Separator } from '@/components/ui/separator'
 
@@ -16,7 +16,9 @@ export function Footer() {
         <div className="grid gap-10 text-center md:grid-cols-3 md:text-left">
           <div className="space-y-3">
             <div className="flex items-center justify-center gap-2 text-sm font-semibold tracking-wide md:justify-start">
-              <ShieldCheck className="h-5 w-5 text-primary" />
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border/60 bg-background">
+                <img src="/brand/logo-mark.png" alt="" className="h-5 w-5 object-contain" />
+              </span>
               HKFT Services
             </div>
             <p className="text-sm text-muted-foreground">

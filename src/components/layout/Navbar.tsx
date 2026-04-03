@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { ChevronDown, Menu, Shield } from 'lucide-react'
+import { ChevronDown, Menu } from 'lucide-react'
 
 import { StartProjectDialog } from '@/components/project/StartProjectDialog'
 import { Button } from '@/components/ui/button'
@@ -97,8 +97,8 @@ export function Navbar({
             Skip to content
           </a>
           <a href="/" className="group inline-flex items-center gap-2">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-primary/15 bg-primary/10">
-              <Shield className="h-5 w-5 text-primary" />
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border/60 bg-background">
+              <img src="/brand/logo-mark.png" alt="" className="h-6 w-6 object-contain" />
             </span>
             <span className="text-sm font-semibold tracking-tight text-foreground">
               HKFT <span className="text-primary">Services</span>
@@ -173,8 +173,8 @@ export function Navbar({
               <SheetContent side="right">
                 <SheetHeader>
                   <SheetTitle className="flex items-center gap-2">
-                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-primary/15 bg-primary/10">
-                      <Shield className="h-4 w-4 text-primary" />
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border/60 bg-background">
+                      <img src="/brand/logo-mark.png" alt="" className="h-5 w-5 object-contain" />
                     </span>
                     HKFT Services
                   </SheetTitle>
