@@ -1,5 +1,4 @@
 import nodemailer from 'nodemailer'
-import { Resend } from 'resend'
 
 function json(res, status, body) {
   res.statusCode = status
@@ -79,9 +78,9 @@ export default async function handler(req, res) {
     return
   }
 
-  const resendApiKey = process.env.RESEND_API_KEY || ''
-
-  const DEFAULT_SMTP_HOST = 'hkftservices.co.za'
+  // IMPORTANT: your website domain may point to Vercel, but your mail server lives on the MX host.
+  // For hkftservices.co.za, MX points to mail.hkftservices.co.za.
+  const DEFAULT_SMTP_HOST = 'mail.hkftservices.co.za'
   const DEFAULT_SMTP_PORT = 465
   const DEFAULT_SMTP_USER = 'admin@hkftservices.co.za'
 
@@ -93,6 +92,11 @@ export default async function handler(req, res) {
   const toEmail = process.env.CONTACT_TO_EMAIL || DEFAULT_SMTP_USER
   const fromEmail = process.env.CONTACT_FROM_EMAIL || DEFAULT_SMTP_USER
   const fromName = process.env.CONTACT_FROM_NAME || 'HKFT Services'
+
+  if (!smtpPass) {
+    json(res, 500, { ok: false, error: 'Email is not configured', missing: ['SMTP_PASS'] })
+    return
+  }
 
   const transporter = nodemailer.createTransport({
     host: smtpHost,
@@ -138,32 +142,14 @@ export default async function handler(req, res) {
   `
 
   try {
-    const from = `${fromName} <${fromEmail}>`
-
-    if (resendApiKey) {
-      const resend = new Resend(resendApiKey)
-      await resend.emails.send({
-        from,
-        to: [toEmail],
-        subject,
-        text,
-        html,
-        replyTo: email,
-      })
-    } else {
-      if (!smtpPass) {
-        json(res, 500, { ok: false, error: 'Email is not configured', missing: ['RESEND_API_KEY', 'SMTP_PASS'] })
-        return
-      }
-      await transporter.sendMail({
-        from,
-        to: toEmail,
-        replyTo: email,
-        subject,
-        text,
-        html,
-      })
-    }
+    await transporter.sendMail({
+      from: `${fromName} <${fromEmail}>`,
+      to: toEmail,
+      replyTo: email,
+      subject,
+      text,
+      html,
+    })
     json(res, 200, { ok: true })
   } catch (err) {
     console.error('[contact] sendMail failed', err)

@@ -75,9 +75,8 @@ export default defineConfig([
 
 ## Contact form
 
-The contact form submits to a Vercel Serverless Function at `/api/contact` and sends email via an email API (recommended) or SMTP.
+The contact form submits to a Vercel Serverless Function at `/api/contact` and sends email via SMTP.
 
 - Configure email in `.env` (see `.env.example`):
-  - Recommended on Vercel: `RESEND_API_KEY`
-  - Alternative: SMTP (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`)
+  - SMTP (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`)
 - In local development, `/api/*` is available when running the project through `vercel dev` (recommended) or when deployed on Vercel
