@@ -1,21 +1,23 @@
 import { Binary, Eye, ShieldCheck } from 'lucide-react'
 
+import { Button } from '@/components/ui/button'
+
 const serviceGroups = [
   {
     title: 'Build',
-    description: 'Ship features and systems that scale.',
+    description: 'Ship new capability with clean architecture.',
     icon: Binary,
-    bullets: ['Product & platform engineering', 'Integrations & APIs', 'PWA / offline-first'],
+    bullets: ['Product & platform engineering', 'Integrations & APIs', 'Offline-ready PWAs'],
   },
   {
     title: 'Improve',
-    description: 'Make what you have faster, clearer, and more usable.',
+    description: 'Make existing product faster and clearer.',
     icon: Eye,
     bullets: ['Performance & UX audit', 'Accessibility audit', 'Design system cleanup'],
   },
   {
     title: 'Operate',
-    description: 'Reliability, safety, and calm production delivery.',
+    description: 'Keep production stable and predictable.',
     icon: ShieldCheck,
     bullets: ['Security & hardening', 'Observability & runbooks', 'DevOps / CI/CD'],
   },
@@ -23,15 +25,15 @@ const serviceGroups = [
 
 export function Services() {
   return (
-    <section id="services" className="scroll-mt-24 py-14 md:py-20">
+    <section id="services" className="scroll-mt-24 border-t border-border/40 py-14 md:py-20">
       <div className="mx-auto max-w-6xl px-4">
         <div className="text-center md:text-left">
           <p className="dc-kicker">Services</p>
           <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
-            A simple menu of help.
+            Three ways we can help.
           </h2>
           <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-            Grouped into three buckets so it’s easy to pick the right starting point.
+            Clear categories, no jargon—pick a starting point and we’ll scope the smallest useful first milestone.
           </p>
         </div>
 
@@ -49,22 +51,25 @@ export function Services() {
                     <Icon className="h-4 w-4 text-primary" />
                   </span>
                 </div>
-                <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                  {group.bullets.map((line) => (
-                    <li key={line} className="flex items-start gap-2">
-                      <span className="mt-2 h-1.5 w-1.5 rounded-full bg-primary" />
-                      <span>{line}</span>
-                    </li>
-                  ))}
-                </ul>
+                <p className="mt-4 text-sm text-muted-foreground">{group.bullets.join(' • ')}</p>
               </div>
             )
           })}
         </div>
 
-        <p className="mt-6 text-center text-xs text-muted-foreground md:text-left">
-          Need help choosing? Use the contact form and we’ll recommend the smallest starting scope.
-        </p>
+        <div className="mt-6 flex flex-col items-center justify-between gap-3 rounded-xl border border-border/60 bg-background/40 p-4 text-center md:flex-row md:text-left">
+          <p className="text-xs text-muted-foreground">
+            Not sure where to start? Send a short brief—we’ll recommend the smallest scope that moves the needle.
+          </p>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <Button asChild size="sm" variant="outline">
+              <a href="/services">All services</a>
+            </Button>
+            <Button asChild size="sm">
+              <a href="/contact">Start a project</a>
+            </Button>
+          </div>
+        </div>
       </div>
     </section>
   )

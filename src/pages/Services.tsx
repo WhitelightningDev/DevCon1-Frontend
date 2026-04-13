@@ -17,52 +17,75 @@ import {
 import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
 import { PageBackground } from '@/components/layout/PageBackground'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { setSeo } from '@/lib/seo'
 
-const offerings = [
+const capabilityGroups = [
   {
-    title: 'Product & Platform Engineering',
-    description: 'React/TypeScript delivery with pragmatic architecture and predictable milestones.',
-    icon: Boxes,
-    includes: ['Component systems & design tokens', 'Feature delivery via PR milestones', 'Maintainable patterns for scale'],
+    label: 'Build',
+    description: 'Ship new capability with clean architecture.',
+    badge: 'Build',
+    items: [
+      {
+        title: 'Product & Platform Engineering',
+        description: 'React/TypeScript delivery with pragmatic architecture and predictable milestones.',
+        icon: Boxes,
+        includes: ['Component systems & design tokens', 'Feature delivery via PR milestones', 'Maintainable patterns for scale'],
+      },
+      {
+        title: 'AI Integration (Existing Infrastructure)',
+        description: 'Add AI capability to current systems without rewriting everything.',
+        icon: Bot,
+        includes: ['LLM APIs + tool integrations', 'RAG/search over internal knowledge', 'Guardrails, evals, and rollout strategy'],
+      },
+      {
+        title: 'Integrations & APIs',
+        description: 'API design and integration work with resilient data contracts and clear ownership.',
+        icon: ServerCog,
+        includes: ['API design & versioning strategy', 'Webhooks, third-party integrations', 'ETL/data sync reliability'],
+      },
+    ],
   },
   {
-    title: 'AI Integration (Existing Infrastructure)',
-    description: 'Add AI capability to current systems without rewriting everything.',
-    icon: Bot,
-    includes: ['LLM APIs + tool integrations', 'RAG/search over internal knowledge', 'Guardrails, evals, and rollout strategy'],
+    label: 'Improve',
+    description: 'Make existing product faster and clearer.',
+    badge: 'Improve',
+    items: [
+      {
+        title: 'Performance & UX Optimization',
+        description: 'Core Web Vitals, conversion flows, and usability fixes tied to measurable outcomes.',
+        icon: Activity,
+        includes: ['Core Web Vitals triage + fixes', 'UX flow improvements for key paths', 'Metrics + instrumentation guidance'],
+      },
+      {
+        title: 'Accessibility & Compliance',
+        description: 'WCAG-focused audit and remediation: keyboard, contrast, semantics, and forms.',
+        icon: Eye,
+        includes: ['Audit + prioritized remediation plan', 'Keyboard + screen reader testing', 'Accessible component patterns'],
+      },
+    ],
   },
   {
-    title: 'Integrations & APIs',
-    description: 'API design and integration work with resilient data contracts and clear ownership.',
-    icon: ServerCog,
-    includes: ['API design & versioning strategy', 'Webhooks, third-party integrations', 'ETL/data sync reliability'],
-  },
-  {
-    title: 'Security Hardening',
-    description: 'Threat-aware implementation with secure defaults and reviewable controls.',
-    icon: Shield,
-    includes: ['AuthN/AuthZ patterns & least privilege', 'Dependency + secrets hygiene', 'Hardening checklist + handoff notes'],
-  },
-  {
-    title: 'Performance & UX Optimization',
-    description: 'Core Web Vitals, conversion flows, and usability fixes tied to measurable outcomes.',
-    icon: Activity,
-    includes: ['Core Web Vitals triage + fixes', 'UX flow improvements for key paths', 'Metrics + instrumentation guidance'],
-  },
-  {
-    title: 'Accessibility & Compliance',
-    description: 'WCAG-focused audit and remediation: keyboard, contrast, semantics, and forms.',
-    icon: Eye,
-    includes: ['Audit + prioritized remediation plan', 'Keyboard + screen reader testing', 'Accessible component patterns'],
-  },
-  {
-    title: 'DevEx, CI/CD & Release',
-    description: 'Build pipelines, release workflows, and environment strategy for calm delivery.',
-    icon: Wrench,
-    includes: ['CI/CD pipelines + quality gates', 'Release & environment strategy', 'Deployment checklist + runbook starter'],
+    label: 'Operate',
+    description: 'Keep production stable and predictable.',
+    badge: 'Operate',
+    items: [
+      {
+        title: 'Security Hardening',
+        description: 'Threat-aware implementation with secure defaults and reviewable controls.',
+        icon: Shield,
+        includes: ['AuthN/AuthZ patterns & least privilege', 'Dependency + secrets hygiene', 'Hardening checklist + handoff notes'],
+      },
+      {
+        title: 'DevEx, CI/CD & Release',
+        description: 'Build pipelines, release workflows, and environment strategy for calm delivery.',
+        icon: Wrench,
+        includes: ['CI/CD pipelines + quality gates', 'Release & environment strategy', 'Deployment checklist + runbook starter'],
+      },
+    ],
   },
 ] as const
 
@@ -126,13 +149,12 @@ export function ServicesPage() {
         <section className="relative overflow-hidden pb-10 pt-12 md:pb-16 md:pt-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="mx-auto max-w-3xl text-center">
-              <p className="dc-kicker">Services</p>
-              <h1 className="dc-animate-heading dc-h1 [--dc-delay:80ms] mt-3 text-foreground">
-                Engineering support built for <span className="text-primary">high-stakes delivery</span>.
+              <p className="text-xs font-medium text-muted-foreground">HKFT Services</p>
+              <h1 className="dc-animate-heading dc-h1 [--dc-delay:80ms] mt-3 font-semibold text-foreground">
+                Services designed for <span className="text-primary">calm delivery</span>.
               </h1>
               <p className="mx-auto mt-4 max-w-2xl dc-lead">
-                We help teams ship secure, reliable software with a repeatable process and clean UX—delivered in
-                reviewable milestones and handed off for long-term ownership.
+                Build, improve, or harden what you have—delivered in reviewable milestones with a clean handoff.
               </p>
 
               <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -142,7 +164,7 @@ export function ServicesPage() {
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
-                  <a href="#offerings">See offerings</a>
+                  <a href="#capabilities">Browse capabilities</a>
                 </Button>
               </div>
 
@@ -164,19 +186,16 @@ export function ServicesPage() {
           </div>
         </section>
 
-        <section id="offerings" className="scroll-mt-24 py-14 md:py-20">
+        <section id="capabilities" className="scroll-mt-24 border-t border-border/40 bg-background/30 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div className="text-center md:text-left">
-                <p className="dc-kicker">Offerings</p>
-                <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
-                  A focused set of services.
-                </h2>
+                <p className="dc-kicker">Capabilities</p>
+                <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">A focused catalog.</h2>
                 <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                  Seven core capabilities—delivered as projects, sprint blocks, or ongoing support with a clean handoff.
+                  Organized like the homepage: build, improve, and operate. Each item includes what you can expect.
                 </p>
               </div>
-
               <div className="flex flex-col items-center gap-2 md:items-end">
                 <Button asChild variant="outline">
                   <a href="#contact">Request a proposal</a>
@@ -187,125 +206,162 @@ export function ServicesPage() {
 
             <Separator className="my-8" />
 
-            <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {offerings.map((item) => {
-                const Icon = item.icon
-                return (
-                  <li
-                    key={item.title}
-                    className="group relative overflow-hidden rounded-2xl border border-border/70 bg-background/55 p-6 shadow-sm shadow-black/5 backdrop-blur transition-colors hover:border-primary/25 hover:bg-background/75"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <h3 className="text-sm font-semibold tracking-tight">{item.title}</h3>
-                        <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
-                      </div>
-                      <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-primary/15 bg-primary/10">
-                        <Icon className="h-5 w-5 text-primary" />
-                      </span>
+            <div className="grid gap-8">
+              {capabilityGroups.map((group) => (
+                <div key={group.label}>
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                      <p className="text-base font-semibold tracking-tight">{group.label}</p>
+                      <p className="mt-1 text-sm text-muted-foreground">{group.description}</p>
                     </div>
+                    <Badge variant="secondary" className="w-fit bg-secondary/70">
+                      {group.badge}
+                    </Badge>
+                  </div>
 
-                    <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
-                      {item.includes.map((line) => (
-                        <li key={line} className="flex items-start gap-2">
-                          <span className="mt-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-primary/10">
-                            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                          </span>
-                          <span>{line}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                )
-              })}
-            </ul>
+                  <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    {group.items.map((item) => {
+                      const Icon = item.icon
+                      return (
+                        <Card key={item.title} className="border-border/60 bg-background/40 shadow-sm">
+                          <CardHeader className="space-y-3 pb-4">
+                            <div className="flex items-start justify-between gap-4">
+                              <div>
+                                <CardTitle className="text-base">{item.title}</CardTitle>
+                                <CardDescription className="mt-1">{item.description}</CardDescription>
+                              </div>
+                              <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border/60 bg-background/50">
+                                <Icon className="h-4 w-4 text-primary" />
+                              </span>
+                            </div>
+                          </CardHeader>
+                          <CardContent className="pt-0">
+                            <details className="rounded-lg border border-border/60 bg-background/50 px-4 py-3">
+                              <summary className="cursor-pointer text-sm font-medium text-foreground">What’s included</summary>
+                              <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                                {item.includes.map((line) => (
+                                  <li key={line}>• {line}</li>
+                                ))}
+                              </ul>
+                            </details>
+                          </CardContent>
+                        </Card>
+                      )
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
 
             <p className="mt-6 text-center text-xs text-muted-foreground md:text-left">
-              Need observability/runbooks, PWA work, or other specialist delivery? Ask—these are available by request.
+              Need something adjacent (observability/runbooks, PWA work, or specialist audits)? Ask—these are available by request.
             </p>
           </div>
         </section>
 
-        <section id="engagement" className="scroll-mt-24 py-14 md:py-20">
+        <section id="engagement" className="scroll-mt-24 border-t border-border/40 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
-            <div className="text-center md:text-left">
-              <p className="dc-kicker">Engagement</p>
-              <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
-                Simple options, clear outcomes.
-              </h2>
-              <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                Choose the engagement model that best fits your timeline and internal capacity.
-              </p>
+            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div className="text-center md:text-left">
+                <p className="dc-kicker">Engagement</p>
+                <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">Simple options.</h2>
+                <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
+                  Pick the model that matches your timeline and internal capacity.
+                </p>
+              </div>
+              <div className="flex flex-col items-center gap-2 md:items-end">
+                <Button asChild size="sm">
+                  <a href="#contact">Talk to us</a>
+                </Button>
+                <p className="text-xs text-muted-foreground">We’ll recommend the smallest scope.</p>
+              </div>
             </div>
 
             <div className="mt-8 grid gap-4 md:grid-cols-3">
               {engagementModels.map((item) => {
                 const Icon = item.icon
                 return (
-                  <div key={item.title} className="rounded-xl border border-border/60 bg-background/40 p-5">
-                    <div className="flex items-center justify-between gap-3">
-                      <p className="text-sm font-semibold">{item.title}</p>
-                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border/60 bg-background/50">
-                        <Icon className="h-4 w-4 text-primary" />
-                      </span>
-                    </div>
-                    <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
-                    <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                      <li>
-                        <span className="font-medium text-foreground">Ideal for:</span> {item.idealFor}
-                      </li>
-                      <li>
-                        <span className="font-medium text-foreground">Timeline:</span> {item.timeline}
-                      </li>
-                      <li>
-                        <span className="font-medium text-foreground">Deliverables:</span> {item.deliverables}
-                      </li>
-                    </ul>
-                  </div>
+                  <Card key={item.title} className="border-border/60 bg-background/40 shadow-sm">
+                    <CardHeader className="space-y-3 pb-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <CardTitle className="text-base">{item.title}</CardTitle>
+                        <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border/60 bg-background/50">
+                          <Icon className="h-4 w-4 text-primary" />
+                        </span>
+                      </div>
+                      <CardDescription>{item.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <div className="grid gap-2 text-sm text-muted-foreground">
+                        <p>
+                          <span className="font-medium text-foreground">Ideal for:</span> {item.idealFor}
+                        </p>
+                        <p>
+                          <span className="font-medium text-foreground">Timeline:</span> {item.timeline}
+                        </p>
+                        <p>
+                          <span className="font-medium text-foreground">Deliverables:</span> {item.deliverables}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
                 )
               })}
             </div>
           </div>
         </section>
 
-        <section id="faq" className="scroll-mt-24 py-14 md:py-20">
+        <section id="faq" className="scroll-mt-24 border-t border-border/40 bg-background/30 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
-            <div className="text-center md:text-left">
-              <p className="dc-kicker">FAQ</p>
-              <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
-                Answer the big questions.
-              </h2>
-              <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                Short answers to help you evaluate fit quickly.
-              </p>
+            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div className="text-center md:text-left">
+                <p className="dc-kicker">FAQ</p>
+                <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">Quick answers.</h2>
+                <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
+                  A few details teams ask for before they reach out.
+                </p>
+              </div>
+              <div className="flex flex-col items-center gap-2 md:items-end">
+                <Button asChild size="sm" variant="outline">
+                  <a href="#contact">Contact</a>
+                </Button>
+              </div>
             </div>
 
-            <div className="mt-8 divide-y divide-border/60 rounded-xl border border-border/60 bg-background/40">
-              {[
-                {
-                  q: 'What do you build?',
-                  a: 'Web apps, dashboards, and internal tools—plus integrations, delivery enablement, and hardening work for teams in demanding environments.',
-                },
-                { q: 'How do engagements start?', a: 'Discovery call → short brief → proposal with milestones → kickoff.' },
-                {
-                  q: 'What’s your security posture?',
-                  a: 'Secure defaults, least-privilege access, code review, and documented handoff practices.',
-                },
-                {
-                  q: 'Can you work with our team?',
-                  a: 'Yes — embedded delivery, pairing, PR reviews, or a take-ownership workstream with regular demos.',
-                },
-              ].map((item) => (
-                <div key={item.q} className="p-5">
-                  <p className="text-sm font-semibold">{item.q}</p>
-                  <p className="mt-2 text-sm text-muted-foreground">{item.a}</p>
-                </div>
-              ))}
-            </div>
+            <Card className="mt-8 border-border/60 bg-background/40 shadow-sm">
+              <CardContent className="divide-y divide-border/60 p-0">
+                {[
+                  {
+                    q: 'What do you build?',
+                    a: 'Web apps, dashboards, and internal tools—plus integrations, delivery enablement, and hardening work for teams in demanding environments.',
+                  },
+                  { q: 'How do engagements start?', a: 'Discovery call → short brief → proposal with milestones → kickoff.' },
+                  {
+                    q: 'What’s your security posture?',
+                    a: 'Secure defaults, least-privilege access, code review, and documented handoff practices.',
+                  },
+                  {
+                    q: 'Can you work with our team?',
+                    a: 'Yes — embedded delivery, pairing, PR reviews, or a take-ownership workstream with regular demos.',
+                  },
+                ].map((item) => (
+                  <details key={item.q} className="group p-5">
+                    <summary className="cursor-pointer list-none text-sm font-semibold text-foreground">
+                      <span className="inline-flex items-center justify-between gap-3">
+                        {item.q}
+                        <span className="text-xs font-medium text-muted-foreground group-open:hidden">Show</span>
+                        <span className="text-xs font-medium text-muted-foreground hidden group-open:inline">Hide</span>
+                      </span>
+                    </summary>
+                    <p className="mt-3 text-sm text-muted-foreground">{item.a}</p>
+                  </details>
+                ))}
+              </CardContent>
+            </Card>
           </div>
         </section>
 
-        <section id="contact" className="scroll-mt-24 py-14 md:py-20">
+        <section id="contact" className="scroll-mt-24 border-t border-border/40 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="rounded-xl border border-border/60 bg-background/40 p-6 md:p-10">
               <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">

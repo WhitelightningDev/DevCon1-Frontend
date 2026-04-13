@@ -32,6 +32,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Separator } from '@/components/ui/separator'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { setSeo } from '@/lib/seo'
+import { useSiteMetadata } from '@/lib/site-metadata'
 
 type ProjectMockup = {
   src: string
@@ -49,6 +50,8 @@ type Project = {
   tags: readonly string[]
   icon: LucideIcon | string
   mockups?: readonly ProjectMockup[]
+  previewFromSite?: boolean
+  fallbackPreviewImage?: string
 }
 
 const projects: readonly Project[] = [
@@ -168,8 +171,56 @@ const projects: readonly Project[] = [
       { src: '/work/aem/mobile.png', label: 'Mobile' },
     ],
   },
+  {
+    id: 'mycoop',
+    title: 'MyCoop Asset Management',
+    href: 'https://www.myco-op.co.za/',
+    summary: 'Cooperative asset management platform for pooled investments, member accounts and financial administration.',
+    tags: ['Web App', 'Finance', 'Co-operatives'],
+    icon: Shield,
+    previewFromSite: true,
+    fallbackPreviewImage: 'https://www.myco-op.co.za/mycoop-og.png',
+  },
+  {
+    id: 'shopsage',
+    title: 'ShopSage',
+    href: 'https://www.shopsage.co.za/',
+    summary: 'The smart B2B wholesale ordering platform. Manage orders, track stock, and streamline your wholesale business online.',
+    tags: ['Web App', 'Commerce', 'B2B'],
+    icon: LayoutDashboard,
+    previewFromSite: true,
+    fallbackPreviewImage: 'https://www.shopsage.co.za/icons/icon-512x512.png',
+  },
  
 ] as const
+
+function ProjectPreviewImage({
+  project,
+  className,
+}: {
+  project: Project
+  className?: string
+}) {
+  const localPreview = project.mockups?.[0]?.src || ''
+  const shouldFetch = Boolean(project.previewFromSite) && !localPreview
+  const { data } = useSiteMetadata(shouldFetch ? project.href : undefined)
+  const remotePreview = data?.image || project.fallbackPreviewImage || ''
+  const src = localPreview || (shouldFetch ? remotePreview : '')
+
+  if (!src) return null
+
+  return (
+    <img
+      src={src}
+      alt={`${project.title} preview`}
+      loading="lazy"
+      className={className}
+      onError={(event) => {
+        event.currentTarget.style.display = 'none'
+      }}
+    />
+  )
+}
 
 type CaseStudy = {
   projectId: Project['id']
@@ -247,6 +298,10 @@ export function WorkPage() {
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
 
   const projectsById = useMemo(() => new Map(projects.map((project) => [project.id, project])), [])
+  const spotlightProjects = useMemo(() => {
+    const ids: readonly Project['id'][] = ['mycoop', 'shopsage']
+    return ids.map((id) => projectsById.get(id)).filter((value): value is Project => Boolean(value))
+  }, [projectsById])
 
   const types = useMemo<readonly string[]>(() => {
     const allTypes = new Set<string>()
@@ -300,7 +355,7 @@ export function WorkPage() {
         categories.set(category, [project])
       }
     })
-    return Array.from(categories.entries())
+    return Array.from(categories.entries()).sort((a, b) => a[0].localeCompare(b[0]))
   }, [filteredProjects])
 
   const activeFilterCount = selectedTypes.length + selectedIndustries.length + (onlyWithScreenshots ? 1 : 0)
@@ -379,16 +434,77 @@ export function WorkPage() {
 	          </div>
 	        </section>
 
+        <section id="spotlight" className="scroll-mt-24 py-12 md:py-16">
+          <div className="mx-auto max-w-6xl px-4">
+            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div className="text-center md:text-left">
+                <p className="dc-kicker">Spotlight</p>
+                <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">MyCoop and ShopSage.</h2>
+                <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
+                  Featured live builds, pulled directly from the sites.
+                </p>
+              </div>
+              <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center md:items-end md:justify-end">
+                <Button asChild variant="outline">
+                  <a href="#projects">Open library</a>
+                </Button>
+                <Button asChild>
+                  <a href="/contact">Start a project</a>
+                </Button>
+              </div>
+            </div>
+
+            <div className="mt-8 grid gap-4 lg:grid-cols-2">
+              {spotlightProjects.map((project) => (
+                <Card key={project.id} className="overflow-hidden border-border/60 bg-background/40 shadow-sm">
+                  <div className="grid sm:grid-cols-[180px_1fr]">
+                    <div className="relative aspect-[16/8] overflow-hidden border-b border-border/60 bg-background/50 sm:aspect-auto sm:border-b-0 sm:border-r">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-xs text-muted-foreground">Preview</span>
+                      </div>
+                      <ProjectPreviewImage project={project} className="absolute inset-0 z-10 h-full w-full object-cover" />
+                    </div>
+
+                    <div className="p-5">
+                      <p className="text-sm font-semibold tracking-tight text-foreground">{project.title}</p>
+                      <p className="mt-1 text-sm text-muted-foreground">{project.summary}</p>
+
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <Badge key={tag} variant="secondary" className="bg-secondary/70">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+
+                      <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+                        <Button asChild size="sm">
+                          <a href={project.href} target="_blank" rel="noreferrer">
+                            View live <ExternalLink className="ml-1 h-4 w-4" />
+                          </a>
+                        </Button>
+                        <Button asChild size="sm" variant="outline">
+                          <a href="#projects">View in library</a>
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section id="case-studies" className="scroll-mt-24 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
 	            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
 	              <div className="text-center md:text-left">
-	                <p className="dc-kicker">Case studies</p>
+	                <p className="dc-kicker">Featured</p>
 	                <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
-	                  Work that sells itself.
+	                  Highlighted builds.
 	                </h2>
                 <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                  Three representative builds — presented like a client would evaluate them.
+                  Three representative projects with outcomes and key artifacts.
                 </p>
               </div>
               <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center md:items-end md:justify-end">
@@ -405,7 +521,6 @@ export function WorkPage() {
               {featuredCaseStudies.map((caseStudy) => {
                 const project = projectsById.get(caseStudy.projectId)
                 if (!project) return null
-                const previewSrc = project.mockups?.[0]?.src || ''
                 const hasGallery = Boolean(project.mockups?.length)
 
                 return (
@@ -413,20 +528,15 @@ export function WorkPage() {
                     key={caseStudy.projectId}
                     className="group overflow-hidden border-border/60 bg-background/40 shadow-sm transition-shadow hover:shadow-md"
                   >
-                    <div className="relative aspect-[16/10] overflow-hidden border-b border-border/60 bg-background/50">
-                      {previewSrc ? (
-                        <img
-                          src={previewSrc}
-                          alt={`${project.title} preview`}
-                          loading="lazy"
-                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="text-xs text-muted-foreground">Preview</span>
-                        </div>
-                      )}
-                      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background/65 to-transparent" />
+                    <div className="relative aspect-[16/8] overflow-hidden border-b border-border/60 bg-background/50">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-xs text-muted-foreground">Preview</span>
+                      </div>
+                      <ProjectPreviewImage
+                        project={project}
+                        className="absolute inset-0 z-10 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
+                      />
+                      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background/65 to-transparent" />
                     </div>
 
                     <CardHeader className="space-y-3 pb-4">
@@ -575,206 +685,199 @@ export function WorkPage() {
 
         <section id="projects" className="scroll-mt-24 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
-            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-              <div className="text-center md:text-left">
-                <p className="dc-kicker">Projects</p>
-                <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
-                  Representative work.
-                </h2>
-                <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                  Browse by type, or search by name.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-center md:justify-end">
-                <div className="w-full sm:w-64">
-                  <label className="text-xs font-medium text-muted-foreground">Search</label>
-                  <div className="relative mt-2">
-                    <Search className="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      value={query}
-                      onChange={(event) => setQuery(event.target.value)}
-                      placeholder="Search projects..."
-                      className="pl-9"
-                    />
-                  </div>
-                </div>
-                <div className="w-full sm:w-56">
-                  <label className="text-xs font-medium text-muted-foreground">Filters</label>
-                  <div className="mt-2 flex items-center gap-2">
-                    <Popover open={filtersOpen} onOpenChange={setFiltersOpen}>
-                      <PopoverTrigger asChild>
-                        <Button type="button" variant="outline" className="w-full justify-between">
-                          <span className="inline-flex items-center gap-2">
-                            <SlidersHorizontal className="h-4 w-4" />
-                            Filters
-                          </span>
-                          {activeFilterCount ? (
-                            <Badge variant="secondary" className="ml-2 bg-secondary/70">
-                              {activeFilterCount}
-                            </Badge>
-                          ) : null}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent align="end" className="w-[320px] p-0">
-                        <div className="p-4">
-                          <p className="text-sm font-semibold">Refine results</p>
-                          <p className="mt-1 text-xs text-muted-foreground">Filter by project type and artifacts.</p>
-                        </div>
-
-                        <Separator />
-
-                        <div className="p-4">
-                          <div className="flex items-center justify-between gap-3">
-                            <p className="text-xs font-medium text-muted-foreground">TYPE</p>
-                            {selectedTypes.length ? (
-                              <Button type="button" variant="ghost" size="sm" onClick={() => setSelectedTypes([])}>
-                                Clear
-                              </Button>
-                            ) : null}
-                          </div>
-
-                          <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3">
-                            {types.map((entry) => {
-                              const checked = selectedTypes.includes(entry)
-                              const id = `type-${entry.toLowerCase().replace(/[^a-z0-9-_]+/g, '-')}`
-                              return (
-                                <div key={entry} className="flex items-center gap-2">
-                                  <Checkbox
-                                    id={id}
-                                    checked={checked}
-                                    onCheckedChange={(value) => {
-                                      const nextChecked = Boolean(value)
-                                      setSelectedTypes((current) => {
-                                        const hasTag = current.includes(entry)
-                                        if (nextChecked && !hasTag) return [...current, entry]
-                                        if (!nextChecked && hasTag) return current.filter((item) => item !== entry)
-                                        return current
-                                      })
-                                    }}
-                                  />
-                                  <Label htmlFor={id} className="text-sm font-normal">
-                                    {entry}
-                                  </Label>
-                                </div>
-                              )
-                            })}
-                          </div>
-
-                          <Separator className="my-4" />
-
-                          <div className="flex items-center justify-between gap-3">
-                            <p className="text-xs font-medium text-muted-foreground">INDUSTRY</p>
-                            {selectedIndustries.length ? (
-                              <Button type="button" variant="ghost" size="sm" onClick={() => setSelectedIndustries([])}>
-                                Clear
-                              </Button>
-                            ) : null}
-                          </div>
-
-                          <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3">
-                            {industries.map((entry) => {
-                              const checked = selectedIndustries.includes(entry)
-                              const id = `industry-${entry.toLowerCase().replace(/[^a-z0-9-_]+/g, '-')}`
-                              return (
-                                <div key={entry} className="flex items-center gap-2">
-                                  <Checkbox
-                                    id={id}
-                                    checked={checked}
-                                    onCheckedChange={(value) => {
-                                      const nextChecked = Boolean(value)
-                                      setSelectedIndustries((current) => {
-                                        const hasTag = current.includes(entry)
-                                        if (nextChecked && !hasTag) return [...current, entry]
-                                        if (!nextChecked && hasTag) return current.filter((item) => item !== entry)
-                                        return current
-                                      })
-                                    }}
-                                  />
-                                  <Label htmlFor={id} className="text-sm font-normal">
-                                    {entry}
-                                  </Label>
-                                </div>
-                              )
-                            })}
-                          </div>
-
-                          <Separator className="my-4" />
-
-                          <div className="flex items-center gap-2">
-                            <Checkbox
-                              id="only-screenshots"
-                              checked={onlyWithScreenshots}
-                              onCheckedChange={(value) => setOnlyWithScreenshots(Boolean(value))}
-                            />
-                            <Label htmlFor="only-screenshots" className="text-sm font-normal">
-                              Only with screenshots
-                            </Label>
-                          </div>
-                        </div>
-
-                        <Separator />
-
-                        <div className="flex items-center justify-between gap-3 p-4">
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            onClick={() => {
-                              setSelectedTypes([])
-                              setSelectedIndustries([])
-                              setOnlyWithScreenshots(false)
-                            }}
-                          >
-                            Clear filters
-                          </Button>
-                          <Button type="button" onClick={() => setFiltersOpen(false)}>
-                            Done
-                          </Button>
-                        </div>
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                </div>
-
-                <div className="w-full sm:w-48">
-                  <label className="text-xs font-medium text-muted-foreground">Sort</label>
-                  <div className="mt-2">
-                    <Select value={sort} onValueChange={(value) => setSort(value as typeof sort)}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent align="end">
-                        <SelectItem value="featured">Featured</SelectItem>
-                        <SelectItem value="title_asc">Title (A–Z)</SelectItem>
-                        <SelectItem value="title_desc">Title (Z–A)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </div>
+            <div className="text-center md:text-left">
+              <p className="dc-kicker">Projects</p>
+              <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">Project library.</h2>
+              <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
+                Browse live websites and app prototypes by type, industry, or name.
+              </p>
             </div>
 
-            <div className="mt-6 flex items-center justify-between gap-3">
+            <Card className="mt-8 border-border/60 bg-background/40">
+              <CardContent className="grid gap-3 p-4 md:grid-cols-[1fr_auto_auto_auto] md:items-center">
+                <div className="relative">
+                  <Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    value={query}
+                    onChange={(event) => setQuery(event.target.value)}
+                    placeholder="Search projects"
+                    aria-label="Search projects"
+                    className="pl-9"
+                  />
+                </div>
+
+                <Popover open={filtersOpen} onOpenChange={setFiltersOpen}>
+                  <PopoverTrigger asChild>
+                    <Button type="button" variant="outline" className="justify-between md:w-44">
+                      <span className="inline-flex items-center gap-2">
+                        <SlidersHorizontal className="h-4 w-4" />
+                        Filters
+                      </span>
+                      {activeFilterCount ? (
+                        <Badge variant="secondary" className="ml-2 bg-secondary/70">
+                          {activeFilterCount}
+                        </Badge>
+                      ) : null}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent align="end" className="w-[340px] p-0">
+                    <div className="p-4">
+                      <p className="text-sm font-semibold">Filters</p>
+                      <p className="mt-1 text-xs text-muted-foreground">Refine by type, industry, and artifacts.</p>
+                    </div>
+
+                    <Separator />
+
+                    <div className="p-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-xs font-medium text-muted-foreground">Type</p>
+                        {selectedTypes.length ? (
+                          <Button type="button" variant="ghost" size="sm" onClick={() => setSelectedTypes([])}>
+                            Clear
+                          </Button>
+                        ) : null}
+                      </div>
+
+                      <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3">
+                        {types.map((entry) => {
+                          const checked = selectedTypes.includes(entry)
+                          const id = `type-${entry.toLowerCase().replace(/[^a-z0-9-_]+/g, '-')}`
+                          return (
+                            <div key={entry} className="flex items-center gap-2">
+                              <Checkbox
+                                id={id}
+                                checked={checked}
+                                onCheckedChange={(value) => {
+                                  const nextChecked = Boolean(value)
+                                  setSelectedTypes((current) => {
+                                    const hasTag = current.includes(entry)
+                                    if (nextChecked && !hasTag) return [...current, entry]
+                                    if (!nextChecked && hasTag) return current.filter((item) => item !== entry)
+                                    return current
+                                  })
+                                }}
+                              />
+                              <Label htmlFor={id} className="text-sm font-normal">
+                                {entry}
+                              </Label>
+                            </div>
+                          )
+                        })}
+                      </div>
+
+                      <Separator className="my-4" />
+
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-xs font-medium text-muted-foreground">Industry</p>
+                        {selectedIndustries.length ? (
+                          <Button type="button" variant="ghost" size="sm" onClick={() => setSelectedIndustries([])}>
+                            Clear
+                          </Button>
+                        ) : null}
+                      </div>
+
+                      <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3">
+                        {industries.map((entry) => {
+                          const checked = selectedIndustries.includes(entry)
+                          const id = `industry-${entry.toLowerCase().replace(/[^a-z0-9-_]+/g, '-')}`
+                          return (
+                            <div key={entry} className="flex items-center gap-2">
+                              <Checkbox
+                                id={id}
+                                checked={checked}
+                                onCheckedChange={(value) => {
+                                  const nextChecked = Boolean(value)
+                                  setSelectedIndustries((current) => {
+                                    const hasTag = current.includes(entry)
+                                    if (nextChecked && !hasTag) return [...current, entry]
+                                    if (!nextChecked && hasTag) return current.filter((item) => item !== entry)
+                                    return current
+                                  })
+                                }}
+                              />
+                              <Label htmlFor={id} className="text-sm font-normal">
+                                {entry}
+                              </Label>
+                            </div>
+                          )
+                        })}
+                      </div>
+
+                      <Separator className="my-4" />
+
+                      <div className="flex items-center gap-2">
+                        <Checkbox
+                          id="only-screenshots"
+                          checked={onlyWithScreenshots}
+                          onCheckedChange={(value) => setOnlyWithScreenshots(Boolean(value))}
+                        />
+                        <Label htmlFor="only-screenshots" className="text-sm font-normal">
+                          Only with screenshots
+                        </Label>
+                      </div>
+                    </div>
+
+                    <Separator />
+
+                    <div className="flex items-center justify-between gap-3 p-4">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        onClick={() => {
+                          setSelectedTypes([])
+                          setSelectedIndustries([])
+                          setOnlyWithScreenshots(false)
+                        }}
+                      >
+                        Clear filters
+                      </Button>
+                      <Button type="button" onClick={() => setFiltersOpen(false)}>
+                        Done
+                      </Button>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+
+                <div className="md:w-44">
+                  <Select value={sort} onValueChange={(value) => setSort(value as typeof sort)}>
+                    <SelectTrigger aria-label="Sort projects">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent align="end">
+                      <SelectItem value="featured">Featured</SelectItem>
+                      <SelectItem value="title_asc">Title (A–Z)</SelectItem>
+                      <SelectItem value="title_desc">Title (Z–A)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {(query.trim() || selectedTypes.length || selectedIndustries.length || onlyWithScreenshots || sort !== 'featured') ? (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="justify-center md:justify-end"
+                    onClick={() => {
+                      setQuery('')
+                      setSelectedTypes([])
+                      setSelectedIndustries([])
+                      setOnlyWithScreenshots(false)
+                      setSort('featured')
+                    }}
+                  >
+                    Reset
+                  </Button>
+                ) : (
+                  <span className="hidden md:block" />
+                )}
+              </CardContent>
+            </Card>
+
+            <div className="mt-4 flex flex-col gap-2 text-center md:flex-row md:items-center md:justify-between md:text-left">
               <p className="text-xs text-muted-foreground">
                 Showing <span className="font-medium text-foreground">{filteredProjects.length}</span> project
                 {filteredProjects.length === 1 ? '' : 's'}.
               </p>
-              {(query.trim() || selectedTypes.length || selectedIndustries.length || onlyWithScreenshots) && (
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setQuery('')
-                    setSelectedTypes([])
-                    setSelectedIndustries([])
-                    setOnlyWithScreenshots(false)
-                    setSort('featured')
-                  }}
-                >
-                  Clear
-                </Button>
-              )}
+              <p className="text-xs text-muted-foreground">Tip: Use filters to narrow fast.</p>
             </div>
 
             {(selectedTypes.length || selectedIndustries.length || onlyWithScreenshots) && (
@@ -784,7 +887,7 @@ export function WorkPage() {
                     key={`type-${entry}`}
                     type="button"
                     onClick={() => setSelectedTypes((current) => current.filter((item) => item !== entry))}
-                    className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-background/40 px-3 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted"
+                    className="inline-flex items-center gap-2 rounded-md border border-border/60 bg-background/60 px-3 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted/60"
                     aria-label={`Remove type filter ${entry}`}
                   >
                     Type: {entry} <X className="h-3.5 w-3.5" />
@@ -795,7 +898,7 @@ export function WorkPage() {
                     key={`industry-${entry}`}
                     type="button"
                     onClick={() => setSelectedIndustries((current) => current.filter((item) => item !== entry))}
-                    className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-background/40 px-3 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted"
+                    className="inline-flex items-center gap-2 rounded-md border border-border/60 bg-background/60 px-3 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted/60"
                     aria-label={`Remove industry filter ${entry}`}
                   >
                     Industry: {entry} <X className="h-3.5 w-3.5" />
@@ -805,7 +908,7 @@ export function WorkPage() {
                   <button
                     type="button"
                     onClick={() => setOnlyWithScreenshots(false)}
-                    className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-background/40 px-3 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted"
+                    className="inline-flex items-center gap-2 rounded-md border border-border/60 bg-background/60 px-3 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted/60"
                     aria-label="Remove filter only with screenshots"
                   >
                     Screenshots <X className="h-3.5 w-3.5" />
@@ -818,10 +921,7 @@ export function WorkPage() {
               {projectsByCategory.map(([category, items]) => (
                 <div key={category}>
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-                    <div>
-                      <p className="dc-kicker">{category}</p>
-                      <h3 className="mt-2 text-lg font-semibold tracking-tight">{category}</h3>
-                    </div>
+                    <h3 className="text-base font-semibold tracking-tight">{category}</h3>
                     <p className="text-xs text-muted-foreground">
                       <span className="font-medium text-foreground">{items.length}</span> project{items.length === 1 ? '' : 's'}
                     </p>
@@ -831,29 +931,22 @@ export function WorkPage() {
                     {items.map((project) => {
                       const isImageIcon = typeof project.icon === 'string'
                       const Icon = isImageIcon ? null : project.icon
-                      const preview = project.mockups?.[0]
-                      const previewSrc = preview?.src || ''
                       const hasGallery = Boolean(project.mockups?.length)
 
                       return (
                         <Card
                           key={project.title}
-                          className="group overflow-hidden border-border/60 bg-background/40 shadow-sm transition-shadow hover:shadow-md"
+                          className="group overflow-hidden border-border/60 bg-background/40 shadow-sm transition-[border-color,box-shadow] hover:border-border/80 hover:shadow-md"
                         >
-                          <div className="relative aspect-[16/10] overflow-hidden border-b border-border/60 bg-background/50">
-                            {previewSrc ? (
-                              <img
-                                src={previewSrc}
-                                alt={`${project.title} preview`}
-                                loading="lazy"
-                                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                              />
-                            ) : (
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <span className="text-xs text-muted-foreground">No preview</span>
-                              </div>
-                            )}
-                            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background/65 to-transparent" />
+                          <div className="relative aspect-[16/8] overflow-hidden border-b border-border/60 bg-background/50">
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <span className="text-xs text-muted-foreground">Preview</span>
+                            </div>
+                            <ProjectPreviewImage
+                              project={project}
+                              className="absolute inset-0 z-10 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]"
+                            />
+                            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background/65 to-transparent" />
                           </div>
 
                           <CardHeader className="space-y-3 pb-4">

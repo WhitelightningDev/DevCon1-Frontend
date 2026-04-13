@@ -6,7 +6,7 @@ export function ContactCTA() {
   const bookingUrl = (import.meta.env.VITE_BOOKING_URL as string | undefined) || ''
 
   return (
-    <section id="contact" className="scroll-mt-24 py-14 md:py-20">
+    <section id="contact" className="scroll-mt-24 border-t border-border/40 py-14 md:py-20">
       <div className="mx-auto max-w-6xl px-4">
         <div className="rounded-xl border border-border/60 bg-background/40 p-6 md:p-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">

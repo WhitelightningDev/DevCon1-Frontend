@@ -10,9 +10,10 @@ export function Hero() {
       <div className="mx-auto max-w-6xl px-4">
         <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
           <div className="max-w-3xl text-center md:text-left">
-            <p className="dc-kicker">Engineering services</p>
-            <h1 className="dc-animate-heading dc-h1 [--dc-delay:80ms] mt-3 text-foreground">
-              Reliable software delivery for <span className="text-primary">performance, security, and growth</span>.
+            <p className="text-xs font-medium text-muted-foreground">HKFT Services</p>
+            <h1 className="dc-animate-heading dc-h1 [--dc-delay:80ms] mt-3 font-semibold text-foreground">
+              Build and improve software with <span className="text-primary">clean UX</span> and{' '}
+              <span className="text-primary">reliable delivery</span>.
             </h1>
 
             <p className="mx-auto mt-4 max-w-2xl dc-lead md:mx-0">
@@ -33,33 +34,37 @@ export function Hero() {
               </Button>
             </div>
 
-            <ul className="mt-8 grid gap-2 text-sm text-muted-foreground sm:grid-cols-3 md:text-left">
-              <li className="flex items-center justify-center gap-2 md:justify-start">
-                <Shield className="h-4 w-4 text-primary" />
-                Security-first defaults
-              </li>
-              <li className="flex items-center justify-center gap-2 md:justify-start">
-                <Radar className="h-4 w-4 text-primary" />
-                Operational clarity
-              </li>
-              <li className="flex items-center justify-center gap-2 md:justify-start">
-                <Sparkles className="h-4 w-4 text-primary" />
-                Polished, fast UX
-              </li>
-            </ul>
+            <div className="mt-8 grid gap-2 sm:grid-cols-3">
+              {[
+                { icon: Shield, title: 'Security-first', detail: 'Safe defaults and hardening.' },
+                { icon: Radar, title: 'Reliable delivery', detail: 'Milestones and calm shipping.' },
+                { icon: Sparkles, title: 'Clean UX', detail: 'Readable, conversion-ready UI.' },
+              ].map((item) => {
+                const Icon = item.icon
+                return (
+                  <div key={item.title} className="rounded-lg border border-border/60 bg-background/40 p-3 text-left">
+                    <p className="flex items-center gap-2 text-sm font-semibold">
+                      <Icon className="h-4 w-4 text-primary" />
+                      {item.title}
+                    </p>
+                    <p className="mt-1 text-xs text-muted-foreground">{item.detail}</p>
+                  </div>
+                )
+              })}
+            </div>
           </div>
 
           <div className="hidden lg:block">
             <Card className="border-border/60">
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">Latest</CardTitle>
-                <CardDescription>Quick links to evaluate fit.</CardDescription>
+                <CardTitle className="text-base">Explore</CardTitle>
+                <CardDescription>Quick paths to evaluate fit.</CardDescription>
               </CardHeader>
               <CardContent className="grid gap-3 pt-0">
                 {[
-                  { title: 'Services and offerings', href: '/services', description: 'What we do, how we engage.' },
-                  { title: 'Work and case studies', href: '/work', description: 'Shipped work with outcomes.' },
-                  { title: 'Delivery process', href: '/process', description: 'Clear phases and templates.' },
+                  { title: 'Featured work', href: '#featured', description: 'MyCoop and ShopSage, live.' },
+                  { title: 'Project library', href: '/work#projects', description: 'Browse all work by category.' },
+                  { title: 'Services', href: '/services', description: 'Build, improve, operate.' },
                 ].map((item) => (
                   <a
                     key={item.href}

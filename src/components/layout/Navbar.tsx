@@ -13,36 +13,8 @@ type NavItem = NavLink | NavMenu
 
 const defaultNavItems: readonly NavItem[] = [
   { kind: 'link', label: 'Home', href: '/' },
-  {
-    kind: 'menu',
-    label: 'Services',
-    tiles: [
-      { title: 'Platform engineering', description: 'Ship features with clean architecture.', href: '/services#offerings' },
-      { title: 'AI integration', description: 'Add LLM workflows to existing systems.', href: '/services#offerings' },
-      { title: 'Integrations & APIs', description: 'Reliable contracts, webhooks, and sync.', href: '/services#offerings' },
-      { title: 'Security hardening', description: 'Threat-aware defaults and controls.', href: '/services#offerings' },
-      { title: 'DevEx & CI/CD', description: 'Pipelines, releases, quality gates.', href: '/services#offerings' },
-      { title: 'Performance & UX', description: 'Core Web Vitals and conversion flows.', href: '/services#offerings' },
-    ],
-    groups: [
-      { title: 'Overview', links: [{ label: 'All services', href: '/services' }, { label: 'Engagement models', href: '/services#engagement' }] },
-      { title: 'Get started', links: [{ label: 'Start a project', href: '/contact' }, { label: 'Work examples', href: '/work' }] },
-    ],
-  },
-  {
-    kind: 'menu',
-    label: 'Work',
-    tiles: [
-      { title: 'Case studies', description: 'Representative builds with outcomes.', href: '/work#case-studies' },
-      { title: 'Project library', description: 'Browse all shipped work.', href: '/work#projects' },
-      { title: 'Deliverables', description: 'Artifacts for long-term ownership.', href: '/work#approach' },
-      { title: 'Process', description: 'How we deliver reliably.', href: '/process' },
-      { title: 'Contact', description: 'Send a short brief.', href: '/contact' },
-      { title: 'Services', description: 'Capabilities and engagement options.', href: '/services' },
-    ],
-    groups: [{ title: 'Explore', links: [{ label: 'Work overview', href: '/work' }, { label: 'Start a project', href: '/contact' }] }],
-  },
-  { kind: 'link', label: 'Process', href: '/process' },
+  { kind: 'link', label: 'Work', href: '/work' },
+  { kind: 'link', label: 'Services', href: '/services' },
   { kind: 'link', label: 'Contact', href: '/contact' },
 ] as const
 

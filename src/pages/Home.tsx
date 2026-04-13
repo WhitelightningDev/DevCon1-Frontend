@@ -4,13 +4,10 @@ import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
 import { PageBackground } from '@/components/layout/PageBackground'
 import { ContactCTA } from '@/components/sections/ContactCTA'
+import { FeaturedWork } from '@/components/sections/FeaturedWork'
 import { Hero } from '@/components/sections/Hero'
-import { Industries } from '@/components/sections/Industries'
 import { Process } from '@/components/sections/Process'
 import { Services } from '@/components/sections/Services'
-import { TrustSignals } from '@/components/sections/TrustSignals'
-import { CompanyLogos } from '@/components/sections/CompanyLogos'
-import { AiIntegration } from '@/components/sections/AiIntegration'
 import { setSeo } from '@/lib/seo'
 
 export function Home() {
@@ -31,11 +28,8 @@ export function Home() {
 
       <main id="main">
         <Hero />
-        <TrustSignals />
-        <CompanyLogos />
+        <FeaturedWork />
         <Services />
-        <AiIntegration />
-        <Industries />
         <Process />
         <ContactCTA />
       </main>
