@@ -18,7 +18,20 @@ const siteUrl =
 
 const origin = siteUrl || 'https://YOUR_DOMAIN_HERE'
 
-const routes = ['/', '/services', '/work', '/process', '/contact']
+const routes = [
+  '/',
+  '/what-we-do',
+  '/what-we-do/web-development',
+  '/what-we-do/saas-development',
+  '/what-we-do/paas-development',
+  '/what-we-do/ai-integration',
+  '/what-we-do/security-integration',
+  '/what-we-do/marketing-basic',
+  '/what-we-do/marketing-growth',
+  '/what-we-do/marketing-advanced',
+  '/process',
+  '/contact',
+]
 
 const lastmod = new Date().toISOString().slice(0, 10)
 

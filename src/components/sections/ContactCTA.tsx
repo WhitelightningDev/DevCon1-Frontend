@@ -1,5 +1,6 @@
 import { Mail, PhoneCall } from 'lucide-react'
 
+import { StartProjectDialog } from '@/components/project/StartProjectDialog'
 import { Button } from '@/components/ui/button'
 
 export function ContactCTA() {
@@ -20,12 +21,15 @@ export function ContactCTA() {
               </p>
             </div>
             <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-end md:justify-end">
-              <Button asChild>
-                <a href="/contact">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Start a project
-                </a>
-              </Button>
+              <StartProjectDialog
+                defaultToWizard
+                trigger={
+                  <Button>
+                    <Mail className="mr-2 h-4 w-4" />
+                    Start a project
+                  </Button>
+                }
+              />
               <Button asChild variant="outline">
                 <a
                   href={bookingUrl || 'tel:+27746588885'}

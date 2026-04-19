@@ -3,8 +3,7 @@ import { Mail, MapPin, Phone } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 
 const footerLinks = [
-  { label: 'Services', href: '/services' },
-  { label: 'Work', href: '/work' },
+  { label: 'What we do', href: '/what-we-do' },
   { label: 'Process', href: '/process' },
   { label: 'Contact', href: '/contact' },
 ] as const
@@ -71,7 +70,7 @@ export function Footer() {
 
         <div className="flex flex-col gap-2 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} HKFT Services. All rights reserved.</p>
-          <p className="text-muted-foreground/80">Built with React, Vite, Tailwind, shadcn/ui.</p>
+          <p className="text-muted-foreground/80"></p>
         </div>
       </div>
     </footer>

@@ -16,11 +16,11 @@ import {
 
 import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
-import { PageBackground } from '@/components/layout/PageBackground'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { offeringsByCategory } from '@/lib/offerings'
 import { setSeo } from '@/lib/seo'
 
 const capabilityGroups = [
@@ -132,29 +132,27 @@ const proofPoints = [
 export function ServicesPage() {
   useEffect(() => {
     setSeo({
-      title: 'HKFT Services — Services',
+      title: 'HKFT Services — What we do',
       description:
-        'Product & platform engineering, AI integration, integrations, performance/UX, accessibility, security hardening, and CI/CD delivery.',
+        'Web development, SaaS and platform delivery, AI integration, security integration, and marketing services from basic to advanced.',
       imagePath: '/pwa/icon-512.png',
     })
   }, [])
 
   return (
-    <div id="top" className="min-h-screen bg-background text-foreground">
-      <PageBackground />
-
+    <div id="top" className="min-h-screen text-foreground">
       <Navbar cta={{ label: 'Start a project', href: '/contact' }} />
 
       <main id="main">
         <section className="relative overflow-hidden pb-10 pt-12 md:pb-16 md:pt-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="mx-auto max-w-3xl text-center">
-              <p className="text-xs font-medium text-muted-foreground">HKFT Services</p>
+              <p className="dc-kicker">What we do</p>
               <h1 className="dc-animate-heading dc-h1 [--dc-delay:80ms] mt-3 font-semibold text-foreground">
-                Services designed for <span className="text-primary">calm delivery</span>.
+                Work that ships—clean UX, reliable delivery, and a <span className="text-primary">durable handoff</span>.
               </h1>
               <p className="mx-auto mt-4 max-w-2xl dc-lead">
-                Build, improve, or harden what you have—delivered in reviewable milestones with a clean handoff.
+                Engineering, platforms, AI & security, and marketing systems—scoped clearly, integrated carefully, and delivered with calm checkpoints.
               </p>
 
               <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -164,7 +162,7 @@ export function ServicesPage() {
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="border-border/60 bg-transparent hover:bg-muted">
-                  <a href="#capabilities">Browse capabilities</a>
+                  <a href="#offerings">Explore service areas</a>
                 </Button>
               </div>
 
@@ -184,12 +182,61 @@ export function ServicesPage() {
               </ul>
             </div>
           </div>
+	        </section>
+
+        <section id="offerings" className="scroll-mt-24 border-t border-border/40 bg-background/20 py-14 md:py-20">
+          <div className="mx-auto max-w-6xl px-4">
+            <div className="text-center md:text-left">
+              <p className="dc-kicker">Service areas</p>
+              <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">Pick a lane, see the full scope.</h2>
+              <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
+                Each service has its own page with what we can introduce, what integrates cleanly, and what “good” looks like.
+              </p>
+            </div>
+
+            <div className="mt-8 grid gap-8">
+              {(Object.keys(offeringsByCategory) as Array<keyof typeof offeringsByCategory>).map((category) => {
+                const items = offeringsByCategory[category]
+                if (!items.length) return null
+                return (
+                  <div key={category}>
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                      <div>
+                        <p className="text-base font-semibold tracking-tight text-foreground">{category}</p>
+                        <p className="mt-1 text-sm text-muted-foreground">Structured scopes + integration-ready delivery.</p>
+                      </div>
+                      <a href="#contact" className="text-sm font-semibold text-primary hover:text-primary/80">
+                        Talk to us
+                      </a>
+                    </div>
+
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                      {items.map((offering) => (
+                        <a
+                          key={offering.slug}
+                          href={`/what-we-do/${offering.slug}`}
+                          className="group rounded-2xl border border-border/60 bg-background/60 p-5 shadow-sm shadow-black/5 transition-[transform,box-shadow,border-color,background-color] hover:-translate-y-0.5 hover:border-border/80 hover:bg-background hover:shadow-md hover:shadow-black/10"
+                        >
+                          <p className="dc-kicker">{offering.category}</p>
+                          <p className="mt-2 text-sm font-semibold tracking-tight text-foreground">{offering.title}</p>
+                          <p className="mt-1 text-sm text-muted-foreground dc-clamp-2">{offering.summary}</p>
+                          <p className="mt-4 inline-flex items-center text-sm font-semibold text-primary transition-colors group-hover:text-primary/80">
+                            View details <ArrowRight className="ml-2 h-4 w-4" />
+                          </p>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
         </section>
 
-        <section id="capabilities" className="scroll-mt-24 border-t border-border/40 bg-background/30 py-14 md:py-20">
-          <div className="mx-auto max-w-6xl px-4">
-            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-              <div className="text-center md:text-left">
+	        <section id="capabilities" className="scroll-mt-24 border-t border-border/40 bg-background/30 py-14 md:py-20">
+	          <div className="mx-auto max-w-6xl px-4">
+	            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+	              <div className="text-center md:text-left">
                 <p className="dc-kicker">Capabilities</p>
                 <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">A focused catalog.</h2>
                 <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">

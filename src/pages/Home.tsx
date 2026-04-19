@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 
 import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
-import { PageBackground } from '@/components/layout/PageBackground'
 import { ContactCTA } from '@/components/sections/ContactCTA'
 import { FeaturedWork } from '@/components/sections/FeaturedWork'
 import { Hero } from '@/components/sections/Hero'
@@ -21,9 +20,7 @@ export function Home() {
   }, [])
 
   return (
-    <div id="top" className="min-h-screen bg-background text-foreground">
-      <PageBackground />
-
+    <div id="top" className="min-h-screen text-foreground">
       <Navbar />
 
       <main id="main">

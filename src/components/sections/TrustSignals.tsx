@@ -30,12 +30,12 @@ export function TrustSignals() {
               Proof you can scan quickly.
             </h2>
             <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-              A few simple signals—plus links to shipped work.
+              A few simple signals—optimized for clarity.
             </p>
           </div>
           <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center md:items-end md:justify-end">
             <Button asChild>
-              <a href="/work">View work</a>
+              <a href="/what-we-do">What we do</a>
             </Button>
             {githubUrl ? (
               <Button asChild variant="outline">
@@ -64,9 +64,7 @@ export function TrustSignals() {
           })}
         </dl>
 
-        <p className="mt-6 text-xs text-muted-foreground text-center md:text-left">
-          Recent work: {logoNames.join(' • ')}
-        </p>
+        <p className="mt-6 text-center text-xs text-muted-foreground md:text-left">Recent logos: {logoNames.join(' • ')}</p>
       </div>
     </section>
   )

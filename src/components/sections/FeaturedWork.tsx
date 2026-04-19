@@ -1,124 +1,255 @@
-import { ExternalLink, ArrowRight } from 'lucide-react'
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 
-import { Badge } from '@/components/ui/badge'
+import { StartProjectDialog } from '@/components/project/StartProjectDialog'
 import { Button } from '@/components/ui/button'
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { useSiteMetadata } from '@/lib/site-metadata'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
-type FeaturedSite = {
-  title: string
+type LogoItem = {
+  name: string
+  src: string
   href: string
-  tags: readonly string[]
-  fallbackDescription: string
-  fallbackImage: string
 }
 
-const featured: readonly FeaturedSite[] = [
+const logos: readonly LogoItem[] = [
   {
-    title: 'MyCoop Asset Management',
-    href: 'https://www.myco-op.co.za/',
-    tags: ['Web App', 'Finance', 'Co-operatives'],
-    fallbackDescription: 'Cooperative asset management platform for pooled investments, member accounts and financial administration.',
-    fallbackImage: 'https://www.myco-op.co.za/mycoop-og.png',
+    name: 'Bullion Beperk',
+    src: '/bullion-logo.png',
+    href: 'https://www.bullionlimited.co.za/',
   },
   {
-    title: 'ShopSage',
-    href: 'https://www.shopsage.co.za/',
-    tags: ['Web App', 'Commerce', 'B2B'],
-    fallbackDescription:
-      'The smart B2B wholesale ordering platform. Manage orders, track stock, and streamline your wholesale business online.',
-    fallbackImage: 'https://www.shopsage.co.za/icons/icon-512x512.png',
+    name: 'Jet Ski And More',
+    src: '/JetSkiLogo.png',
+    href: 'https://www.jetskiandmore.com/home',
+  },
+  {
+    name: 'Found Your Pet',
+    src: '/foundyourpetlogo.png',
+    href: 'https://www.foundyourpet.co.za/',
+  },
+  {
+    name: 'Field Flow',
+    src: '/fieldflow-logo.png',
+    href: 'https://fieldflow-billing.vercel.app/',
+  },
+  {
+    name: 'Team Flow',
+    src: '/teamflow-logo.png',
+    href: 'https://teamflow-pearl.vercel.app/',
+  },
+  {
+    name: 'Kiings VIP',
+    src: '/kingslogo.JPG',
+    href: 'https://kiingsvipcarwash.vercel.app/',
+  },
+  {
+    name: 'HKNFT',
+    src: '/hkftlogo.png',
+    href: 'https://hongkongtrust.vercel.app/',
   },
 ] as const
 
-function FeaturedSiteCard({ site }: { site: FeaturedSite }) {
-  const { data } = useSiteMetadata(site.href)
-  const previewSrc = data?.image || site.fallbackImage
-  const favicon = data?.favicon || ''
-  const title = data?.title || site.title
-  const description = data?.description || site.fallbackDescription
-
-  return (
-    <Card className="group overflow-hidden border-border/60 bg-background/40 shadow-sm transition-shadow hover:shadow-md">
-      <div className="relative aspect-[16/8] overflow-hidden border-b border-border/60 bg-background/60">
-        {previewSrc ? (
-          <img
-            src={previewSrc}
-            alt={`${title} preview`}
-            loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-            onError={(event) => {
-              event.currentTarget.style.display = 'none'
-            }}
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            {favicon ? (
-              <img src={favicon} alt="" className="h-10 w-10 object-contain opacity-80" loading="lazy" />
-            ) : (
-              <span className="text-xs text-muted-foreground">Preview loading…</span>
-            )}
-          </div>
-        )}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background/70 to-transparent" />
-      </div>
-
-      <CardHeader className="space-y-2 pb-4">
-        <CardTitle className="text-base">{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-        <div className="flex flex-wrap gap-2 pt-1">
-          {site.tags.map((tag) => (
-            <Badge key={tag} variant="secondary" className="bg-secondary/70">
-              {tag}
-            </Badge>
-          ))}
-        </div>
-      </CardHeader>
-
-      <CardFooter className="flex items-center justify-between gap-3">
-        <Button asChild size="sm">
-          <a href={site.href} target="_blank" rel="noreferrer">
-            View live <ExternalLink className="ml-1 h-4 w-4" />
-          </a>
-        </Button>
-        <Button asChild size="sm" variant="outline">
-          <a href="/work#projects">
-            More work <ArrowRight className="ml-1 h-4 w-4" />
-          </a>
-        </Button>
-      </CardFooter>
-    </Card>
-  )
-}
-
 export function FeaturedWork() {
+  const [visibleCount, setVisibleCount] = useState(4)
+  const [activeIndex, setActiveIndex] = useState(logos.length)
+  const [animate, setAnimate] = useState(true)
+  const [paused, setPaused] = useState(false)
+  const pauseRef = useRef(false)
+  const dragRef = useRef<{ startX: number; dragging: boolean }>({ startX: 0, dragging: false })
+  const reduceMotion = useMemo(() => {
+    if (typeof window === 'undefined') return false
+    return window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
+  }, [])
+
+  const extended = useMemo(() => [...logos, ...logos, ...logos], [])
+  const slidePercent = 100 / visibleCount
+  const activeSlot = Math.floor(visibleCount / 2) + 1
+  const translatePercent = (activeIndex - activeSlot) * slidePercent
+
+  useEffect(() => {
+    function computeVisible() {
+      const width = window.innerWidth
+      if (width >= 1024) return 4
+      if (width >= 768) return 3
+      return 2
+    }
+
+    function onResize() {
+      setVisibleCount(computeVisible())
+    }
+
+    onResize()
+    window.addEventListener('resize', onResize, { passive: true })
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  useEffect(() => {
+    pauseRef.current = paused
+  }, [paused])
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      if (pauseRef.current || reduceMotion) return
+      setActiveIndex((value) => value + 1)
+    }, 2800)
+    return () => window.clearInterval(id)
+  }, [reduceMotion])
+
+  useEffect(() => {
+    const n = logos.length
+    if (activeIndex >= n * 2) {
+      const id = window.setTimeout(() => {
+        setAnimate(false)
+        setActiveIndex((value) => value - n)
+        window.setTimeout(() => setAnimate(true), 0)
+      }, 360)
+      return () => window.clearTimeout(id)
+    }
+
+    if (activeIndex < n) {
+      const id = window.setTimeout(() => {
+        setAnimate(false)
+        setActiveIndex((value) => value + n)
+        window.setTimeout(() => setAnimate(true), 0)
+      }, 360)
+      return () => window.clearTimeout(id)
+    }
+  }, [activeIndex])
+
+  function prev() {
+    setActiveIndex((value) => value - 1)
+  }
+
+  function next() {
+    setActiveIndex((value) => value + 1)
+  }
+
   return (
-    <section id="featured" className="scroll-mt-24 border-t border-border/40 bg-background/30 py-14 md:py-20">
-      <div className="mx-auto max-w-6xl px-4">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+    <section id="featured" className="scroll-mt-24 border-t border-border/40 bg-secondary/30 py-16 md:py-24">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
           <div className="text-center md:text-left">
-            <p className="dc-kicker">Featured work</p>
-            <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
-              MyCoop and ShopSage, live.
+            <p className="dc-kicker">Trusted by</p>
+            <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+              Logos, not a project grid.
             </h2>
             <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-              Two recent builds—pulled in dynamically from the live sites.
+              A few recent brands and builds we’ve supported—kept intentionally minimal on the homepage.
             </p>
           </div>
+
           <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center md:items-end md:justify-end">
-            <Button asChild>
-              <a href="/work">See all work</a>
-            </Button>
-            <Button asChild variant="outline">
-              <a href="/contact">Start a project</a>
+            <StartProjectDialog
+              defaultToWizard
+              trigger={<Button className="h-11 rounded-none px-5">Start a project</Button>}
+            />
+            <Button asChild variant="outline" className="h-11 rounded-none px-5">
+              <a href="/what-we-do">
+                What we do <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
             </Button>
           </div>
         </div>
 
-        <div className="mt-8 grid gap-5 md:grid-cols-2">
-          {featured.map((site) => (
-            <FeaturedSiteCard key={site.href} site={site} />
-          ))}
+        <div
+          className="relative mt-10 overflow-hidden rounded-2xl border border-border/60 bg-background/60 shadow-sm shadow-black/5"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Client logos"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background/95 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background/95 to-transparent" />
+
+          <div className="flex items-center justify-between gap-3 border-b border-border/60 px-6 py-4 md:px-8">
+            <p className="text-xs font-medium text-muted-foreground">Swipe or use arrows</p>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={prev}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-background/60 text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                aria-label="Previous logos"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={next}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-background/60 text-muted-foreground transition-colors hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                aria-label="Next logos"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+
+          <div className="px-3 py-6 md:px-5">
+            <div
+              className="flex touch-pan-y select-none"
+              style={{
+                transform: `translateX(-${translatePercent}%)`,
+                transition: animate ? 'transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1)' : 'none',
+              }}
+              onPointerDown={(event) => {
+                event.currentTarget.setPointerCapture(event.pointerId)
+                dragRef.current = { startX: event.clientX, dragging: true }
+                setPaused(true)
+              }}
+              onPointerUp={(event) => {
+                if (!dragRef.current.dragging) return
+                const delta = event.clientX - dragRef.current.startX
+                dragRef.current.dragging = false
+                event.currentTarget.releasePointerCapture(event.pointerId)
+                if (Math.abs(delta) < 40) return
+                if (delta > 0) prev()
+                else next()
+                window.setTimeout(() => setPaused(false), 400)
+              }}
+              onPointerCancel={() => {
+                dragRef.current.dragging = false
+                setPaused(false)
+              }}
+            >
+              {extended.map((logo, index) => {
+                const isActive = index === activeIndex
+                const content = (
+                  <div
+                    className={[
+                      'flex w-full items-center justify-center rounded-2xl border border-border/60 bg-background/40 px-4 py-4 shadow-sm shadow-black/5',
+                      'transition-[transform,opacity,background-color,border-color] duration-300',
+                      isActive ? 'bg-background border-border/80 opacity-100 scale-[1.08]' : 'opacity-70 hover:opacity-90',
+                    ].join(' ')}
+                  >
+                    <img
+                      src={logo.src}
+                      alt={logo.name}
+                      loading="lazy"
+                      draggable={false}
+                      className={[
+                        'h-9 w-auto max-w-[180px] object-contain',
+                        'transition-[filter,transform,opacity] duration-300',
+                        isActive ? 'grayscale-0 opacity-100' : 'grayscale opacity-85',
+                      ].join(' ')}
+                    />
+                  </div>
+                )
+
+                return (
+                  <a
+                    key={`${logo.name}-${index}`}
+                    href={logo.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group shrink-0 px-3 outline-none focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    style={{ flex: `0 0 ${slidePercent}%` }}
+                    aria-label={logo.name}
+                  >
+                    {content}
+                  </a>
+                )
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </section>

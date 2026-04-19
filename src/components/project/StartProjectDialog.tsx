@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { useMemo, useState } from 'react'
 import { format } from 'date-fns'
-import { ArrowRight, CalendarIcon, ClipboardList, Mail, Sparkles } from 'lucide-react'
+import { ArrowRight, CalendarIcon, Check, ClipboardList, Mail, Sparkles } from 'lucide-react'
 
 import {
   AlertDialog,
@@ -503,69 +503,145 @@ export function StartProjectDialog({
         }}
       >
         <DialogTrigger asChild>{trigger}</DialogTrigger>
-        <DialogContent className="z-[60] max-h-[85vh] overflow-y-auto sm:max-w-2xl">
+        <DialogContent className="z-[60] p-0 overflow-hidden sm:max-w-5xl">
           {mode === 'choice' ? (
-            <>
+            <div className="max-h-[85vh] overflow-y-auto p-6 pr-14">
               <DialogHeader>
-                <DialogTitle>Start a project</DialogTitle>
+                <DialogTitle className="text-xl">Start a project</DialogTitle>
                 <DialogDescription>Choose the fastest way to get started.</DialogDescription>
               </DialogHeader>
 
-              <div className="grid gap-3 md:grid-cols-2">
+              <div className="mt-6 grid gap-3 md:grid-cols-2">
                 <button
                   type="button"
                   onClick={() => goContact(false)}
-                  className="rounded-xl border border-border/60 bg-background/40 p-5 text-left transition-colors hover:border-primary/20 hover:bg-muted/40"
+                  className="group rounded-2xl border border-border/60 bg-background/60 p-6 text-left shadow-sm shadow-black/5 transition-[border-color,transform,box-shadow,background-color] hover:-translate-y-0.5 hover:border-border/80 hover:bg-background hover:shadow-md hover:shadow-black/10"
                 >
-                  <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="text-sm font-semibold">Use the contact page</p>
-                      <p className="mt-1 text-sm text-muted-foreground">Write what you need help with and send it.</p>
+                      <p className="text-sm font-semibold text-foreground">Use the contact page</p>
+                      <p className="mt-1 text-sm text-muted-foreground">Send a short brief and we’ll reply with next steps.</p>
                     </div>
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-primary/15 bg-primary/10">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-secondary/40 transition-colors group-hover:bg-secondary/60">
                       <Mail className="h-4 w-4 text-primary" />
                     </span>
                   </div>
+                  <p className="mt-4 text-xs text-muted-foreground">Best for: quick requests, simple scopes.</p>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setMode('wizard')}
-                  className="rounded-xl border border-border/60 bg-background/40 p-5 text-left transition-colors hover:border-primary/20 hover:bg-muted/40"
+                  className="group rounded-2xl border border-border/60 bg-background/60 p-6 text-left shadow-sm shadow-black/5 transition-[border-color,transform,box-shadow,background-color] hover:-translate-y-0.5 hover:border-border/80 hover:bg-background hover:shadow-md hover:shadow-black/10"
                 >
-                  <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="text-sm font-semibold">Follow an advanced wizard</p>
-                      <p className="mt-1 text-sm text-muted-foreground">More questions → a better brief → faster quotes.</p>
+                      <p className="text-sm font-semibold text-foreground">Follow an advanced wizard</p>
+                      <p className="mt-1 text-sm text-muted-foreground">Answer structured prompts for a stronger quote.</p>
                     </div>
-                    <span className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-primary/15 bg-primary/10">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/60 bg-secondary/40 transition-colors group-hover:bg-secondary/60">
                       <Sparkles className="h-4 w-4 text-primary" />
                     </span>
                   </div>
+                  <p className="mt-4 text-xs text-muted-foreground">Best for: complex builds, dashboards, integrations.</p>
                 </button>
               </div>
-            </>
+            </div>
           ) : (
-            <>
-              <DialogHeader>
-                <DialogTitle className="flex items-center justify-between gap-3">
-                  <span className="inline-flex items-center gap-2">
-                    <ClipboardList className="h-5 w-5 text-primary" />
-                    Project wizard
-                  </span>
-                  <span className="text-xs text-muted-foreground">
-                    Step {step + 1} of {steps.length}
-                  </span>
-                </DialogTitle>
-                <DialogDescription className="flex items-center justify-between gap-3">
-                  <span>{steps[step]?.title}</span>
-                  <span className="text-xs text-muted-foreground">
-                    Brief strength: {briefStrength.score}/{briefStrength.total}
-                  </span>
-                </DialogDescription>
-              </DialogHeader>
+            <div className="grid max-h-[85vh] md:grid-cols-[280px_1fr]">
+              <aside className="hidden flex-col border-r border-border/60 bg-secondary/30 md:flex">
+                <div className="px-6 py-6">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Project intake</p>
+                      <p className="mt-2 flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground">
+                        <ClipboardList className="h-4 w-4 text-primary" />
+                        Wizard
+                      </p>
+                    </div>
+                    <span className="text-xs font-medium text-muted-foreground">
+                      {step + 1}/{steps.length}
+                    </span>
+                  </div>
 
-              <Progress value={percent} className="h-2" />
+                  <div className="mt-4">
+                    <Progress value={percent} className="h-1.5" />
+                    <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
+                      <span>{steps[step]?.title}</span>
+                      <span>
+                        Brief {briefStrength.score}/{briefStrength.total}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="px-3 pb-6">
+                  <div className="grid gap-1">
+                    {steps.map((s, index) => {
+                      const active = index === step
+                      const completed = index < step
+                      const canJump = index <= step
+                      return (
+                        <button
+                          key={s.title}
+                          type="button"
+                          disabled={!canJump}
+                          onClick={() => setStep(index)}
+                          className={[
+                            'flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left transition-colors',
+                            active ? 'bg-background text-foreground shadow-sm shadow-black/5' : 'text-muted-foreground hover:bg-muted/40 hover:text-foreground',
+                            canJump ? '' : 'cursor-not-allowed opacity-60 hover:bg-transparent hover:text-muted-foreground',
+                          ].join(' ')}
+                          aria-current={active ? 'step' : undefined}
+                        >
+                          <span
+                            className={[
+                              'inline-flex h-7 w-7 flex-none items-center justify-center rounded-full border text-xs font-semibold',
+                              completed || active ? 'border-primary/20 bg-primary/10 text-primary' : 'border-border/60 bg-background text-muted-foreground',
+                            ].join(' ')}
+                            aria-hidden="true"
+                          >
+                            {completed ? <Check className="h-4 w-4" /> : index + 1}
+                          </span>
+                          <span className="text-sm font-medium">{s.title}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                <div className="mt-auto border-t border-border/60 px-6 py-5 text-xs text-muted-foreground">
+                  <p className="font-medium text-foreground">Tip</p>
+                  <p className="mt-1">Short bullets beat long paragraphs. You can skip anything optional.</p>
+                </div>
+              </aside>
+
+              <div className="flex flex-col">
+                <div className="border-b border-border/60 bg-background/80 px-6 py-5 pr-14 backdrop-blur">
+                  <DialogHeader>
+                    <DialogTitle className="flex items-center justify-between gap-3 text-base">
+                      <span className="inline-flex items-center gap-2">
+                        <ClipboardList className="h-4 w-4 text-primary" />
+                        Project wizard
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        Step {step + 1} of {steps.length}
+                      </span>
+                    </DialogTitle>
+                    <DialogDescription className="flex items-center justify-between gap-3">
+                      <span className="text-sm">{steps[step]?.title}</span>
+                      <span className="text-xs text-muted-foreground">
+                        Brief strength: {briefStrength.score}/{briefStrength.total}
+                      </span>
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="mt-4">
+                    <Progress value={percent} className="h-2" />
+                  </div>
+                </div>
+
+                <div className="flex-1 overflow-y-auto px-6 py-6">
+                  <div className="rounded-2xl border border-border/60 bg-background/60 p-5 shadow-sm shadow-black/5 md:p-6">
 
               {step === 0 && (
                 <div className="grid gap-4 md:grid-cols-2">
@@ -1191,67 +1267,80 @@ export function StartProjectDialog({
               {step === 8 && (
                 <div className="grid gap-3">
                   <div className="flex items-center justify-between gap-3">
-                    <p className="text-sm font-semibold">Review</p>
-                    <div className="flex items-center gap-2">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="border-border/60 bg-transparent hover:bg-muted"
-                        onClick={() => copy(summary)}
-                      >
-                        Copy
-                      </Button>
-                      <Button type="button" onClick={() => goContact(true)}>
-                        Send via contact form <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">Review</p>
+                      <p className="mt-1 text-sm text-muted-foreground">Scan the generated brief before sending.</p>
                     </div>
+                    <p className="hidden text-xs text-muted-foreground md:block">Send from the footer actions.</p>
                   </div>
-                  <Textarea readOnly value={summary} className="min-h-[240px]" />
-                  <p className="text-xs text-muted-foreground">
-                    This takes you to the contact form with the brief prefilled so you can submit it directly.
-                  </p>
+                  <Textarea readOnly value={summary} className="min-h-[280px]" />
+                  <p className="text-xs text-muted-foreground">Opens the contact form with this brief prefilled.</p>
                 </div>
               )}
+                  </div>
+                </div>
 
-              <div className="mt-2 flex items-center justify-between gap-3">
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="border-border/60 bg-transparent hover:bg-muted"
-                  onClick={() => {
-                    if (step === 0) {
-                      setConfirmAction('back-to-choice')
-                      setConfirmOpen(true)
-                    } else {
-                      setStep((s) => Math.max(0, s - 1))
-                    }
-                  }}
-                >
-                  Back
-                </Button>
-                <div className="flex items-center gap-2">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    onClick={() => {
-                      setConfirmAction('skip')
-                      setConfirmOpen(true)
-                    }}
-                  >
-                    Skip wizard
-                  </Button>
-                  {step < steps.length - 1 ? (
+                <div className="border-t border-border/60 bg-background/80 px-6 py-4 backdrop-blur">
+                  <div className="flex items-center justify-between gap-3">
                     <Button
                       type="button"
-                      disabled={!canNext}
-                      onClick={() => setStep((s) => Math.min(steps.length - 1, s + 1))}
+                      variant="outline"
+                      className="h-11 rounded-none border-border/60 bg-transparent px-5 hover:bg-muted"
+                      onClick={() => {
+                        if (step === 0) {
+                          setConfirmAction('back-to-choice')
+                          setConfirmOpen(true)
+                        } else {
+                          setStep((s) => Math.max(0, s - 1))
+                        }
+                      }}
                     >
-                      Next <ArrowRight className="ml-2 h-4 w-4" />
+                      Back
                     </Button>
-                  ) : null}
+
+                    <div className="flex items-center gap-2">
+                      {step === steps.length - 1 ? (
+                        <>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            className="h-11 rounded-none border-border/60 bg-transparent px-5 hover:bg-muted"
+                            onClick={() => copy(summary)}
+                          >
+                            Copy
+                          </Button>
+                          <Button type="button" className="h-11 rounded-none px-5" onClick={() => goContact(true)}>
+                            Send via contact form <ArrowRight className="ml-2 h-4 w-4" />
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            className="h-11 rounded-none px-4"
+                            onClick={() => {
+                              setConfirmAction('skip')
+                              setConfirmOpen(true)
+                            }}
+                          >
+                            Skip
+                          </Button>
+                          <Button
+                            type="button"
+                            className="h-11 rounded-none px-5"
+                            disabled={!canNext}
+                            onClick={() => setStep((s) => Math.min(steps.length - 1, s + 1))}
+                          >
+                            Next <ArrowRight className="ml-2 h-4 w-4" />
+                          </Button>
+                        </>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </>
+            </div>
           )}
         </DialogContent>
       </Dialog>

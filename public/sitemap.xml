@@ -2,22 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://YOUR_DOMAIN_HERE/</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-18</lastmod>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE/services</loc>
-    <lastmod>2026-04-13</lastmod>
+    <loc>https://YOUR_DOMAIN_HERE/what-we-do</loc>
+    <lastmod>2026-04-18</lastmod>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE/work</loc>
-    <lastmod>2026-04-13</lastmod>
+    <loc>https://YOUR_DOMAIN_HERE/what-we-do/web-development</loc>
+    <lastmod>2026-04-18</lastmod>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/what-we-do/saas-development</loc>
+    <lastmod>2026-04-18</lastmod>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/what-we-do/paas-development</loc>
+    <lastmod>2026-04-18</lastmod>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/what-we-do/ai-integration</loc>
+    <lastmod>2026-04-18</lastmod>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/what-we-do/security-integration</loc>
+    <lastmod>2026-04-18</lastmod>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/what-we-do/marketing-basic</loc>
+    <lastmod>2026-04-18</lastmod>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/what-we-do/marketing-growth</loc>
+    <lastmod>2026-04-18</lastmod>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/what-we-do/marketing-advanced</loc>
+    <lastmod>2026-04-18</lastmod>
   </url>
   <url>
     <loc>https://YOUR_DOMAIN_HERE/process</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-18</lastmod>
   </url>
   <url>
     <loc>https://YOUR_DOMAIN_HERE/contact</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-18</lastmod>
   </url>
 </urlset>

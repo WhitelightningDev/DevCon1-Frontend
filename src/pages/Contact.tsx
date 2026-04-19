@@ -4,7 +4,6 @@ import { ArrowRight, Mail, PhoneCall } from 'lucide-react'
 
 import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
-import { PageBackground } from '@/components/layout/PageBackground'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -74,9 +73,7 @@ export function ContactPage() {
   }
 
   return (
-    <div id="top" className="min-h-screen bg-background text-foreground">
-      <PageBackground />
-
+    <div id="top" className="min-h-screen text-foreground">
       <Navbar cta={{ label: 'Start a project', href: '/contact' }} />
 
       <main id="main">

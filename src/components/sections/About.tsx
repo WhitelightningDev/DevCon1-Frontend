@@ -34,7 +34,7 @@ export function About() {
                 <a href="/contact">Work with us</a>
               </Button>
               <Button asChild variant="outline">
-                <a href="/work">See work</a>
+                <a href="/process">Our process</a>
               </Button>
             </div>
           </div>

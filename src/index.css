@@ -86,6 +86,20 @@
     @apply text-xs font-medium tracking-[0.08em] uppercase text-muted-foreground;
   }
 
+  .dc-clamp-2 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .dc-clamp-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
   .dc-h1 {
     @apply text-balance text-4xl font-light leading-[1.04] tracking-tight sm:text-5xl lg:text-6xl;
   }

@@ -14,7 +14,6 @@ import {
 
 import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
-import { PageBackground } from '@/components/layout/PageBackground'
 import { Button } from '@/components/ui/button'
 import { setSeo } from '@/lib/seo'
 
@@ -149,9 +148,7 @@ export function ProcessPage() {
   }, [])
 
   return (
-    <div id="top" className="min-h-screen bg-background text-foreground">
-      <PageBackground />
-
+    <div id="top" className="min-h-screen text-foreground">
       <Navbar cta={{ label: 'Start a project', href: '/contact' }} />
 
       <main id="main">
@@ -197,34 +194,112 @@ export function ProcessPage() {
 
         <section id="phases" className="scroll-mt-24 py-14 md:py-20">
           <div className="mx-auto max-w-6xl px-4">
-            <div className="text-center md:text-left">
-              <p className="dc-kicker">Phases</p>
-              <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
-                A clear sequence, flexible scope.
-              </h2>
-              <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                These phases keep delivery predictable while still allowing scope to flex where it’s safe.
-              </p>
-            </div>
+            <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+              <div className="text-center md:text-left">
+                <p className="dc-kicker">Phases</p>
+                <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
+                  A clear sequence, flexible scope.
+                </h2>
+                <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
+                  These phases keep delivery predictable while still allowing scope to flex where it’s safe.
+                </p>
 
-            <ol className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-              {phases.map((phase, index) => {
-                const Icon = phase.icon
-                return (
-                  <li key={phase.title} className="rounded-lg border border-border/60 bg-background/40 p-4">
-                    <p className="flex items-center justify-between gap-3 text-sm font-semibold">
-                      <span>
-                        <span className="mr-2 text-primary">{String(index + 1).padStart(2, '0')}.</span>
-                        {phase.title}
-                      </span>
-                      <Icon className="h-4 w-4 text-primary" />
-                    </p>
-                    <p className="mt-1 text-sm text-muted-foreground">{phase.description}</p>
-                    <p className="mt-3 text-xs text-muted-foreground">{phase.bullets.join(' • ')}</p>
-                  </li>
-                )
-              })}
-            </ol>
+                <div className="mt-6 rounded-2xl border border-border/60 bg-background/40 p-4 shadow-sm shadow-black/5 md:p-5">
+                  <div className="grid gap-3">
+                    <div className="relative overflow-hidden rounded-xl border border-border/60 bg-secondary/30">
+                      <div className="aspect-[16/10]">
+                        <img
+                          src="/imagery/collaboration.jpg"
+                          alt=""
+                          aria-hidden="true"
+                          loading="lazy"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-black/0 to-black/0" />
+                      <div className="absolute inset-x-0 bottom-0 p-4">
+                        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/80">Collaboration</p>
+                        <p className="mt-1 text-sm font-semibold text-white">Align stakeholders. Reduce risk early.</p>
+                      </div>
+                    </div>
+
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <div className="relative overflow-hidden rounded-xl border border-border/60 bg-secondary/30">
+                        <div className="aspect-[16/11]">
+                          <img
+                            src="/imagery/infrastructure.jpg"
+                            alt=""
+                            aria-hidden="true"
+                            loading="lazy"
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-black/0 to-black/0" />
+                        <div className="absolute inset-x-0 bottom-0 p-4">
+                          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/80">Delivery</p>
+                          <p className="mt-1 text-sm font-semibold text-white">Shippable increments.</p>
+                        </div>
+                      </div>
+
+                      <div className="relative overflow-hidden rounded-xl border border-border/60 bg-secondary/30">
+                        <div className="aspect-[16/11]">
+                          <img
+                            src="/imagery/ai-security.jpg"
+                            alt=""
+                            aria-hidden="true"
+                            loading="lazy"
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-black/0 to-black/0" />
+                        <div className="absolute inset-x-0 bottom-0 p-4">
+                          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/80">Hardening</p>
+                          <p className="mt-1 text-sm font-semibold text-white">Security + performance.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-5 border-t border-border/60 pt-5">
+                    <p className="text-sm font-semibold text-foreground">What this gives you</p>
+                    <ul className="mt-3 grid gap-2 text-sm text-muted-foreground">
+                      {[
+                        'Predictable checkpoints for scope, risk, and decision-making.',
+                        'Room to adapt without breaking timelines or quality.',
+                        'Clear handoff artifacts for long-term ownership.',
+                      ].map((line) => (
+                        <li key={line} className="flex items-start gap-2">
+                          <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-primary/70" aria-hidden="true" />
+                          <span>{line}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <ol className="grid gap-3 md:grid-cols-2">
+                {phases.map((phase, index) => {
+                  const Icon = phase.icon
+                  return (
+                    <li
+                      key={phase.title}
+                      className="rounded-2xl border border-border/60 bg-background/40 p-5 shadow-sm shadow-black/5"
+                    >
+                      <p className="flex items-center justify-between gap-3 text-sm font-semibold">
+                        <span>
+                          <span className="mr-2 text-primary">{String(index + 1).padStart(2, '0')}.</span>
+                          {phase.title}
+                        </span>
+                        <Icon className="h-4 w-4 text-primary" />
+                      </p>
+                      <p className="mt-1 text-sm text-muted-foreground">{phase.description}</p>
+                      <p className="mt-3 text-xs text-muted-foreground">{phase.bullets.join(' • ')}</p>
+                    </li>
+                  )
+                })}
+              </ol>
+            </div>
           </div>
         </section>
 

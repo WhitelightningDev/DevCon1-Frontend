@@ -62,9 +62,9 @@ export function Hero() {
               </CardHeader>
               <CardContent className="grid gap-3 pt-0">
                 {[
-                  { title: 'Featured work', href: '#featured', description: 'MyCoop and ShopSage, live.' },
-                  { title: 'Project library', href: '/work#projects', description: 'Browse all work by category.' },
-                  { title: 'Services', href: '/services', description: 'Build, improve, operate.' },
+                  { title: 'Trusted by', href: '#featured', description: 'A few recent logos.' },
+                  { title: 'How we work', href: '/process', description: 'A clear, senior-led delivery flow.' },
+                  { title: 'What we do', href: '/what-we-do', description: 'Engineering + marketing systems.' },
                 ].map((item) => (
                   <a
                     key={item.href}
