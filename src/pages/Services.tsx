@@ -20,8 +20,29 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { OfferingCard } from '@/features/offerings/OfferingCard'
+import { getOfferingCategoryVisual } from '@/features/offerings/visuals'
 import { offeringsByCategory } from '@/lib/offerings'
 import { setSeo } from '@/lib/seo'
+
+const categoryExplainers = {
+  Engineering: {
+    blurb: 'Customer-facing web experiences built like production software: fast, accessible, measurable, and maintainable.',
+    bullets: ['Performance + UX improvements', 'SEO + analytics foundations', 'Component patterns + handoff'],
+  },
+  Platforms: {
+    blurb: 'Product and internal platform work that keeps teams shipping: auth, billing, dashboards, automation, and reliable workflows.',
+    bullets: ['SaaS foundations (auth, billing)', 'Admin portals + internal tools', 'Integrations + data sync'],
+  },
+  'AI & Security': {
+    blurb: 'Practical AI workflows and security-minded delivery—built with guardrails, reviewable controls, and calm rollout.',
+    bullets: ['AI integration (RAG, assistants)', 'Hardening + safe defaults', 'Governance + observability'],
+  },
+  Marketing: {
+    blurb: 'Marketing systems that support development: funnels, measurement, and content structure that informs what to build next.',
+    bullets: ['Conversion funnels + iteration', 'Tracking + reporting', 'Scalable page patterns'],
+  },
+} as const
 
 const capabilityGroups = [
   {
@@ -198,32 +219,45 @@ export function ServicesPage() {
               {(Object.keys(offeringsByCategory) as Array<keyof typeof offeringsByCategory>).map((category) => {
                 const items = offeringsByCategory[category]
                 if (!items.length) return null
+                const visual = getOfferingCategoryVisual(category)
+                const Illustration = visual.Illustration
+                const explainer = categoryExplainers[category]
                 return (
                   <div key={category}>
-                    <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                    <div className="grid gap-4 lg:grid-cols-[1fr_0.95fr] lg:items-stretch">
                       <div>
-                        <p className="text-base font-semibold tracking-tight text-foreground">{category}</p>
-                        <p className="mt-1 text-sm text-muted-foreground">Structured scopes + integration-ready delivery.</p>
+                        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                          <div>
+                            <p className="text-base font-semibold tracking-tight text-foreground">{category}</p>
+                            <p className="mt-1 text-sm text-muted-foreground">{explainer.blurb}</p>
+                          </div>
+                          <a href="#contact" className="text-sm font-semibold text-primary hover:text-primary/80">
+                            Talk to us
+                          </a>
+                        </div>
+
+                        <ul className="mt-4 grid gap-2 text-sm text-muted-foreground sm:grid-cols-3">
+                          {explainer.bullets.map((line) => (
+                            <li key={line} className="flex items-start gap-2">
+                              <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-primary/60" aria-hidden="true" />
+                              <span>{line}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                      <a href="#contact" className="text-sm font-semibold text-primary hover:text-primary/80">
-                        Talk to us
-                      </a>
+
+                      <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-background/55 p-6 shadow-sm shadow-black/5">
+                        <div
+                          className={`pointer-events-none absolute -inset-24 bg-gradient-to-br ${visual.backdropClassName}`}
+                          aria-hidden="true"
+                        />
+                        <Illustration className={`relative h-28 w-full ${visual.accentClassName}`} />
+                      </div>
                     </div>
 
-                    <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                       {items.map((offering) => (
-                        <a
-                          key={offering.slug}
-                          href={`/what-we-do/${offering.slug}`}
-                          className="group rounded-2xl border border-border/60 bg-background/60 p-5 shadow-sm shadow-black/5 transition-[transform,box-shadow,border-color,background-color] hover:-translate-y-0.5 hover:border-border/80 hover:bg-background hover:shadow-md hover:shadow-black/10"
-                        >
-                          <p className="dc-kicker">{offering.category}</p>
-                          <p className="mt-2 text-sm font-semibold tracking-tight text-foreground">{offering.title}</p>
-                          <p className="mt-1 text-sm text-muted-foreground dc-clamp-2">{offering.summary}</p>
-                          <p className="mt-4 inline-flex items-center text-sm font-semibold text-primary transition-colors group-hover:text-primary/80">
-                            View details <ArrowRight className="ml-2 h-4 w-4" />
-                          </p>
-                        </a>
+                        <OfferingCard key={offering.slug} offering={offering} />
                       ))}
                     </div>
                   </div>

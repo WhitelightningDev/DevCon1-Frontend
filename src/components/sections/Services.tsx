@@ -1,6 +1,7 @@
 import { Binary, Eye, ShieldCheck } from 'lucide-react'
 
 import { StartProjectDialog } from '@/components/project/StartProjectDialog'
+import { SectionHeader } from '@/components/sections/SectionHeader'
 import { Button } from '@/components/ui/button'
 
 const serviceGroups = [
@@ -29,17 +30,14 @@ const serviceGroups = [
 
 export function Services() {
   return (
-    <section id="services" className="scroll-mt-24 border-t border-border/40 py-14 md:py-20">
+    <section id="services" className="scroll-mt-24 border-t border-border/40 bg-secondary/15 py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="text-center md:text-left">
-          <p className="dc-kicker">What we do</p>
-          <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
-            Three ways we can help.
-          </h2>
-          <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-            Clear categories, no jargon—pick a starting point and we’ll scope the smallest useful first milestone.
-          </p>
-        </div>
+        <SectionHeader
+          index="02"
+          kicker="What we do"
+          title="Three ways we can help."
+          description="Clear categories, no jargon—pick a starting point and we’ll scope the smallest useful first milestone."
+        />
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {serviceGroups.map((group) => {
@@ -74,7 +72,7 @@ export function Services() {
           })}
         </div>
 
-        <div className="mt-6 flex flex-col items-center justify-between gap-3 rounded-xl border border-border/60 bg-background/40 p-4 text-center md:flex-row md:text-left">
+        <div className="mt-6 flex flex-col items-center justify-between gap-3 rounded-xl border border-border/60 bg-background/50 p-4 text-center shadow-sm shadow-black/5 md:flex-row md:text-left">
           <p className="text-xs text-muted-foreground">
             Not sure where to start? Send a short brief—we’ll recommend the smallest scope that moves the needle.
           </p>

@@ -2,6 +2,8 @@ import { lazy, Suspense, useMemo } from 'react'
 
 import { PageBackground } from '@/components/layout/PageBackground'
 import { FloatingContactFab } from '@/components/layout/FloatingContactFab'
+import { AppErrorFallback } from '@/components/system/AppErrorFallback'
+import { ErrorBoundary } from '@/components/system/ErrorBoundary'
 
 const Home = lazy(() => import('./pages/Home').then((mod) => ({ default: mod.Home })))
 const ContactPage = lazy(() => import('./pages/Contact').then((mod) => ({ default: mod.ContactPage })))
@@ -35,7 +37,9 @@ function App() {
       <div className="relative">
         <PageBackground />
         <div className="relative z-10">
-          <Page />
+          <ErrorBoundary fallback={<AppErrorFallback />}>
+            <Page />
+          </ErrorBoundary>
           <FloatingContactFab />
         </div>
       </div>

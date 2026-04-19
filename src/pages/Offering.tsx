@@ -7,6 +7,8 @@ import { StartProjectDialog } from '@/components/project/StartProjectDialog'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { OfferingCard } from '@/features/offerings/OfferingCard'
+import { OfferingHeroVisual } from '@/features/offerings/OfferingHeroVisual'
 import { getOffering, offerings } from '@/lib/offerings'
 import { setSeo } from '@/lib/seo'
 
@@ -65,38 +67,82 @@ export function OfferingPage() {
       <main id="main">
         <section className="relative overflow-hidden pb-10 pt-12 md:pb-16 md:pt-20">
           <div className="mx-auto max-w-6xl px-4">
-            <div className="mx-auto max-w-3xl text-center md:text-left md:mx-0">
-              <div className="flex flex-wrap items-center justify-center gap-2 md:justify-start">
-                <Badge variant="outline" className="rounded-full border-border/60 bg-background/60">
-                  What we do
-                </Badge>
-                <Badge variant="secondary" className="rounded-full border-border/60 bg-secondary/60">
-                  {offering.category}
-                </Badge>
+            <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+              <div className="mx-auto max-w-3xl text-center md:text-left md:mx-0">
+                <div className="flex flex-wrap items-center justify-center gap-2 md:justify-start">
+                  <Badge variant="outline" className="rounded-full border-border/60 bg-background/60">
+                    What we do
+                  </Badge>
+                  <Badge variant="secondary" className="rounded-full border-border/60 bg-secondary/60">
+                    {offering.category}
+                  </Badge>
+                </div>
+
+                <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight sm:text-5xl">{offering.title}</h1>
+                <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">{offering.intro}</p>
+
+                <div className="mt-8 lg:hidden">
+                  <OfferingHeroVisual offering={offering} />
+                </div>
+
+                <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row md:justify-start">
+                  <StartProjectDialog
+                    defaultToWizard
+                    trigger={
+                      <Button className="h-11 rounded-none px-5">
+                        Start a project <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    }
+                  />
+                  <Button asChild variant="outline" className="h-11 rounded-none px-5">
+                    <a href="/what-we-do">All services</a>
+                  </Button>
+                </div>
+
+                <p className="mt-6 text-sm text-muted-foreground">{offering.summary}</p>
               </div>
 
-              <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-                {offering.title}
-              </h1>
-              <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                {offering.intro}
-              </p>
+              <div className="hidden lg:block">
+                <OfferingHeroVisual offering={offering} />
+              </div>
+            </div>
+          </div>
+        </section>
 
-              <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row md:justify-start">
-                <StartProjectDialog
-                  defaultToWizard
-                  trigger={
-                    <Button className="h-11 rounded-none px-5">
-                      Start a project <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  }
-                />
-                <Button asChild variant="outline" className="h-11 rounded-none px-5">
-                  <a href="/what-we-do">All services</a>
-                </Button>
+        <section className="border-t border-border/40 bg-secondary/15 py-14 md:py-20">
+          <div className="mx-auto max-w-6xl px-4">
+            <div className="grid gap-6 lg:grid-cols-3">
+              <div className="rounded-2xl border border-border/60 bg-background/55 p-6 shadow-sm shadow-black/5">
+                <p className="dc-kicker">Why it matters</p>
+                <h2 className="mt-3 text-xl font-semibold tracking-tight text-foreground">Relevant to delivery</h2>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{offering.whyItMatters}</p>
               </div>
 
-              <p className="mt-6 text-sm text-muted-foreground">{offering.summary}</p>
+              <div className="rounded-2xl border border-border/60 bg-background/55 p-6 shadow-sm shadow-black/5">
+                <p className="dc-kicker">Best for</p>
+                <h2 className="mt-3 text-xl font-semibold tracking-tight text-foreground">When to choose this</h2>
+                <ul className="mt-4 grid gap-3 text-sm text-muted-foreground">
+                  {offering.bestFor.map((line) => (
+                    <li key={line} className="flex items-start gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-primary/60" aria-hidden="true" />
+                      <span>{line}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-2xl border border-border/60 bg-background/55 p-6 shadow-sm shadow-black/5">
+                <p className="dc-kicker">Examples</p>
+                <h2 className="mt-3 text-xl font-semibold tracking-tight text-foreground">What we build</h2>
+                <ul className="mt-4 grid gap-3 text-sm text-muted-foreground">
+                  {offering.examples.map((line) => (
+                    <li key={line} className="flex items-start gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-foreground/30" aria-hidden="true" />
+                      <span>{line}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </section>
@@ -165,15 +211,7 @@ export function OfferingPage() {
                   .filter((item) => item.slug !== offering.slug)
                   .slice(0, 6)
                   .map((item) => (
-                    <a
-                      key={item.slug}
-                      href={`/what-we-do/${item.slug}`}
-                      className="rounded-2xl border border-border/60 bg-background/60 p-5 shadow-sm shadow-black/5 transition-[transform,box-shadow,border-color] hover:-translate-y-0.5 hover:border-border/80 hover:shadow-md hover:shadow-black/10"
-                    >
-                      <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">{item.category}</p>
-                      <p className="mt-2 text-sm font-semibold tracking-tight text-foreground">{item.title}</p>
-                      <p className="mt-1 text-sm text-muted-foreground dc-clamp-2">{item.summary}</p>
-                    </a>
+                    <OfferingCard key={item.slug} offering={item} />
                   ))}
               </div>
             </div>

@@ -16,7 +16,7 @@ const siteUrl =
   normalizeOrigin(process.env.SITE_URL) ||
   null
 
-const origin = siteUrl || 'https://YOUR_DOMAIN_HERE'
+const origin = siteUrl || 'https://www.hkftservices.co.za'
 
 const routes = [
   '/',

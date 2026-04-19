@@ -1,36 +1,34 @@
 import { Mail, PhoneCall } from 'lucide-react'
 
 import { StartProjectDialog } from '@/components/project/StartProjectDialog'
+import { SectionHeader } from '@/components/sections/SectionHeader'
 import { Button } from '@/components/ui/button'
+import { isValidAbsoluteUrl } from '@/lib/validation'
 
 export function ContactCTA() {
-  const bookingUrl = (import.meta.env.VITE_BOOKING_URL as string | undefined) || ''
+  const bookingUrlRaw = (import.meta.env.VITE_BOOKING_URL as string | undefined) || ''
+  const bookingUrl = isValidAbsoluteUrl(bookingUrlRaw) ? bookingUrlRaw : ''
 
   return (
-    <section id="contact" className="scroll-mt-24 border-t border-border/40 py-14 md:py-20">
+    <section id="contact" className="scroll-mt-24 border-t border-border/40 bg-secondary/10 py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="rounded-xl border border-border/60 bg-background/40 p-6 md:p-10">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div className="text-center md:text-left">
-              <p className="dc-kicker">Contact</p>
-              <h2 className="dc-animate-heading dc-h2 [--dc-delay:60ms] mt-3">
-                Ready to ship something solid?
-              </h2>
-              <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-                Share a short brief and we’ll reply within 1 business day.
-              </p>
-            </div>
-            <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:items-end md:justify-end">
+        <SectionHeader
+          index="04"
+          kicker="Contact"
+          title="Ready to ship something solid?"
+          description="Share a short brief and we’ll reply within 1 business day."
+          actions={
+            <>
               <StartProjectDialog
                 defaultToWizard
                 trigger={
-                  <Button>
+                  <Button className="h-11 rounded-none px-5">
                     <Mail className="mr-2 h-4 w-4" />
                     Start a project
                   </Button>
                 }
               />
-              <Button asChild variant="outline">
+              <Button asChild variant="outline" className="h-11 rounded-none px-5">
                 <a
                   href={bookingUrl || 'tel:+27746588885'}
                   target={bookingUrl ? '_blank' : undefined}
@@ -40,9 +38,12 @@ export function ContactCTA() {
                   {bookingUrl ? 'Book a call' : 'Call'}
                 </a>
               </Button>
-            </div>
-          </div>
-          <p className="mt-6 text-center text-xs text-muted-foreground md:text-left">
+            </>
+          }
+        />
+
+        <div className="mt-10 rounded-xl border border-border/60 bg-background/55 p-6 text-center shadow-sm shadow-black/5 md:p-8 md:text-left">
+          <p className="text-xs text-muted-foreground">
             Engagements: projects, sprint blocks, or retainers • Remote-first, US-aligned availability
           </p>
         </div>

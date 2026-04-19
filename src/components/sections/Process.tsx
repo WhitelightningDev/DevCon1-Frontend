@@ -1,4 +1,5 @@
 import { ArrowRight, ClipboardList, Code2, Palette, Rocket, ShieldCheck } from 'lucide-react'
+import { SectionHeader } from '@/components/sections/SectionHeader'
 
 const steps = [
   {
@@ -30,28 +31,22 @@ const steps = [
 
 export function Process() {
   return (
-    <section id="process" className="relative scroll-mt-24 border-t border-border/40 bg-background/20 py-16 md:py-24">
-      <div className="relative mx-auto max-w-7xl px-4">
-        <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
-          <div className="text-center md:text-left">
-            <p className="dc-kicker">Process</p>
-            <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              Tight loops. Clear checkpoints.
-            </h2>
-            <p className="mx-auto mt-2 max-w-2xl text-sm text-muted-foreground sm:text-base md:mx-0">
-              A pragmatic flow that keeps risk down and quality up—especially when requirements evolve.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center md:items-end md:justify-end">
+    <section id="process" className="relative scroll-mt-24 border-t border-border/40 bg-secondary/20 py-16 md:py-24">
+      <div className="relative mx-auto max-w-6xl px-4">
+        <SectionHeader
+          index="03"
+          kicker="Process"
+          title="Tight loops. Clear checkpoints."
+          description="A pragmatic flow that keeps risk down and quality up—especially when requirements evolve."
+          actions={
             <a
               href="/process"
               className="inline-flex h-11 items-center justify-center rounded-none border border-border/60 bg-background/60 px-5 text-sm font-semibold text-foreground shadow-sm shadow-black/5 transition-[background-color,border-color,transform,box-shadow] hover:-translate-y-0.5 hover:bg-background hover:border-border/80 hover:shadow-md hover:shadow-black/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               View full process <ArrowRight className="ml-2 h-4 w-4" />
             </a>
-          </div>
-        </div>
+          }
+        />
 
         <ol className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {steps.map((step, index) => {

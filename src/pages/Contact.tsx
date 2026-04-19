@@ -8,10 +8,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { readStartProjectDraft } from '@/features/start-project/storage'
+import { isValidAbsoluteUrl, isValidEmail } from '@/lib/validation'
 import { setSeo } from '@/lib/seo'
 
 export function ContactPage() {
-  const bookingUrl = (import.meta.env.VITE_BOOKING_URL as string | undefined) || ''
+  const bookingUrlRaw = (import.meta.env.VITE_BOOKING_URL as string | undefined) || ''
+  const bookingUrl = isValidAbsoluteUrl(bookingUrlRaw) ? bookingUrlRaw : ''
 
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [name, setName] = useState('')
@@ -19,6 +22,7 @@ export function ContactPage() {
   const [company, setCompany] = useState('')
   const [message, setMessage] = useState('')
   const [website, setWebsite] = useState('')
+  const [emailTouched, setEmailTouched] = useState(false)
 
   useEffect(() => {
     setSeo({
@@ -29,20 +33,17 @@ export function ContactPage() {
   }, [])
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem('devcon1:start-project')
-      if (!raw) return
-      const parsed = JSON.parse(raw) as { name?: string; email?: string; company?: string; summary?: string }
-      if (parsed.name) setName(parsed.name)
-      if (parsed.email) setEmail(parsed.email)
-      if (parsed.company) setCompany(parsed.company)
-      if (parsed.summary) setMessage(parsed.summary)
-    } catch {
-      // ignore
-    }
+    const draft = readStartProjectDraft()
+    if (!draft) return
+    if (draft.name) setName(draft.name)
+    if (draft.email) setEmail(draft.email)
+    if (draft.company) setCompany(draft.company)
+    if (draft.summary) setMessage(draft.summary)
   }, [])
 
-  const canSubmit = useMemo(() => Boolean(name.trim()) && Boolean(email.trim()) && Boolean(message.trim()), [email, message, name])
+  const emailOk = useMemo(() => isValidEmail(email), [email])
+  const messageOk = useMemo(() => message.trim().length >= 20, [message])
+  const canSubmit = useMemo(() => Boolean(name.trim()) && emailOk && messageOk, [emailOk, messageOk, name])
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -129,9 +130,15 @@ export function ContactPage() {
                         id="contact-email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        onBlur={() => setEmailTouched(true)}
+                        aria-invalid={emailTouched && !emailOk}
                         autoComplete="email"
                         inputMode="email"
+                        type="email"
                       />
+                      {emailTouched && !emailOk ? (
+                        <p className="text-xs text-muted-foreground">Enter a valid email address.</p>
+                      ) : null}
                     </div>
                     <div className="grid gap-2">
                       <Label htmlFor="contact-company">Company (optional)</Label>
@@ -151,6 +158,9 @@ export function ContactPage() {
                         className="min-h-[160px]"
                         placeholder="Goal, users, scope, constraints, timeline, and links (if any)."
                       />
+                      {!messageOk && message.trim().length > 0 ? (
+                        <p className="text-xs text-muted-foreground">Add a little more detail (at least 20 characters).</p>
+                      ) : null}
                     </div>
 
                     <div className="hidden" aria-hidden="true">

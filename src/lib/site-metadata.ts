@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { safeJsonParse } from '@/lib/validation'
 
 export type SiteMetadata = {
   url: string
@@ -20,10 +21,10 @@ function cacheKey(url: string) {
 }
 
 function readCache(url: string): SiteMetadata | null {
+  if (typeof window === 'undefined') return null
   try {
-    const raw = localStorage.getItem(cacheKey(url))
-    if (!raw) return null
-    const parsed = JSON.parse(raw) as { ts?: number; data?: SiteMetadata }
+    const parsed = safeJsonParse<{ ts?: number; data?: SiteMetadata }>(localStorage.getItem(cacheKey(url)))
+    if (!parsed) return null
     if (!parsed?.ts || !parsed?.data) return null
     if (Date.now() - parsed.ts > CACHE_TTL_MS) return null
     return parsed.data
@@ -33,6 +34,7 @@ function readCache(url: string): SiteMetadata | null {
 }
 
 function writeCache(url: string, data: SiteMetadata) {
+  if (typeof window === 'undefined') return
   try {
     localStorage.setItem(cacheKey(url), JSON.stringify({ ts: Date.now(), data }))
   } catch {

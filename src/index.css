@@ -64,6 +64,12 @@
 @layer base {
   * {
     @apply border-border;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  *::-webkit-scrollbar {
+    width: 0;
+    height: 0;
   }
   html,
   body,
@@ -135,6 +141,16 @@
     .dc-animate-heading {
       animation: none !important;
     }
+  }
+
+  .dc-section-index {
+    @apply pointer-events-none select-none font-semibold tracking-tight text-primary/15;
+    font-size: clamp(3rem, 6vw, 4.75rem);
+    line-height: 1;
+  }
+
+  .dc-section-rail {
+    @apply pointer-events-none h-px w-16 bg-gradient-to-r from-primary/70 via-primary/25 to-transparent;
   }
 
   @keyframes dc-marquee {

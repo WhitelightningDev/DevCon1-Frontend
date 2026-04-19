@@ -6,6 +6,10 @@ export type Offering = {
   category: OfferingCategory
   summary: string
   intro: string
+  whyItMatters: string
+  bestFor: readonly string[]
+  examples: readonly string[]
+  highlights: readonly string[]
   whatWeDeliver: readonly string[]
   integrations: readonly string[]
   outcomes: readonly string[]
@@ -19,6 +23,11 @@ export const offerings: readonly Offering[] = [
     summary: 'High-quality websites and web apps with clean UX, performance, and maintainable code.',
     intro:
       'From marketing sites to complex frontends, we build fast, accessible experiences with a professional handoff your team can own.',
+    whyItMatters:
+      'Your website is often the first product experience. We treat it like production software: fast, accessible, measurable, and built on maintainable UI patterns.',
+    bestFor: ['Teams replacing an outdated site', 'Products needing faster UX and better conversions', 'Sites that need clean SEO + analytics basics'],
+    examples: ['A new marketing site with a clear contact flow', 'A multi-page site with CMS content', 'A frontend rebuild focused on Core Web Vitals'],
+    highlights: ['Performance-first', 'Accessible UI', 'SEO + tracking'],
     whatWeDeliver: [
       'Modern React/TypeScript implementation with clean component patterns',
       'Responsive UI, accessibility-first, and performance tuning',
@@ -35,6 +44,11 @@ export const offerings: readonly Offering[] = [
     summary: 'Subscription software built with product-grade UX and operational readiness.',
     intro:
       'We design and build SaaS capability: authentication, billing, roles, dashboards, and reliable workflows—shipped in reviewable milestones.',
+    whyItMatters:
+      'SaaS isn’t “just a web app”—it needs billing, permissions, lifecycle emails, and stable operations. We build the foundations that keep growth predictable.',
+    bestFor: ['New SaaS MVPs that need to ship fast', 'Existing products adding billing and plan gating', 'Teams needing admin tooling and roles/permissions'],
+    examples: ['Auth + onboarding + first dashboard', 'Stripe subscriptions + upgrade flows', 'Admin portal with audit-friendly workflows'],
+    highlights: ['Auth + roles', 'Billing-ready', 'Operational handoff'],
     whatWeDeliver: [
       'Auth, roles/permissions, and secure account flows',
       'Dashboards, admin areas, and core feature workflows',
@@ -51,6 +65,11 @@ export const offerings: readonly Offering[] = [
     summary: 'Platform features and internal tools that keep teams shipping: portals, automation, and governance.',
     intro:
       'When product teams scale, the platform needs to scale too. We help build portals, tooling, and automation that improves reliability and speed.',
+    whyItMatters:
+      'Internal platforms reduce delivery friction. Good tooling eliminates manual ops, standardizes access, and makes releases calmer as teams and systems grow.',
+    bestFor: ['Internal dashboards and portals', 'Automation that reduces manual ops work', 'Teams scaling permissions, governance, and reliability'],
+    examples: ['Ops dashboard with alerts + runbooks', 'Workflow approvals for releases', 'Data sync + reconciliation tooling'],
+    highlights: ['Automation', 'Portals', 'Governance'],
     whatWeDeliver: [
       'Internal portals and operational dashboards',
       'Workflow automation and approvals',
@@ -67,6 +86,11 @@ export const offerings: readonly Offering[] = [
     summary: 'Add AI features to existing systems without rewriting everything.',
     intro:
       'We integrate LLM capability where it provides real leverage: search, summarization, support tooling, and internal assistants—built with guardrails.',
+    whyItMatters:
+      'AI features should reduce cycle time and cognitive load. We focus on practical workflows with guardrails, evals, and safe rollout—not demos.',
+    bestFor: ['Support teams needing faster responses', 'Internal tooling that needs summarization/search', 'Products adding drafting, classification, or recommendations'],
+    examples: ['RAG search over docs and tickets', 'Summarize long messages and threads', 'Structured outputs for internal ops'],
+    highlights: ['Guardrails', 'RAG/search', 'Tooling'],
     whatWeDeliver: [
       'LLM-enabled workflows (assistants, summarization, drafting, classification)',
       'Tool integrations and structured outputs',
@@ -83,6 +107,11 @@ export const offerings: readonly Offering[] = [
     summary: 'Security-minded delivery: hardening, reviewable controls, and safer defaults.',
     intro:
       'We embed security into delivery: from auth and access control to dependency hygiene and environment practices—documented for handoff.',
+    whyItMatters:
+      'Security is a product feature. We implement reviewable controls and safe defaults that reduce incidents, improve trust, and keep teams shipping confidently.',
+    bestFor: ['Apps adding auth/roles or sensitive data', 'Teams needing hardening before launch', 'Products that need safer input handling and governance'],
+    examples: ['Least-privilege roles + permissions', 'Security headers + CSP hardening', 'Dependency/secrets hygiene + review notes'],
+    highlights: ['Least privilege', 'Hardening', 'Reviewable controls'],
     whatWeDeliver: [
       'AuthN/AuthZ patterns with least privilege',
       'Secure form handling and input validation',
@@ -99,6 +128,11 @@ export const offerings: readonly Offering[] = [
     summary: 'Clean foundations: pages, messaging clarity, SEO basics, and tracking.',
     intro:
       'A strong baseline for teams that need clarity and credibility quickly—without overbuilding.',
+    whyItMatters:
+      'If your marketing site isn’t measurable, you can’t improve it. We build a clean baseline: fast pages, clear messaging, and tracking you can trust.',
+    bestFor: ['New brands needing credibility quickly', 'Teams fixing weak SEO/metadata basics', 'Sites that need analytics and a better contact flow'],
+    examples: ['Landing page + contact funnel', 'SEO metadata + sitemap + indexing', 'Performance/accessibility pass'],
+    highlights: ['SEO basics', 'Tracking', 'Conversion clarity'],
     whatWeDeliver: [
       'Landing pages and conversion-ready sections',
       'SEO basics (titles, metadata, sitemap, indexing)',
@@ -115,6 +149,11 @@ export const offerings: readonly Offering[] = [
     summary: 'Experimentation-ready marketing: funnels, content structure, and iteration.',
     intro:
       'For teams that want ongoing improvement: better funnels, better content structure, and clean measurement that informs what to build next.',
+    whyItMatters:
+      'Growth work needs a system: repeatable pages, measurable funnels, and tight iteration loops. We help you build marketing like a product.',
+    bestFor: ['Teams running campaigns and iterating weekly', 'Products improving lead quality and conversion rate', 'Brands building content at scale'],
+    examples: ['Funnel iteration + lead quality improvements', 'Reusable landing page templates', 'Measurement plan + test readiness'],
+    highlights: ['Funnels', 'Iteration', 'Measurement'],
     whatWeDeliver: [
       'Funnel improvements (forms, lead capture, booking flows)',
       'Content templates and scalable page patterns',
@@ -131,6 +170,11 @@ export const offerings: readonly Offering[] = [
     summary: 'Advanced instrumentation, attribution thinking, and high-signal reporting.',
     intro:
       'For teams running serious campaigns or scaling acquisition: deeper tracking, cleaner reporting, and reliable conversion data.',
+    whyItMatters:
+      'When spend increases, “close enough” tracking becomes expensive. We implement governance and QA so decisions are based on clean, reliable data.',
+    bestFor: ['Teams scaling paid acquisition', 'Products needing reliable conversion data', 'Organizations aligning marketing + product metrics'],
+    examples: ['Event taxonomy + QA checklist', 'Attribution-minded reporting', 'Integration plan across tools and pipelines'],
+    highlights: ['Attribution', 'Reporting', 'Governance'],
     whatWeDeliver: [
       'Advanced event tracking strategy (naming, governance, QA)',
       'Attribution-minded funnel design and reporting',
@@ -153,4 +197,3 @@ export const offeringsByCategory = offerings.reduce<Record<OfferingCategory, Off
   },
   { Engineering: [], Platforms: [], 'AI & Security': [], Marketing: [] },
 )
-

@@ -3,6 +3,8 @@ import { useMemo, useState } from 'react'
 import { format } from 'date-fns'
 import { ArrowRight, CalendarIcon, Check, ClipboardList, Mail, Sparkles } from 'lucide-react'
 
+import { writeStartProjectDraft } from '@/features/start-project/storage'
+import { isValidEmail } from '@/lib/validation'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -95,8 +97,6 @@ type WizardData = {
 
   notes: string
 }
-
-const STORAGE_KEY = 'devcon1:start-project'
 
 const CURRENCIES: ReadonlyArray<{
   code: CurrencyCode
@@ -242,10 +242,6 @@ function inferCategory(projectType: string) {
   return 'app'
 }
 
-function isValidEmail(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())
-}
-
 function formatList(value: string) {
   const lines = value
     .split('\n')
@@ -343,7 +339,7 @@ function saveToStorage(data: WizardData) {
     summary: buildSummary(data),
     createdAt: new Date().toISOString(),
   }
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload))
+  writeStartProjectDraft(payload)
   return payload
 }
 

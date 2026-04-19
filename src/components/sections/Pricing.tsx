@@ -81,7 +81,11 @@ export function Pricing() {
   })
 
   useEffect(() => {
-    localStorage.setItem('devcon1.currency', currency)
+    try {
+      localStorage.setItem('devcon1.currency', currency)
+    } catch {
+      // ignore
+    }
   }, [currency])
 
   const formatter = useMemo(
